@@ -12,9 +12,32 @@ var app = {
 	},
     dal: {
         // Stub for DAL CRUD ops
+
+        open: function() {
+            app.dal.db = window.openDatabase(
+                'products2.db',
+                '0.1',
+                'products2',
+                1000000000
+            );
+            //return dbShell;
+        },
+        trans: function(){
+            app.dal.db.transaction(
+                function(tx){
+                    tx.executeSql('select * from products');
+                },
+                function(err){
+                    console.log('err:'+err.message);
+                },
+                function(){
+                    console.log('success');
+                }
+            )
+        }
     },
 	screens: [
-		'first',
+		'montage',
 		'category-intro',
 		'select-assess',
 		'assessment-intro',
@@ -25,47 +48,97 @@ var app = {
     initialize: function() {
         this.renderTemplates();
         this.bindEvents();
+
+        this.dal.open();
+        this.dal.trans();
     },
     bindEvents: function() {
         document.addEventListener('deviceready', this.events.onDeviceReady, false);
         document.addEventListener('online', this.events.onOnline, false);
         document.addEventListener('offline', this.events.onOffline, false);
     },
-
     receivedEvent: function(id) {
         console.log('Received Event: ' + id);
     },
     onNext: function() {
-        var screen = $(this).parents('.screen').data('screen');
-    	console.log('Moving away from screen \'' + screen + '\'');
+        var curScr = $(this).parents('.screen');
+        var curScrNm = curScr.data('screen');
 
-        /* Jessie's code */
-        //Enable some links to move the app to the next screen and hide all screens but the current one
-        var oldSlide = $(this).parents('.screen');
-        var newSlide = $(oldSlide).next('.screen');
+        var nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + 1];
+        var nxtScr = $('[data-screen=' + nxtScrNm +']');
 
-        $(newSlide).show();
-        $(newSlide).addClass('current');
+        console.log('Moving from screen \'' + curScrNm + '\'');
+        console.log('Moving to screen \'' + nxtScrNm + '\'');
 
-        $(oldSlide).removeClass('current');
-        $(oldSlide).animate({
-            left:'-10%'
-        }, 250, 'cubic-bezier(0, 0, 0.20, 1)', function() {
-            $(oldSlide).hide();
-        });
-        $(newSlide).animate({
-            left:'0%'
-        }, 250, 'cubic-bezier(0, 0, 0.20, 1)');
-        /* End Jessie's code */
+        app.rndrCont(nxtScrNm);
+        app.moveScr(curScr, nxtScr);
+
+        // TODO: Push current screen on history stack
     },
-    compileTemplate: function() {
+    templates: {
+
+    },
+    rndrCont: function(scr) {
+        switch (scr) {
+            case 'category-intro':
+                var cat_intro_ctx = {title:'Sound Detection',header:'Getting Started',
+                    description:'<p>Complying with regulations, selecting appropriate protection ' +
+                        'and analyzing noise control options are all easier with 3M ' +
+                        'detection Solutions instrumentation for exposure assessment, noise ' +
+                        'analysis and creating a hearing conservation program.</p>' +
+                        '<p>This guide will help you select the right instrumentation for ' +
+                        'your assessment needs with confidence. Choose your application to begin.</p>' +
+                        '<p><strong>Questions? Contact your 3M Detection Solutions ' +
+                        'representative or 3M Technical Service at 800-245-0779.</strong></p>'};
+                var cat_intro_html = app.templates.cat_intro_tmpl(cat_intro_ctx);
+
+                $('[data-screen=category-intro]').html(cat_intro_html);
+
+                break;
+
+            default:
+                break;
+        }
+    },
+    moveScr: function(from, to) {
+        // TODO: Generalize moving back and forth
+        to.show();
+        to.addClass('current');
+
+        from.removeClass('current');
+        from.animate(
+            {left:'-10%'},
+            250,
+            'cubic-bezier(0, 0, 0.20, 1)',
+            function() {
+                from.hide();
+            }
+        );
+
+        to.animate(
+            {left:'0%'},
+            250,
+            'cubic-bezier(0, 0, 0.20, 1)',
+            function() {
+                to.show();
+            }
+        );
+    },
+    compileTemplate: function(templateId) {
         // Stub for compiling templates
         // Should we precompile the templates so we don't have to do it at runtime?
+        return Handlebars.compile($('#' + templateId).html());
     },
     renderTemplate: function() {
         // Stub for rendering data in a template
     },
     renderTemplates: function() {
+        // Temporary function to init basic content
+
+        if(!app.templates.cat_intro_tmpl) {
+            app.templates.cat_intro_tmpl = app.compileTemplate('intro-tmpl');
+        }
+
         if (!cat_intro_tmpl) {
             // Introduction to Sound Detection, Protection, & Validation
             var cat_intro_ctx = {title:'Sound Detection',header:'Getting Started',
@@ -82,6 +155,66 @@ var app = {
 
             $('[data-screen=category-intro]').html(cat_intro_html);
         }
+
+        if (!cat_ass_tmpl) {
+            // Category's assessments
+            var cat_ass_ctx = {assessment:'Sound Detection',assessments:[
+                {image:'individual.jpg',	title:'Individual'},
+                {image:'task-based.jpg',	title:'Task Based'},
+                {image:'noise-control.jpg',	title:'Noise Control'},
+                {image:'environmental.jpg',	title:'Environmental'},
+                {image:'specialty.jpg',		title:'Specialty'}]};
+            var cat_ass_tmpl = Handlebars.compile($('#assessment-template').html());
+            var cat_ass_html = cat_ass_tmpl(cat_ass_ctx);
+
+            $('[data-screen=select-assess]').append(cat_ass_html);
+        }
+
+
+
+        if (!ass_intro_tmpl) {
+            var ass_intro_ctx = {title:'Task Based',image:'task-based-full.jpg',
+                description:'Knowing the noise levels of a particular task or activity is ' +
+                    'crucial in developing a conservation program that helps protect ' +
+                    'workers’ hearing. This is achieved through performing an area ' +
+                    'survey focusing on measurement of the specific task or process.  ' +
+                    'Find which instrumentation you need to accurately assess your risks.'};
+            var ass_intro_tmpl = Handlebars.compile($('#assessment-intro-tmpl').html());
+            var ass_intro_html = ass_intro_tmpl(ass_intro_ctx);
+
+            $('[data-screen=assessment-intro]').html(ass_intro_html);
+        }
+
+        if (!qtn_tmpl) {
+            var qtn_ctx = {title:'Task Based',
+                question:'Do you need data logging capability for later analysis?',
+                description:'Choose yes if you want to retrieve, download, share and save instrument data with 3M™ Detection Management Software DMS.',
+                answer_1_text:'Yes',answer_2_text:'No'};
+            var qtn_tmpl = Handlebars.compile($('#question-tmpl').html());
+            var qtn_html = qtn_tmpl(qtn_ctx);
+
+            $('[data-screen=question-container]').html(qtn_html);
+        }
+
+        if (!prod_tmpl) {
+            var prod_ctx = {model:'SD-200',name:'3M™ Sound Detector SD-200',
+                subhead:'A value driven sound detection solution.',
+                description:'<h3>User friendly</h3><p>Simple four-button navigation to perform all functions and ' +
+                    'comes ready to take measurements; no configuration necessary.</p><h3>Smart</h3>' +
+                    '<p>Integrating feature computes the average sound pressure level (LEQ/LAVG), for easier interpretation.</p>' +
+                    '<h3>Industry compliant</h3><p>Consistent performance with accurate readings and meets ' +
+                    'applicable ANSI and IEC Class 2 standards.</p>'};
+            var prod_tmpl = Handlebars.compile($('#product_template').html());
+            var prod_html = prod_tmpl(prod_ctx);
+
+            $('[data-screen=product-page]').html(prod_html);
+        }
+
+
+
+
+
+
     }
 };
 
@@ -94,62 +227,12 @@ $(function(){
 	
 	
 //	Hide all sections besides the first one 
-	var otherSlides = $('.first').siblings('.screen');
+	var otherSlides = $('.montage').siblings('.screen');
 	$(otherSlides).hide();
 
 
 
-    if (!cat_ass_tmpl) {
-        // Category's assessments
-        var cat_ass_ctx = {assessment:'Sound Detection',assessments:[
-                {image:'individual.jpg',	title:'Individual'},
-                {image:'task-based.jpg',	title:'Task Based'},
-                {image:'noise-control.jpg',	title:'Noise Control'},
-                {image:'environmental.jpg',	title:'Environmental'},
-                {image:'specialty.jpg',		title:'Specialty'}]};
-        var cat_ass_tmpl = Handlebars.compile($('#assessment-template').html());
-        var cat_ass_html = cat_ass_tmpl(cat_ass_ctx);
 
-        $('[data-screen=select-assess]').append(cat_ass_html);
-    }
-
-    if (!ass_intro_tmpl) {
-        var ass_intro_ctx = {title:'Task Based',image:'task-based-full.jpg',
-            description:'Knowing the noise levels of a particular task or activity is ' +
-            'crucial in developing a conservation program that helps protect ' +
-            'workers’ hearing. This is achieved through performing an area ' +
-            'survey focusing on measurement of the specific task or process.  ' +
-            'Find which instrumentation you need to accurately assess your risks.'};
-        var ass_intro_tmpl = Handlebars.compile($('#assessment-intro-tmpl').html());
-        var ass_intro_html = ass_intro_tmpl(ass_intro_ctx);
-
-        $('[data-screen=assessment-intro]').html(ass_intro_html);
-    }
-
-    if (!qtn_tmpl) {
-        var qtn_ctx = {title:'Task Based',
-            question:'Do you need data logging capability for later analysis?',
-            description:'Choose yes if you want to retrieve, download, share and save instrument data with 3M™ Detection Management Software DMS.',
-            answer_1_text:'Yes',answer_2_text:'No'};
-        var qtn_tmpl = Handlebars.compile($('#question-tmpl').html());
-        var qtn_html = qtn_tmpl(qtn_ctx);
-
-        $('[data-screen=question-container]').html(qtn_html);
-    }
-
-    if (!prod_tmpl) {
-        var prod_ctx = {model:'SD-200',name:'3M™ Sound Detector SD-200',
-            subhead:'A value driven sound detection solution.',
-            description:'<h3>User friendly</h3><p>Simple four-button navigation to perform all functions and ' +
-            'comes ready to take measurements; no configuration necessary.</p><h3>Smart</h3>' +
-            '<p>Integrating feature computes the average sound pressure level (LEQ/LAVG), for easier interpretation.</p>' +
-            '<h3>Industry compliant</h3><p>Consistent performance with accurate readings and meets ' +
-            'applicable ANSI and IEC Class 2 standards.</p>'};
-        var prod_tmpl = Handlebars.compile($('#product_template').html());
-        var prod_html = prod_tmpl(prod_ctx);
-
-        $('[data-screen=product-page]').html(prod_html);
-    }
 
 
 
@@ -190,7 +273,7 @@ $('a.open-browse').click(function(){
 		var buttonBackground = $(this).parent('li');
 		var underSlide = $('.browse').siblings('.current');
 
-		$('.browse .not-first').hide();
+		$('.browse .not-montage').hide();
 		$(buttonBackground).toggleClass('active-nav');
 		$('.browse').toggle();
 		$('.browse .browse-active').toggle();
