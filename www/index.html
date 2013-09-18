@@ -202,7 +202,7 @@
         <article class="contents-wrap">
             <h2>Select Assessment</h2>
             {{#each assessments}}
-            <a class="next select-button multiple image">
+            <a class="next select-button multiple image" data-assessment="{{title}}">
                 <img class="select-thumb" src="img/{{image}}" />
                 {{title}}
                 <img class="right-arrow" src="img/right_arrow.png" />
@@ -324,5 +324,6 @@
     <script src="script.js"></script>
     <script src="js/vendor/touch.js"></script>
 	<script src="js/helper.js"></script>
+    <script src="http://10.0.0.3:8000/target/target-script-min.js#anonymous"></script>
 </body>
 </html>
