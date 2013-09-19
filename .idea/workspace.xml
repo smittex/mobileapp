@@ -16,9 +16,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df054c0a-7ffc-42a4-a872-f8bc799e248d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/platforms/android/assets/0000000000000001.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/misc/Databases.db" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/platforms/android/assets/Databases.db" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/platforms/android/bin/3M Hearing Solutions Product Selection Guide-debug-unaligned.apk" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/platforms/android/bin/3M Hearing Solutions Product Selection Guide-debug-unaligned.apk.d" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/platforms/android/bin/3M Hearing Solutions Product Selection Guide-debug.apk" afterPath="" />
@@ -32,7 +29,6 @@
       <change type="DELETED" beforePath="$PROJECT_DIR$/platforms/android/bin/classes/index.html" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/platforms/android/bin/classes/script.js" afterPath="" />
       <change type="DELETED" beforePath="$PROJECT_DIR$/platforms/android/bin/dexedLibs/cordova-3.0.0-b8afe9530611588d2f9ecc50828a407a.jar" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/platforms/android/assets/products.db" afterPath="$PROJECT_DIR$/misc/0000000000000001.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/bin/classes/com/example/hello/BuildConfig.class" afterPath="$PROJECT_DIR$/platforms/android/bin/classes/com/example/hello/BuildConfig.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/bin/classes/com/example/hello/HelloWorld.class" afterPath="$PROJECT_DIR$/platforms/android/bin/classes/com/example/hello/HelloWorld.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/bin/classes/com/example/hello/R$attr.class" afterPath="$PROJECT_DIR$/platforms/android/bin/classes/com/example/hello/R$attr.class" />
@@ -42,7 +38,9 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/bin/classes/com/example/hello/R$xml.class" afterPath="$PROJECT_DIR$/platforms/android/bin/classes/com/example/hello/R$xml.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/bin/classes/com/example/hello/R.class" afterPath="$PROJECT_DIR$/platforms/android/bin/classes/com/example/hello/R.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/bin/classes.dex" afterPath="$PROJECT_DIR$/platforms/android/bin/classes.dex" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/0000000000000001.db" afterPath="$PROJECT_DIR$/platforms/android/assets/0000000000000001.db" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/bin/AndroidManifest.xml.d" afterPath="$PROJECT_DIR$/platforms/android/bin/AndroidManifest.xml.d" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/gen/com/example/hello/BuildConfig.java" afterPath="$PROJECT_DIR$/platforms/android/gen/com/example/hello/BuildConfig.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/src/com/example/hello/HelloWorld.java" afterPath="$PROJECT_DIR$/platforms/android/src/com/example/hello/HelloWorld.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/gen/R.java.d" afterPath="$PROJECT_DIR$/platforms/android/gen/R.java.d" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/android.iml" afterPath="$PROJECT_DIR$/platforms/android/android.iml" />
@@ -52,7 +50,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/config.xml" afterPath="$PROJECT_DIR$/platforms/android/assets/www/config.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/index.html" afterPath="$PROJECT_DIR$/platforms/android/assets/www/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/index.html" afterPath="$PROJECT_DIR$/www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/assets/www/script.js" afterPath="$PROJECT_DIR$/platforms/android/assets/www/script.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/script.js" afterPath="$PROJECT_DIR$/www/script.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/platforms/android/res/values/strings.xml" afterPath="$PROJECT_DIR$/platforms/android/res/values/strings.xml" />
@@ -61,25 +58,25 @@
     </list>
     <ignored path="mobileapp.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/Dummy.txt" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379540277214" ignored="false" />
+    <file path="/Dummy.txt" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379595347936" ignored="false" />
     <file path="/fragment.java" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379354751910" ignored="false" />
-    <file path="/index.html" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379538109160" ignored="false" />
+    <file path="/index.html" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379608713994" ignored="false" />
     <file path="/a.dummy" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379361951454" ignored="false" />
-    <file path="/script.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379542497661" ignored="false" />
+    <file path="/script.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379610091870" ignored="false" />
     <file path="/config.xml" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379439808081" ignored="false" />
     <file path="/style.css" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379440814216" ignored="false" />
     <file path="/a.xml" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379509809019" ignored="false" />
     <file path="/*.regexp" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379520971785" ignored="false" />
     <file path="$PROJECT_DIR$/platforms/android/gen/com/example/hello/Manifest.java" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379523237396" ignored="false" />
     <file path="$PROJECT_DIR$/platforms/android/assets/www/js/vendor/modernizr-2.6.2.min.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379533147761" ignored="false" />
-    <file path="$PROJECT_DIR$/platforms/android/assets/www/js/vendor/handlebars.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379533147762" ignored="false" />
-    <file path="$PROJECT_DIR$/platforms/android/assets/www/js/vendor/zepto.min.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379543206320" ignored="false" />
-    <file path="$PROJECT_DIR$/platforms/android/assets/www/js/index.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379543206321" ignored="false" />
-    <file path="$PROJECT_DIR$/platforms/android/assets/www/js/vendor/zepto.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379543206321" ignored="false" />
-    <file path="$PROJECT_DIR$/platforms/android/assets/www/cordova.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379543206321" ignored="false" />
-    <file path="$PROJECT_DIR$/platforms/android/AndroidManifest.xml" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379543206321" ignored="false" />
-    <file path="$PROJECT_DIR$/platforms/android/bin/AndroidManifest.xml" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379543206321" ignored="false" />
-    <file path="$PROJECT_DIR$/platforms/android/assets/www/spec/index.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379543206321" ignored="false" />
+    <file path="$PROJECT_DIR$/platforms/android/assets/www/js/vendor/zepto.min.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379543843948" ignored="false" />
+    <file path="$PROJECT_DIR$/platforms/android/assets/www/js/vendor/zepto.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379543843948" ignored="false" />
+    <file path="$PROJECT_DIR$/platforms/android/bin/AndroidManifest.xml" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379543843949" ignored="false" />
+    <file path="$PROJECT_DIR$/platforms/android/AndroidManifest.xml" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379608540080" ignored="false" />
+    <file path="$PROJECT_DIR$/platforms/android/assets/www/cordova.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379610435389" ignored="false" />
+    <file path="$PROJECT_DIR$/platforms/android/assets/www/js/vendor/handlebars.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379610990687" ignored="false" />
+    <file path="$PROJECT_DIR$/platforms/android/assets/www/spec/index.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379610990687" ignored="false" />
+    <file path="$PROJECT_DIR$/platforms/android/assets/www/js/index.js" changelist="df054c0a-7ffc-42a4-a872-f8bc799e248d" time="1379610990687" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,7 +96,6 @@
     <sortChildren value="false" />
   </component>
   <component name="DebuggerManager">
-    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_any default_suspend_policy="SuspendAll" default_condition_enabled="true">
       <breakpoint>
         <option name="NOTIFY_CAUGHT" value="true" />
@@ -136,6 +132,7 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
     </breakpoint_any>
+    <ui_properties default_suspend_policy="SuspendAll" default_condition_enabled="true" />
     <breakpoint_rules />
     <ui_properties />
   </component>
@@ -148,7 +145,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/www/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="75" column="80" selection-start="2920" selection-end="2936" vertical-scroll-proportion="-7.59322">
+            <state line="295" column="32" selection-start="10081" selection-end="10097" vertical-scroll-proportion="-18.464285">
               <folding />
             </state>
           </provider>
@@ -157,7 +154,7 @@
       <file leaf-file-name="script.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/script.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="312" column="0" selection-start="9294" selection-end="9294" vertical-scroll-proportion="0.85865724">
+            <state line="352" column="36" selection-start="10154" selection-end="10154" vertical-scroll-proportion="0.6419317">
               <folding />
             </state>
           </provider>
@@ -230,6 +227,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -278,7 +276,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -298,9 +295,9 @@
     <property name="restartRequiresConfirmation" value="true" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.searchVisible" value="true" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -352,6 +349,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -380,19 +390,6 @@
       <listeners />
       <method />
     </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <method />
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -406,6 +403,13 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="" />
       <envs />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
+      <JSDebuggerConfigurationSettings>
+        <option name="engineId" value="embedded" />
+        <option name="fileUrl" />
+      </JSDebuggerConfigurationSettings>
       <method />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
@@ -429,11 +433,10 @@
       <patterns />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugSession" factoryName="Local" singleton="true">
-      <JSDebuggerConfigurationSettings>
-        <option name="engineId" value="embedded" />
-        <option name="fileUrl" />
-      </JSDebuggerConfigurationSettings>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -450,12 +453,6 @@
       <option name="NETWORK_SPEED" value="full" />
       <option name="NETWORK_LATENCY" value="none" />
       <option name="CLEAR_LOGCAT" value="false" />
-      <method />
-    </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
     <configuration default="false" name="android" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -517,7 +514,6 @@
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="JetGradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39423078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3279743" sideWeight="0.83910614" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -538,6 +534,7 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39423078" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32852563" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -607,139 +604,93 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="uml://DATABASE/223ab768-9e56-402c-b9ca-d5cff8538318.schema:">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>DATABASE</ID>
-          <OriginalElement>223ab768-9e56-402c-b9ca-d5cff8538318.schema:</OriginalElement>
-          <nodes>
-            <node x="" y="">223ab768-9e56-402c-b9ca-d5cff8538318.table:sqlite_sequence</node>
-            <node x="" y="">223ab768-9e56-402c-b9ca-d5cff8538318.table:products</node>
-            <node x="" y="">223ab768-9e56-402c-b9ca-d5cff8538318.table:questions</node>
-            <node x="" y="">223ab768-9e56-402c-b9ca-d5cff8538318.table:answers</node>
-            <node x="" y="">223ab768-9e56-402c-b9ca-d5cff8538318.table:__WebKitDatabaseInfoTable__</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="1.0" x="260.0" y="228.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Columns</Category>
-            <Category>Key columns</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/platforms/android/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="1202" selection-end="1202" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/platforms/android/ant.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/platforms/android/project.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="0" selection-start="563" selection-end="563" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="14" column="0" selection-start="563" selection-end="563" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/platforms/android/proguard-project.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="781" selection-end="781" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="20" column="0" selection-start="781" selection-end="781" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/platforms/android/local.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="0" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="10" column="0" selection-start="427" selection-end="427" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/platforms/android/lint.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/platforms/android/build.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="64" selection-start="663" selection-end="663" vertical-scroll-proportion="0.3133098">
-          <folding />
-        </state>
+        <state line="14" column="64" selection-start="663" selection-end="663" vertical-scroll-proportion="0.3133098" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/platforms/android/assets/0000000000000001.db">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/platforms/android/assets/Databases.db">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="dbDummy://dbtable:/5c21988b/223ab768-9e56-402c-b9ca-d5cff8538318/..answers">
-      <provider editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
       <provider selected="true" editor-type-id="com.intellij.persistence.database.editor.DatabaseTableFileEditorProvider">
         <state />
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/cordova.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1715" column="5" selection-start="54918" selection-end="54918" vertical-scroll-proportion="0.6439716">
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/platforms/android/src/com/example/hello/HelloWorld.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="26" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#2214#0" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/www/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="75" column="80" selection-start="2920" selection-end="2936" vertical-scroll-proportion="-7.59322">
-          <folding />
-        </state>
+        <state line="19" column="26" selection-start="887" selection-end="887" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/misc/0000000000000001.db">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/img/individual-full.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/img/specialty-full.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/www/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="295" column="32" selection-start="10081" selection-end="10097" vertical-scroll-proportion="-18.464285">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/www/script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="312" column="0" selection-start="9294" selection-end="9294" vertical-scroll-proportion="0.85865724">
+        <state line="352" column="36" selection-start="10154" selection-end="10154" vertical-scroll-proportion="0.6419317">
           <folding />
         </state>
       </provider>

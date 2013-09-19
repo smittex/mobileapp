@@ -55,7 +55,7 @@
 			</ul>
 		</nav>
 		<h4>
-			The power to protect your word.<sup>SM</sup>
+			The power to protect your world.<sup>SM</sup>
 		</h4>
 	</section>
 	<!--  Opening montage screen end -->
@@ -202,7 +202,7 @@
         <article class="contents-wrap">
             <h2>Select Assessment</h2>
             {{#each assessments}}
-            <a class="next select-button multiple image" data-assessment="{{title}}">
+            <a class="next select-button multiple image" data-subitem="{{title}}">
                 <img class="select-thumb" src="img/{{image}}" />
                 {{title}}
                 <img class="right-arrow" src="img/right_arrow.png" />
@@ -251,8 +251,8 @@
             </div>
             <div class="question-choices">
                 <ul>
-                    <li class="option1"><a class="next">{{answer_1_text}}</a></li>
-                    <li class="option2"><a class="next">{{answer_2_text}}</a></li>
+                    <li class="option1"><a class="next" data-subitem="1">{{answer_1_text}}</a></li>
+                    <li class="option2"><a class="next" data-subitem="2">{{answer_2_text}}</a></li>
                 </ul>
             </div>
             <div class="link-description">

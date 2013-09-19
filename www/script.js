@@ -1,8 +1,8 @@
 var app = {
 	events: {
 		onDeviceReady: function() {
-
-        },
+			// Stub for when DOM is loaded
+		},
 		onOnline: function() {
 			// Stub for when device comes online
 		},
@@ -40,6 +40,7 @@ var app = {
 			);
 		}
 	},
+	history: [],
 	screens: [
 		'montage',
 		'category-intro',
@@ -50,57 +51,76 @@ var app = {
 	],
 	initialize: function() {
 		this.renderTemplates();
-        $('.montage').siblings('.screen').hide();
-        app.dal.open();
-        $('a.next').one('click',app.onNext);
-        $('a.back').one('click',app.onBack);
+		$('.montage').siblings('.screen').hide();
+		app.dal.open();
+		$('a.next').one('click',app.onNext);
+		$('a.back').one('click',app.onBack);
 
-        document.addEventListener('deviceready', this.events.onDeviceReady, false);
-        document.addEventListener('online', this.events.onOnline, false);
-        document.addEventListener('offline', this.events.onOffline, false);
+		document.addEventListener('deviceready', this.events.onDeviceReady, false);
+		document.addEventListener('online', this.events.onOnline, false);
+		document.addEventListener('offline', this.events.onOffline, false);
 	},
 	onNext: function() {
-        // TODO: Generalize onNext & onBack into one function
-        var curScr = $(this).parents('.screen');
+		// TODO: Generalize onNext & onBack into one function
+		var curScr = $(this).parents('.screen');
 		var curScrNm = curScr.data('screen');
 
 		var nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + 1];
 		var nxtScr = $('[data-screen=' + nxtScrNm +']');
 
-		app.rndrCont(nxtScrNm);
+		var obj = $(this).data('subitem');
+		if (!obj) {
+			obj = '';
+		}
+		else {
+			obj = obj.toLowerCase().replace(' ','-');
+		}
+
+		var toPush = curScrNm;
+		if (!obj == '') {
+			toPush += obj;
+		}
+
+		app.history.push(toPush);
+		app.rndrCont(nxtScrNm, obj);
 		app.moveScr(curScr, nxtScr, 'next');
-
-		// TODO: Push current screen on history stack
 	},
-    onBack: function() {
-        // TODO: Generalize onNext & onBack into one function
-        var curScr = $(this).parents('.screen');
-        var curScrNm = curScr.data('screen');
+	onBack: function() {
+		// TODO: Generalize onNext & onBack into one function
+		var curScr = $(this).parents('.screen');
+		var curScrNm = curScr.data('screen');
 
-        var nxtScrNm = app.screens[app.screens.indexOf(curScrNm) - 1];
-        var nxtScr = $('[data-screen=' + nxtScrNm +']');
+		var nxtScrNm = app.screens[app.screens.indexOf(curScrNm) - 1];
+		var nxtScr = $('[data-screen=' + nxtScrNm +']');
 
-        app.rndrCont(nxtScrNm);
-        app.moveScr(curScr, nxtScr, 'back');
+		var obj = $(this).data('subitem');
+		if (!obj) {
+			obj = '';
+		}
+		else {
+			obj = obj.toLowerCase().replace(' ','-');
+		}
 
-        // TODO: Pop current screen off history stack
-    },
-	rndrCont: function(scr) {
+		app.history.pop()
+		app.rndrCont(nxtScrNm, obj);
+		app.moveScr(curScr, nxtScr, 'back');
+	},
+	rndrCont: function(scr, obj) {
 		switch (scr) {
-            case 'category-intro':
+			case 'category-intro':
 				var sql = 'select value from content where screen=\'category-intro\' and key=\'sound-detection\'';
 
-                // TODO: Generalize the DB access & template rendering
+				// TODO: Generalize the DB access & template rendering
 				$(document).one('get:content', function (event) {
-                    // TODO: Check if template has been compiled first
+					// TODO: Check if template has been compiled first
 					var tmpl = Handlebars.compile($('#intro-tmpl').html());
 
-                    // TODO: Possible security vulnerability here if someone has write access to DB
+					// TODO: Possible security vulnerability here if someone has write access to DB
 					var cat_intro_html = tmpl(eval("(" + event.data.item(0).value + ')'));
 					$('[data-screen=category-intro]').html(cat_intro_html);
-                    $('a.next').one('click',app.onNext);
-                    $('a.back').one('click',app.onBack);
-                });
+					$('a.next').one('click',app.onNext);
+					$('a.back').one('click',app.onBack);
+				});
 
 				app.dal.getRows(sql, 'get:content');
 				break;
@@ -111,34 +131,69 @@ var app = {
 					var tmpl = Handlebars.compile($('#assessment-template').html());
 					var cat_ass_html = tmpl(eval("(" + event.data.item(0).value + ')'));
 					$('[data-screen=select-assess]').html(cat_ass_html);
-                    $('a.next').one('click',app.onNext);
-                    $('a.back').one('click',app.onBack);
-                });
+					$('a.next').one('click',app.onNext);
+					$('a.back').one('click',app.onBack);
+				});
 
 				app.dal.getRows(sql, 'get:content');
 				break;
 
-            case 'assessment-intro':
-                var sql = 'select value from content where screen=\'assess-intro\' and key=\'task-based\'';
+			case 'assessment-intro':
+				app.assessment = obj;
+				var sql = 'select value from content where screen=\'assess-intro\' and key=\''+obj+'\'';
 
-                $(document).one('get:content', function (event) {
-                    var tmpl = Handlebars.compile($('#assessment-intro-tmpl').html());
-                    var ass_intro_html = tmpl(eval("(" + event.data.item(0).value + ')'));
-                    $('[data-screen=assessment-intro]').html(ass_intro_html);
-                    $('a.next').one('click',app.onNext);
-                    $('a.back').one('click',app.onBack);
-                });
+				$(document).one('get:content', function (event) {
+					var tmpl = Handlebars.compile($('#assessment-intro-tmpl').html());
+					var ass_intro_html = tmpl(eval("(" + event.data.item(0).value + ')'));
+					$('[data-screen=assessment-intro]').html(ass_intro_html);
+					$('a.next').one('click',app.onNext);
+					$('a.back').one('click',app.onBack);
+				});
 
-                app.dal.getRows(sql, 'get:content');
+				app.dal.getRows(sql, 'get:content');
 
-                break;
+				break;
 
+			case ''://question-container
+				// TODO: Track the questions already answered
+				var sql = 'select question_id, question_text from questions where assessment=\''+app.assessment+'\'';
+
+				$(document).one('get:content', function (event) {
+					var tmpl = Handlebars.compile($('#question-tmpl').html());
+					// TODO: Create JSON from query results
+					// TODO: SELECT answers
+
+					var qtn_html = tmpl(eval("(" + event.data.item(0).value + ')'));
+					$('[data-screen=question-container]').html(qtn_html);
+					$('a.next').one('click',app.onNext);
+					$('a.back').one('click',app.onBack);
+				});
+
+				app.dal.getRows(sql, 'get:content');
+
+				break;
+
+			case ''://product-page
+				var sql = 'select name, desc_1, desc_2, content, image, link from products where product_id=\''+obj+'\'';
+
+				$(document).one('get:content', function (event) {
+					var tmpl = Handlebars.compile($('#product_template').html());
+
+					var prod_html = tmpl(eval("(" + event.data.item(0).value + ')'));
+					$('[data-screen=product-page]').html(prod_html);
+					$('a.next').one('click',app.onNext);
+					$('a.back').one('click',app.onBack);
+				});
+
+				app.dal.getRows(sql, 'get:content');
+
+				break;
 			default:
 				break;
 		}
 	},
 	moveScr: function(from, to, direction) {
-        var percent = {'next':[-10,0],'back':[100,0]};
+		var percent = {'next':[-10,0],'back':[100,0]};
 
 		to.show();
 /*		to.addClass('current');
@@ -172,9 +227,6 @@ var app = {
 	},
 	renderTemplates: function() {
 		// Temporary function to init basic content
-
-
-
 		if (!qtn_tmpl) {
 			var qtn_ctx = {title:'Task Based',
 				question:'Do you need data logging capability for later analysis?',
@@ -206,8 +258,6 @@ app.dal.open();
 app.initialize();
 
 $(function(){
-
-
 	$('a.det-icon, a.pro-icon, a.com-icon').click(function(){
 		$('nav.main-nav').show();
 	});
@@ -216,8 +266,8 @@ $(function(){
 		$('nav.main-nav').hide();
 	});
 
-//Open Browse functionality
-$('a.open-browse').click(function(){
+	//Open Browse functionality
+	$('a.open-browse').click(function(){
 		var buttonBackground = $(this).parent('li');
 		var underSlide = $('.browse').siblings('.current');
 
@@ -226,87 +276,87 @@ $('a.open-browse').click(function(){
 		$('.browse').toggle();
 		$('.browse .browse-active').toggle();
 		$(underSlide).toggle();
-});
-
-//Browse next functionality
-$('a.browse-next').click(function(){
-			var oldSlide = $(this).parents('.pane');
-			var newSlide = $(oldSlide).next('.pane');
-
-			$(newSlide).show();
-			$(newSlide).addClass('browse-active');
-			$(oldSlide).removeClass('browse-active');
-			$(oldSlide).animate({
-				left:'-100%'
-			}, 250, 'cubic-bezier(0, 0, 0.20, 1)', function() {
-				$(oldSlide).hide();
-				});
-			$(newSlide).animate({
-				left:'0%'
-			}, 250, 'cubic-bezier(0, 0, 0.20, 1)');
-});
-
-//Browse back functionality
-$('a.back-pane').click(function(){
-				var oldSlide = $(this).parents('.pane');
-				var newSlide = $(oldSlide).prev('.pane');
-
-				$(newSlide).show();
-				$(newSlide).addClass('browse-active');
-				$(oldSlide).removeClass('browse-active');
-				$(newSlide).animate({
-					left:'0%'
-				}, 250, 'cubic-bezier(0, 0, 0.20, 1)');
-
-				$(oldSlide).animate({
-				left:'100%'
-				}, 250, 'cubic-bezier(0, 0, 0.20, 1)',function() {
-					$(oldSlide).hide();
-				});
-			});
-
-//Open product page
-$('a.open-product').click(function(){
-			var parentSection = $(this).parents('.screen');
-			var productSection = $(parentSection).siblings('.product-page');
-			var otherSlides = $(productSection).siblings('.detection');
-
-			$(productSection).show();
-			$(productSection).addClass('current');
-			$(otherSlides).removeClass('current');
-			$(otherSlides).hide();
-			$(productSection).css({left:0});
-			$(parentSection).hide();
-			$('.pane').hide();
-			$('li.active-nav').removeClass('active-nav');
-		});
-
-//Back up to Select Assessment Page
-
-$('a.open-assessments').click(function(){
-			$('.select-assess').css({left:0});
-			$('.after-assess').css({left:'100%'});
-			$('.after-assess').removeClass('current');
-			$('.category-intro').css({left:'-10%'});
-			$('.select-assess').show();
-			$('.category-intro').hide();
-			$('.after-assess').hide();
-			$('category-intro').removeClass('current');
-			$('.select-assess').addClass('current');
-			$('.browse').hide();
-			$('li.active-nav').removeClass('active-nav');
 	});
 
-$('a.home').click(function(){
-			var openSib = $('.opening').siblings('.detection');
+	//Browse next functionality
+	$('a.browse-next').click(function(){
+		var oldSlide = $(this).parents('.pane');
+		var newSlide = $(oldSlide).next('.pane');
 
-			$('.opening').css({left:0});
-			$('.opening').show();
-			$(openSib).css({left:'100%'});
-			$(openSib).removeClass('current');
-			$(openSib).hide();
-			$('.browse').hide();
-			$('li.active-nav').removeClass('active-nav');
-			$('.main-nav').hide();
+		$(newSlide).show();
+		$(newSlide).addClass('browse-active');
+		$(oldSlide).removeClass('browse-active');
+		$(oldSlide).animate({
+			left:'-100%'
+		}, 250, 'cubic-bezier(0, 0, 0.20, 1)', function() {
+			$(oldSlide).hide();
+			});
+		$(newSlide).animate({
+			left:'0%'
+		}, 250, 'cubic-bezier(0, 0, 0.20, 1)');
+	});
+
+	//Browse back functionality
+	$('a.back-pane').click(function(){
+		var oldSlide = $(this).parents('.pane');
+		var newSlide = $(oldSlide).prev('.pane');
+
+		$(newSlide).show();
+		$(newSlide).addClass('browse-active');
+		$(oldSlide).removeClass('browse-active');
+		$(newSlide).animate({
+			left:'0%'
+		}, 250, 'cubic-bezier(0, 0, 0.20, 1)');
+
+		$(oldSlide).animate({
+		left:'100%'
+		}, 250, 'cubic-bezier(0, 0, 0.20, 1)',function() {
+			$(oldSlide).hide();
+		});
+	});
+
+	//Open product page
+	$('a.open-product').click(function(){
+		var parentSection = $(this).parents('.screen');
+		var productSection = $(parentSection).siblings('.product-page');
+		var otherSlides = $(productSection).siblings('.detection');
+
+		$(productSection).show();
+		$(productSection).addClass('current');
+		$(otherSlides).removeClass('current');
+		$(otherSlides).hide();
+		$(productSection).css({left:0});
+		$(parentSection).hide();
+		$('.pane').hide();
+		$('li.active-nav').removeClass('active-nav');
+	});
+
+	//Back up to Select Assessment Page
+
+	$('a.open-assessments').click(function(){
+		$('.select-assess').css({left:0});
+		$('.after-assess').css({left:'100%'});
+		$('.after-assess').removeClass('current');
+		$('.category-intro').css({left:'-10%'});
+		$('.select-assess').show();
+		$('.category-intro').hide();
+		$('.after-assess').hide();
+		$('category-intro').removeClass('current');
+		$('.select-assess').addClass('current');
+		$('.browse').hide();
+		$('li.active-nav').removeClass('active-nav');
+	});
+
+	$('a.home').click(function(){
+		var openSib = $('.opening').siblings('.detection');
+
+		$('.opening').css({left:0});
+		$('.opening').show();
+		$(openSib).css({left:'100%'});
+		$(openSib).removeClass('current');
+		$(openSib).hide();
+		$('.browse').hide();
+		$('li.active-nav').removeClass('active-nav');
+		$('.main-nav').hide();
 	});
 });
