@@ -12,24 +12,27 @@ var app = {
 	},
 	dal: {
 		open: function() {
-			app.dal.db = window.openDatabase(
-				'products.db',
-				'1.0',
-				'products',
-				1000000
-			);
+			if (!app.dal.db)
+                app.dal.db = window.openDatabase(
+                    'products.db',
+                    '1.0',
+                    'products',
+                    1000000
+                );
 		},
 		error: function(err) {
 			console.log(err.message);
 			return null;
 		},
 		getRows: function(sql, id){
+            console.log('in getRows');
 			app.dal.db.transaction(
 				function(tx){
 					tx.executeSql(
 						sql,
 						[],
 						function(tx, results) {
+                            console.log('got results');
 							app.dal.results = results.rows;
 							$(document.body).trigger(id, results.rows);
 						},
@@ -41,136 +44,212 @@ var app = {
 		}
 	},
 	history: [],
+    templates: [],
 	screens: [
 		'montage',
-		'category-intro',
+		'cat-intro',
 		'select-assess',
-		'assessment-intro',
+		'assess-intro',
 		'question-container',
 		'product-page'
 	],
-	initialize: function() {
-		this.renderTemplates();
-		$('.montage').siblings('.screen').hide();
-		app.dal.open();
-		$('a.next').one('click',app.onNext);
-		$('a.back').one('click',app.onBack);
+    assessment: {
+        questions: [],
+        answers: [],
+        question_answered: function() {
+            console.log('In question_answered');
 
-		document.addEventListener('deviceready', this.events.onDeviceReady, false);
-		document.addEventListener('online', this.events.onOnline, false);
-		document.addEventListener('offline', this.events.onOffline, false);
-	},
-	onNext: function() {
-		// TODO: Generalize onNext & onBack into one function
-		var curScr = $(this).parents('.screen');
-		var curScrNm = curScr.data('screen');
+            // Determine answer and route user to next screen {question, product}
+            var question_id = $(this).data('question-id');
+            var answer_id = $(this).data('answer-id');
+            var node_type = $(this).data('node-type');
+            var node_id = $(this).data('node-id');
 
-		var nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + 1];
-		var nxtScr = $('[data-screen=' + nxtScrNm +']');
+            console.log('question_id:'+question_id);
+            console.log('answer_id:'+answer_id);
 
-		var obj = $(this).data('subitem');
-		if (!obj) {
-			obj = '';
-		}
-		else {
-			obj = obj.toLowerCase().replace(' ','-');
-		}
+            var question;
+            for (var i = 0; i < app.assessment.questions.length; i++) {
+                console.log('i:'+i);
+                console.log('id:'+app.assessment.questions[i].question_id);
 
-		var toPush = curScrNm;
-		if (!obj == '') {
-			toPush += obj;
-		}
+                if (app.assessment.questions[i].question_id == question_id) {
+                    console.log('found question');
+                    question = app.assessment.questions[i];
+                    for (var j = 0; j < question.answers.length; j++) {
+                        if (question.answers[j].id == answer_id) {
+                            console.log('found answer');
+                            question.answer = question.answers[j];
+                        }
+                    }
+                    app.assessment.answers.push(question);
+                    app.assessment.questions.splice(i, 1);
+                    break;
+                }
+            }
 
-		app.history.push(toPush);
-		app.rndrCont(nxtScrNm, obj);
-		app.moveScr(curScr, nxtScr, 'next');
-	},
-	onBack: function() {
-		// TODO: Generalize onNext & onBack into one function
-		var curScr = $(this).parents('.screen');
-		var curScrNm = curScr.data('screen');
 
-		var nxtScrNm = app.screens[app.screens.indexOf(curScrNm) - 1];
-		var nxtScr = $('[data-screen=' + nxtScrNm +']');
+            app.rndrCont('question-container', null);
 
-		var obj = $(this).data('subitem');
-		if (!obj) {
-			obj = '';
-		}
-		else {
-			obj = obj.toLowerCase().replace(' ','-');
-		}
+            // if type = question, go to next question
+            // if type = product, go to product
 
-		app.history.pop()
-		app.rndrCont(nxtScrNm, obj);
-		app.moveScr(curScr, nxtScr, 'back');
-	},
+        },
+        getNextQuestion: function() {
+            //if (app.assessment.answers == []) {
+                return app.assessment.questions[0];
+            //}
+
+        }
+    },
+    cacheQuestions: function(assessment) {
+        // TODO: Consider creating a tree instead of an array
+        app.assessment.questions = [];
+        app.assessment.answers = [];
+
+        var sql = 'select q.question_id, q.question_text, group_concat(a.answer_id) answer_ids, ' +
+            'group_concat(a.answer_text) answer_texts, group_concat(a.node_type) node_types, ' +
+            'group_concat(a.node_id) node_ids from questions q left join answers a on q.question_id=a.question_id ' +
+            'where q.assessment=\''+assessment+'\' group by q.question_id';
+
+        $(document).one('get:content', function (event) {
+            try{
+                console.log('data:'+event.data.item(0));
+
+                for (var i = 0; i < event.data.length; i++) {
+                    var question = {
+                        question_id:event.data.item(i).question_id,
+                        title:event.data.item(i).title,
+                        question:event.data.item(i).question_text,
+                        description:'',
+                        answers: []
+                    };
+
+                    var ans_ids = event.data.item(i).answer_ids.split(',');
+                    var texts = event.data.item(i).answer_texts.split(',');
+                    var nodes = event.data.item(i).node_types.split(',');
+                    var node_ids_tmp = event.data.item(i).node_ids;
+                    var node_ids = node_ids_tmp?node_ids_tmp.split(','):null;
+
+                    console.log('ids:'+ans_ids);
+                    console.log('texts:'+texts);
+                    console.log('nodes:'+nodes);
+                    console.log('node_ids:'+node_ids);
+
+                    for (var j = 0; j < ans_ids.length; j++) {
+                        console.log('j:'+j);
+
+                        var ans = {
+                            id: ans_ids[j],
+                            text: texts[j],
+                            node_type: nodes[j],
+                            // Make sure node_ids AND node_ids[j] are not null before assignment
+                            node_id: node_ids?node_ids[j]?node_ids[j]:0:0 // TODO: need to handle node 0?
+                        };
+
+                        console.log('answer '+j);
+                        console.log(ans)
+                        question.answers.push(ans);
+                    }
+
+                    console.log('question '+i+':'+question);
+                    app.assessment.questions.push(question);
+                }
+            }
+            catch(err){
+                console.log(err.message);
+            }
+        });
+
+        console.log('sql:'+sql);
+        app.dal.getRows(sql, 'get:content');
+    },
+    initialize: function() {
+        if (!app.dal.db)
+            app.dal.open();
+
+        this.home();
+        this.renderTemplates();
+
+        document.addEventListener('deviceready', this.events.onDeviceReady, false);
+        document.addEventListener('online', this.events.onOnline, false);
+        document.addEventListener('offline', this.events.onOffline, false);
+    },
+    home: function() {
+        app.history = [];
+        $('.montage').siblings('.screen').removeClass('current').hide();
+        $('.montage').addClass('current').css({left:0}).show();
+        $('nav.main-nav').hide();
+        $('a.next,.back').one('click',app.onNav);
+    },
+    onNav: function() {
+        // Determine direction of navigation
+        var dir, inc;
+        if ($(this).hasClass('next')) {
+            dir = 'next';
+            inc = 1;
+        }
+        else if($(this).hasClass('back')) {
+            dir = 'back';
+            inc = -1;
+        }
+        else {
+            return;
+        }
+
+        // Determine screen to navigate to
+        var curScr = $(this).parents('.screen');
+        var curScrNm = curScr.data('screen');
+
+        var nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + inc];
+        var nxtScr = $('[data-screen=' + nxtScrNm +']');
+
+        // Get contextual information on the navigation
+        var obj = $(this).data('subitem');
+        if (!obj) {
+            obj = '';
+        }
+        else {
+            obj = obj.toLowerCase().replace(' ','-');
+        }
+
+        // Keep track of the navigation history
+        if (dir == 'next') {
+            var toPush = curScrNm;
+            if (obj != '') {
+                toPush += ':' + obj;
+            }
+
+            app.history.push(toPush);
+
+            // Keep track of the assessment they're using
+            if(curScrNm == 'select-assess')
+                app.assessment.assessment = obj;
+        }
+        else {
+            app.history.pop();
+        }
+
+        // Prepare content and perform transitions
+        app.rndrCont(nxtScrNm, obj);
+        app.moveScr(curScr, nxtScr, dir);
+    },
 	rndrCont: function(scr, obj) {
-		switch (scr) {
-			case 'category-intro':
-				var sql = 'select value from content where screen=\'category-intro\' and key=\'sound-detection\'';
+        console.log('in rndrCont;scr:'+scr+';obj:'+obj);
 
-				// TODO: Generalize the DB access & template rendering
-				$(document).one('get:content', function (event) {
-					// TODO: Check if template has been compiled first
-					var tmpl = Handlebars.compile($('#intro-tmpl').html());
+        // Get the questions ready
+        if (scr == 'assess-intro')
+            app.cacheQuestions(app.assessment.assessment);
 
-					// TODO: Possible security vulnerability here if someone has write access to DB
-					var cat_intro_html = tmpl(eval("(" + event.data.item(0).value + ')'));
-					$('[data-screen=category-intro]').html(cat_intro_html);
-					$('a.next').one('click',app.onNext);
-					$('a.back').one('click',app.onBack);
-				});
-
-				app.dal.getRows(sql, 'get:content');
-				break;
-			case 'select-assess':
-				var sql = 'select value from content where screen=\'select-assess\'';
-
-				$(document).one('get:content', function (event) {
-					var tmpl = Handlebars.compile($('#assessment-template').html());
-					var cat_ass_html = tmpl(eval("(" + event.data.item(0).value + ')'));
-					$('[data-screen=select-assess]').html(cat_ass_html);
-					$('a.next').one('click',app.onNext);
-					$('a.back').one('click',app.onBack);
-				});
-
-				app.dal.getRows(sql, 'get:content');
-				break;
-
-			case 'assessment-intro':
-				app.assessment = obj;
-				var sql = 'select value from content where screen=\'assess-intro\' and key=\''+obj+'\'';
-
-				$(document).one('get:content', function (event) {
-					var tmpl = Handlebars.compile($('#assessment-intro-tmpl').html());
-					var ass_intro_html = tmpl(eval("(" + event.data.item(0).value + ')'));
-					$('[data-screen=assessment-intro]').html(ass_intro_html);
-					$('a.next').one('click',app.onNext);
-					$('a.back').one('click',app.onBack);
-				});
-
-				app.dal.getRows(sql, 'get:content');
-
-				break;
-
-			case ''://question-container
+        switch (scr) {
+            case 'question-container':
 				// TODO: Track the questions already answered
-				var sql = 'select question_id, question_text from questions where assessment=\''+app.assessment+'\'';
+                var tmpl = Handlebars.compile($('#question-tmpl').html());
 
-				$(document).one('get:content', function (event) {
-					var tmpl = Handlebars.compile($('#question-tmpl').html());
-					// TODO: Create JSON from query results
-					// TODO: SELECT answers
-
-					var qtn_html = tmpl(eval("(" + event.data.item(0).value + ')'));
-					$('[data-screen=question-container]').html(qtn_html);
-					$('a.next').one('click',app.onNext);
-					$('a.back').one('click',app.onBack);
-				});
-
-				app.dal.getRows(sql, 'get:content');
-
+                var qtn_html = tmpl(app.assessment.getNextQuestion());
+                $('[data-screen=question-container]').html(qtn_html);
+                $('a.back').one('click',app.onNav);
+                $('a.answer').one('click', app.assessment.question_answered);
 				break;
 
 			case ''://product-page
@@ -181,14 +260,31 @@ var app = {
 
 					var prod_html = tmpl(eval("(" + event.data.item(0).value + ')'));
 					$('[data-screen=product-page]').html(prod_html);
-					$('a.next').one('click',app.onNext);
-					$('a.back').one('click',app.onBack);
+                    $('a.next,.back').one('click',app.onNav);
 				});
 
 				app.dal.getRows(sql, 'get:content');
 
 				break;
 			default:
+                var content = {
+                    'cat-intro':'select value from content where screen=\'cat-intro\' and key=\'sound-detection\'',
+                    'select-assess':'select value from content where screen=\'select-assess\'',
+                    'assess-intro':'select value from content where screen=\'assess-intro\' and key=\''+obj+'\''
+                };
+
+                $(document).one('get:content', function (event) {
+                    // TODO: figure out a way to cache the templates or precompile them
+                    var tmpl =  Handlebars.compile($('#'+scr+'-tmpl').html());
+                    // Possible security vulnerability here if someone has write access to DB
+                    var html = tmpl(eval("(" + event.data.item(0).value + ')'));
+                    $('[data-screen='+scr+']').html(html);
+                    $('a.next,.back').one('click',app.onNav);
+                });
+
+                console.log('sql:'+content[scr]);
+                app.dal.getRows(content[scr], 'get:content');
+
 				break;
 		}
 	},
@@ -196,9 +292,9 @@ var app = {
 		var percent = {'next':[-10,0],'back':[100,0]};
 
 		to.show();
-/*		to.addClass('current');
+		to.addClass('current');
+		from.removeClass('current');
 
-		from.removeClass('current');*/
 		from.animate(
 			{left:percent[direction][0]+'%'},
 			250,
@@ -216,9 +312,24 @@ var app = {
 				to.show();
 			}
 		);
+
+        $('a.next,.back').one('click',app.onNav);
+
+        if (to.data('screen') != 'montage')
+            $('nav.main-nav').show();
+        else
+            $('nav.main-nav').hide();
 	},
+    getTemplate: function(name) {
+        console.log('in getTemplate;name:'+name);
+        console.log('tmpl:'+app.templates[name]);
+
+
+        if (!app.templates[name])
+           app.templates[name] = app.compileTemplate(name);
+        return app.templates[name];
+    },
 	compileTemplate: function(templateId) {
-		// Stub for compiling templates
 		// Should we precompile the templates so we don't have to do it at runtime?
 		return Handlebars.compile($('#' + templateId).html());
 	},
@@ -227,7 +338,7 @@ var app = {
 	},
 	renderTemplates: function() {
 		// Temporary function to init basic content
-		if (!qtn_tmpl) {
+/*		if (!qtn_tmpl) {
 			var qtn_ctx = {title:'Task Based',
 				question:'Do you need data logging capability for later analysis?',
 				description:'Choose yes if you want to retrieve, download, share and save instrument data with 3M™ Detection Management Software DMS.',
@@ -236,7 +347,7 @@ var app = {
 			var qtn_html = qtn_tmpl(qtn_ctx);
 
 			$('[data-screen=question-container]').html(qtn_html);
-		}
+		}*/
 
 		if (!prod_tmpl) {
 			var prod_ctx = {model:'SD-200',name:'3M™ Sound Detector SD-200',
@@ -258,13 +369,13 @@ app.dal.open();
 app.initialize();
 
 $(function(){
-	$('a.det-icon, a.pro-icon, a.com-icon').click(function(){
+/*	$('a.det-icon, a.pro-icon, a.com-icon').click(function(){
 		$('nav.main-nav').show();
 	});
 
 	$('a.main-page').click(function(){
 		$('nav.main-nav').hide();
-	});
+	});*/
 
 	//Open Browse functionality
 	$('a.open-browse').click(function(){
@@ -335,28 +446,17 @@ $(function(){
 
 	$('a.open-assessments').click(function(){
 		$('.select-assess').css({left:0});
-		$('.after-assess').css({left:'100%'});
-		$('.after-assess').removeClass('current');
-		$('.category-intro').css({left:'-10%'});
+		//$('.after-assess').css({left:'100%'});
+		//$('.after-assess').removeClass('current');
+		$('.cat-intro').css({left:'-10%'});
 		$('.select-assess').show();
-		$('.category-intro').hide();
-		$('.after-assess').hide();
-		$('category-intro').removeClass('current');
+		$('.cat-intro').hide();
+		//$('.after-assess').hide();
+		$('cat-intro').removeClass('current');
 		$('.select-assess').addClass('current');
 		$('.browse').hide();
 		$('li.active-nav').removeClass('active-nav');
 	});
 
-	$('a.home').click(function(){
-		var openSib = $('.opening').siblings('.detection');
 
-		$('.opening').css({left:0});
-		$('.opening').show();
-		$(openSib).css({left:'100%'});
-		$(openSib).removeClass('current');
-		$(openSib).hide();
-		$('.browse').hide();
-		$('li.active-nav').removeClass('active-nav');
-		$('.main-nav').hide();
-	});
 });

@@ -12,6 +12,7 @@ body {
 }
 
 section {
+    top: 0px;
 	width: 100%;
 	height:auto;
 	position: absolute;
@@ -25,7 +26,7 @@ section {
 ul {
 	padding: 0;
 	margin: 0;
-	
+
 }
 
 ul li {
@@ -71,7 +72,7 @@ nav ul li a{
 	text-decoration: none;
 	width: 100%;
 	padding-top: 3.5em;
-	
+
 }
 
 nav ul li a.home{
@@ -103,7 +104,7 @@ nav.cat-nav {
 	border-top: none;
 	background-color: #ffffff;
 	height: 5.938em;
-	
+
 }
 
 nav.cat-nav ul {
@@ -257,6 +258,8 @@ h4.bolder {
 
 
 header {
+    top: 0px;
+    left: 0px;
 	height:2.75em;
 	border-bottom: 1px solid #d7d7d7;
 	background-color: rgba(255,255,255,0.85);
@@ -487,7 +490,7 @@ img.select-thumb {
 
 .browse-back-arrow {
 	opacity:1;
-	
+
 }
 
 
@@ -501,7 +504,7 @@ img.select-thumb {
 	background-size: 35% auto;
 	background-position: center top;
 	color: #FFFFFF;
-	
+
 }
 
 

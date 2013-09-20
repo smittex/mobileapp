@@ -1,2 +1,2 @@
-/home/bryan/dev/pg-tests/platforms/android/bin/AndroidManifest.xml : \
-/home/bryan/dev/pg-tests/platforms/android/AndroidManifest.xml \
+/home/bryan/dev/mobileapp/platforms/android/bin/AndroidManifest.xml : \
+/home/bryan/dev/mobileapp/platforms/android/AndroidManifest.xml \
