@@ -159,7 +159,6 @@
 				</ul>
 			</article>
 		</div>
-
 	</section>
 	<!-- Browse end -->
 
@@ -253,7 +252,7 @@
                 <ul>
                     <!-- TODO: alternate the class -->
                     {{#each answers}}
-                    <li class="option1"><a class="answer" data-question-id="{{../question_id}}" data-answer-id="{{id}}" data-node-type="{{node_type}}" data-node-id="{{node_id}}">{{text}}</a></li>
+                    <li><a class="answer" data-question-id="{{../question_id}}" data-answer-id="{{id}}" data-node-type="{{node_type}}" data-node-id="{{node_id}}">{{text}}</a></li>
                     {{/each}}
                 </ul>
             </div>
@@ -267,7 +266,7 @@
         </article>
     </script>
 
-    <script id="product_template" type="text/x-handlebars-template">
+    <script id="product-page-tmpl" type="text/x-handlebars-template">
         <header>
             <div class="nav-back">
                 <a class="back"><img src="img/back_arrow.png" /></a>
@@ -277,16 +276,14 @@
 
         <article class="contents-wrap">
             <div class="full-width">
-                <img src="img/sd-200_phone.png" />
+                <img src="img/{{image}}" />
             </div>
-
             <h2 class="product-name">{{name}}</h2>
             <h3 class="sub-head">{{{subhead}}}</h3>
             <div class="copy-wrap product-desc">
                 {{{description}}}
             </div>
-            <a href="http://solutions.3m.com/wps/portal/3M/en_US/3M-PPE-Safety-Solutions/Personal-Protective-Equipment/Products/Product-Catalog/~/3M-Sound-Detector-SD-200-Kit-USB-Cable-Windscreen-1-Kit-Case?N=4294695233+5011378&&Nr=AND%28hrcy_id%3AFBK4BV6W8Zgs_KV91B300S9_N2RL3FHWVK_GPD0K8BC31gv%29&rt=d"
-                class="select-button green">
+            <a href="{{link}}" class="select-button green">
                 More Information
                 <img class="right-arrow" src="img/right_arrow.png" />
             </a>

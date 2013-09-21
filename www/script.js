@@ -56,9 +56,21 @@ var app = {
     assessment: {
         questions: [],
         answers: [],
+        getQuestionById: function(id) {
+            for (var i = 0; i < app.assessment.questions.length; i++) {
+               if (app.assessment.questions[i].question_id == id)
+                    return app.assessment.questions[i];
+            }
+            return null;
+        },
+        getAnswerById: function(question, id) {
+            for (var i = 0; i < question.answers.length; i++) {
+                if (question.answers[i].id == id)
+                    return question.answers[i];
+            }
+            return null;
+        },
         question_answered: function() {
-            console.log('In question_answered');
-
             // Determine answer and route user to next screen {question, product}
             var question_id = $(this).data('question-id');
             var answer_id = $(this).data('answer-id');
@@ -67,102 +79,100 @@ var app = {
 
             console.log('question_id:'+question_id);
             console.log('answer_id:'+answer_id);
-
-            var question;
-            for (var i = 0; i < app.assessment.questions.length; i++) {
-                console.log('i:'+i);
-                console.log('id:'+app.assessment.questions[i].question_id);
-
-                if (app.assessment.questions[i].question_id == question_id) {
-                    console.log('found question');
-                    question = app.assessment.questions[i];
-                    for (var j = 0; j < question.answers.length; j++) {
-                        if (question.answers[j].id == answer_id) {
-                            console.log('found answer');
-                            question.answer = question.answers[j];
-                        }
-                    }
-                    app.assessment.answers.push(question);
-                    app.assessment.questions.splice(i, 1);
-                    break;
+            try {
+                var question = app.assessment.getQuestionById(question_id);
+                if (question != null) {
+                    question.answer = app.assessment.getAnswerById(question, answer_id);
                 }
-            }
-
-
-            app.rndrCont('question-container', null);
-
-            // if type = question, go to next question
-            // if type = product, go to product
-
-        },
-        getNextQuestion: function() {
-            //if (app.assessment.answers == []) {
-                return app.assessment.questions[0];
-            //}
-
-        }
-    },
-    cacheQuestions: function(assessment) {
-        // TODO: Consider creating a tree instead of an array
-        app.assessment.questions = [];
-        app.assessment.answers = [];
-
-        var sql = 'select q.question_id, q.question_text, group_concat(a.answer_id) answer_ids, ' +
-            'group_concat(a.answer_text) answer_texts, group_concat(a.node_type) node_types, ' +
-            'group_concat(a.node_id) node_ids from questions q left join answers a on q.question_id=a.question_id ' +
-            'where q.assessment=\''+assessment+'\' group by q.question_id';
-
-        $(document).one('get:content', function (event) {
-            try{
-                console.log('data:'+event.data.item(0));
-
-                for (var i = 0; i < event.data.length; i++) {
-                    var question = {
-                        question_id:event.data.item(i).question_id,
-                        title:event.data.item(i).title,
-                        question:event.data.item(i).question_text,
-                        description:'',
-                        answers: []
-                    };
-
-                    var ans_ids = event.data.item(i).answer_ids.split(',');
-                    var texts = event.data.item(i).answer_texts.split(',');
-                    var nodes = event.data.item(i).node_types.split(',');
-                    var node_ids_tmp = event.data.item(i).node_ids;
-                    var node_ids = node_ids_tmp?node_ids_tmp.split(','):null;
-
-                    console.log('ids:'+ans_ids);
-                    console.log('texts:'+texts);
-                    console.log('nodes:'+nodes);
-                    console.log('node_ids:'+node_ids);
-
-                    for (var j = 0; j < ans_ids.length; j++) {
-                        console.log('j:'+j);
-
-                        var ans = {
-                            id: ans_ids[j],
-                            text: texts[j],
-                            node_type: nodes[j],
-                            // Make sure node_ids AND node_ids[j] are not null before assignment
-                            node_id: node_ids?node_ids[j]?node_ids[j]:0:0 // TODO: need to handle node 0?
-                        };
-
-                        console.log('answer '+j);
-                        console.log(ans)
-                        question.answers.push(ans);
-                    }
-
-                    console.log('question '+i+':'+question);
-                    app.assessment.questions.push(question);
-                }
-            }
-            catch(err){
+            } catch (err) {
                 console.log(err.message);
             }
-        });
 
-        console.log('sql:'+sql);
-        app.dal.getRows(sql, 'get:content');
+            console.log(question);
+            app.assessment.answers.push(question);
+
+            if (question.answer.node_type == 'question') {
+                app.rndrCont('question-container', null);
+            }
+            else if (question.answer.node_type == 'product') {
+                console.log('go to product');
+                app.rndrCont('product-page', question.answer.node_id);
+            }
+        },
+        getNextQuestion: function() {
+            console.log('getting next question');
+            if (!app.assessment.answers.length) {
+                console.log('no answers');
+                return app.assessment.questions[0];
+            }
+            console.log('returning next node');
+            var question_id = app.assessment.answers[app.assessment.answers.length - 1].answer.node_id;
+            console.log('next question:' + question_id);
+            return app.assessment.getQuestionById(question_id);
+        },
+        cacheQuestions: function(assessment) {
+            // TODO: Consider creating a tree instead of an array
+            // TODO: Also, Consider putting this in the DAL
+            app.assessment.questions = [];
+            app.assessment.answers = [];
+
+            var sql = 'select q.question_id, q.question_text, group_concat(a.answer_id) answer_ids, ' +
+                'group_concat(a.answer_text) answer_texts, group_concat(a.node_type) node_types, ' +
+                'group_concat(a.node_id) node_ids from questions q left join answers a on q.question_id=a.question_id ' +
+                'where q.assessment=\''+assessment+'\' group by q.question_id';
+
+            $(document).one('get:content', function (event) {
+                try{
+                    console.log('data:'+event.data.item(0));
+
+                    for (var i = 0; i < event.data.length; i++) {
+                        var question = {
+                            question_id:event.data.item(i).question_id,
+                            title:event.data.item(i).title,
+                            question:event.data.item(i).question_text,
+                            description:'',
+                            answers: []
+                        };
+
+                        var ans_ids = event.data.item(i).answer_ids.split(',');
+                        var texts = event.data.item(i).answer_texts.split(',');
+                        var nodes = event.data.item(i).node_types.split(',');
+                        var node_ids_tmp = event.data.item(i).node_ids;
+                        var node_ids = node_ids_tmp?node_ids_tmp.split(','):null;
+
+                        console.log('ids:'+ans_ids);
+                        console.log('texts:'+texts);
+                        console.log('nodes:'+nodes);
+                        console.log('node_ids:'+node_ids);
+
+                        for (var j = 0; j < ans_ids.length; j++) {
+                            console.log('j:'+j);
+
+                            var ans = {
+                                id: ans_ids[j],
+                                text: texts[j],
+                                node_type: nodes[j],
+                                // Make sure node_ids AND node_ids[j] are not null before assignment
+                                node_id: node_ids?node_ids[j]?node_ids[j]:0:0 // TODO: need to handle node 0?
+                            };
+
+                            console.log('answer '+j);
+                            console.log(ans)
+                            question.answers.push(ans);
+                        }
+
+                        console.log('question '+i+':'+question);
+                        app.assessment.questions.push(question);
+                    }
+                }
+                catch(err) {
+                    console.log(err.message);
+                }
+            });
+
+            console.log('sql:'+sql);
+            app.dal.getRows(sql, 'get:content');
+        }
     },
     initialize: function() {
         if (!app.dal.db)
@@ -183,6 +193,12 @@ var app = {
         $('a.next,.back').one('click',app.onNav);
     },
     onNav: function() {
+        // Determine Category
+        if ($(this).hasClass('det-icon'))
+            app.category = 'detection';
+        else if ($(this).hasClass('pro-icon'))
+            app.category = 'protection';
+
         // Determine direction of navigation
         var dir, inc;
         if ($(this).hasClass('next')) {
@@ -193,9 +209,8 @@ var app = {
             dir = 'back';
             inc = -1;
         }
-        else {
+        else
             return;
-        }
 
         // Determine screen to navigate to
         var curScr = $(this).parents('.screen');
@@ -206,29 +221,28 @@ var app = {
 
         // Get contextual information on the navigation
         var obj = $(this).data('subitem');
-        if (!obj) {
+        if (!obj)
             obj = '';
-        }
-        else {
+        else
             obj = obj.toLowerCase().replace(' ','-');
-        }
 
         // Keep track of the navigation history
         if (dir == 'next') {
             var toPush = curScrNm;
-            if (obj != '') {
+            if (obj != '')
                 toPush += ':' + obj;
-            }
-
             app.history.push(toPush);
 
             // Keep track of the assessment they're using
             if(curScrNm == 'select-assess')
                 app.assessment.assessment = obj;
         }
-        else {
+        else
             app.history.pop();
-        }
+
+        // Add the correct class
+        // TODO: This does not work on the product page because it's not routed through here
+        nxtScr.removeClass('protection').removeClass('detection').addClass(app.category);
 
         // Prepare content and perform transitions
         app.rndrCont(nxtScrNm, obj);
@@ -237,13 +251,8 @@ var app = {
 	rndrCont: function(scr, obj) {
         console.log('in rndrCont;scr:'+scr+';obj:'+obj);
 
-        // Get the questions ready
-        if (scr == 'assess-intro')
-            app.cacheQuestions(app.assessment.assessment);
-
         switch (scr) {
             case 'question-container':
-				// TODO: Track the questions already answered
                 var tmpl = Handlebars.compile($('#question-tmpl').html());
 
                 var qtn_html = tmpl(app.assessment.getNextQuestion());
@@ -252,27 +261,52 @@ var app = {
                 $('a.answer').one('click', app.assessment.question_answered);
 				break;
 
-			case ''://product-page
-				var sql = 'select name, desc_1, desc_2, content, image, link from products where product_id=\''+obj+'\'';
+            case 'product-page':
+                var sql = 'select name, model, subhead, description, image, link from products where product_id=\''+obj+'\'';
 
-				$(document).one('get:content', function (event) {
-					var tmpl = Handlebars.compile($('#product_template').html());
 
-					var prod_html = tmpl(eval("(" + event.data.item(0).value + ')'));
-					$('[data-screen=product-page]').html(prod_html);
-                    $('a.next,.back').one('click',app.onNav);
-				});
+                $(document).one('get:content', function (event) {
+                    console.log('creating product');
+                    try {
+                        var product = {
+                            name: event.data.item(0).name,
+                            model: event.data.item(0).model,
+                            subhead: event.data.item(0).subhead,
+                            description: event.data.item(0).description,
+                            image: event.data.item(0).image,
+                            link: event.data.item(0).link
+                        };
+                        console.log('bout to compile template');
+                        var tmpl = Handlebars.compile($('#product-page-tmpl').html());
+                        // Possible security vulnerability here if someone has write access to DB
+                        console.log('bout to render html');
 
-				app.dal.getRows(sql, 'get:content');
+                        var html = tmpl(product);
+                        $('[data-screen=product-page]').html(html);
+                        $('a.next,.back').one('click', app.onNav);
 
-				break;
+                        app.moveScr($('[data-screen=question-container]'),$('[data-screen=product-page]'), 'next');
+                    } catch (err) {
+                        console.log(err.message);
+                    }
+                });
+
+                console.log('sql:' + sql);
+                app.dal.getRows(sql, 'get:content');
+
+                break;
 			default:
+                // Get the questions ready
+                if (scr == 'assess-intro')
+                    app.assessment.cacheQuestions(app.assessment.assessment);
+
                 var content = {
                     'cat-intro':'select value from content where screen=\'cat-intro\' and key=\'sound-detection\'',
                     'select-assess':'select value from content where screen=\'select-assess\'',
                     'assess-intro':'select value from content where screen=\'assess-intro\' and key=\''+obj+'\''
                 };
 
+                try{
                 $(document).one('get:content', function (event) {
                     // TODO: figure out a way to cache the templates or precompile them
                     var tmpl =  Handlebars.compile($('#'+scr+'-tmpl').html());
@@ -281,7 +315,7 @@ var app = {
                     $('[data-screen='+scr+']').html(html);
                     $('a.next,.back').one('click',app.onNav);
                 });
-
+                }catch(err){console.log(err.message);}
                 console.log('sql:'+content[scr]);
                 app.dal.getRows(content[scr], 'get:content');
 
@@ -324,7 +358,6 @@ var app = {
         console.log('in getTemplate;name:'+name);
         console.log('tmpl:'+app.templates[name]);
 
-
         if (!app.templates[name])
            app.templates[name] = app.compileTemplate(name);
         return app.templates[name];
@@ -337,19 +370,7 @@ var app = {
 		// Stub for rendering data in a template
 	},
 	renderTemplates: function() {
-		// Temporary function to init basic content
-/*		if (!qtn_tmpl) {
-			var qtn_ctx = {title:'Task Based',
-				question:'Do you need data logging capability for later analysis?',
-				description:'Choose yes if you want to retrieve, download, share and save instrument data with 3M™ Detection Management Software DMS.',
-				answer_1_text:'Yes',answer_2_text:'No'};
-			var qtn_tmpl = Handlebars.compile($('#question-tmpl').html());
-			var qtn_html = qtn_tmpl(qtn_ctx);
-
-			$('[data-screen=question-container]').html(qtn_html);
-		}*/
-
-		if (!prod_tmpl) {
+/*		if (!prod_tmpl) {
 			var prod_ctx = {model:'SD-200',name:'3M™ Sound Detector SD-200',
 				subhead:'A value driven sound detection solution.',
 				description:'<h3>User friendly</h3><p>Simple four-button navigation to perform all functions and ' +
@@ -361,7 +382,7 @@ var app = {
 			var prod_html = prod_tmpl(prod_ctx);
 
 			$('[data-screen=product-page]').html(prod_html);
-		}
+		}*/
 	}
 };
 
