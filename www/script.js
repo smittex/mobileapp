@@ -116,7 +116,7 @@ var app = {
             app.assessment.questions = [];
             app.assessment.answers = [];
 
-            var sql = 'select q.question_id, q.question_text, group_concat(a.answer_id) answer_ids, ' +
+            var sql = 'select q.question_id, q.question_text, q.description, group_concat(a.answer_id) answer_ids, ' +
                 'group_concat(a.answer_text) answer_texts, group_concat(a.node_type) node_types, ' +
                 'group_concat(a.node_id) node_ids from questions q left join answers a on q.question_id=a.question_id ' +
                 'where q.assessment=\''+assessment+'\' group by q.question_id';
@@ -130,7 +130,7 @@ var app = {
                             question_id:event.data.item(i).question_id,
                             title:event.data.item(i).title,
                             question:event.data.item(i).question_text,
-                            description:'',
+                            description:event.data.item(i).description,
                             answers: []
                         };
 
