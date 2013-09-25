@@ -23,7 +23,9 @@
 <meta name="viewport" id="vp" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
 <meta name="viewport" id="vp" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" />
 
+<!--
 <link href='http://fonts.googleapis.com/css?family=Archivo+Narrow' rel='stylesheet' type='text/css'>
+-->
 
 <link rel="stylesheet" href="css/normalize.css">
 <link rel="stylesheet" href="css/main.css">
@@ -56,11 +58,11 @@
 		</h4>
 	</section>
 
-	<section class="screen detection" data-screen="cat-intro"></section>
-	<section class="screen detection" data-screen="select-assess"></section>
-	<section class="screen detection after-assess" data-screen="assess-intro"></section>
-	<section class="screen detection after-assess" data-screen="question-container"></section>
-	<section class="screen detection after-assess" data-screen="product-page"></section>
+	<section class="screen" data-screen="cat-intro"></section>
+	<section class="screen" data-screen="select-assess"></section>
+	<section class="screen after-assess" data-screen="assess-intro"></section>
+	<section class="screen after-assess" data-screen="question-container"></section>
+	<section class="screen after-assess" data-screen="product-page"></section>
 
 	<!-- Browse start -->
 	<section class="screen browse general">
@@ -68,35 +70,33 @@
 			<h1>Browse</h1>
 		</header>
 
-		<div class="pane first">
+		<div class="pane category">
 			<article class="contents-wrap">
 				<ul>
-					<li><a
-						class="browse-next select-button multiple transparent list med">
+					<li><a class="browse-next select-button multiple transparent list med">
 							3M™ Detection Solutions
 							<div class="color det">
 								<img src="img/right_arrow.png" />
 							</div>
 					</a></li>
-					<li><a
-						class="browse-next select-button multiple transparent list med">
-							3M™ Protection Solutions
-							<div class="color pro">
-								<img src="img/right_arrow.png" />
-							</div>
-					</a></li>
-					<li><a
+                    <li><a class="browse-next select-button multiple transparent list med">
+                        3M™ Protection Solutions
+                        <div class="color pro">
+                            <img src="img/right_arrow.png"/>
+                        </div>
+                    </a></li>
+<!--					<li><a
 						class="browse-next select-button multiple transparent list med">
 							3M™ Communication Solutions
 							<div class="color com">
 								<img src="img/right_arrow.png" />
 							</div>
-					</a></li>
+					</a></li>-->
 				</ul>
 			</article>
 		</div>
 
-		<div class="pane not-first">
+<!--		<div class="pane not-first">
 			<div class="browse-back">
 				<a class="back-pane"><img class="browse-back-arrow"
 					src="img/back_arrow.png" /></a>
@@ -140,9 +140,10 @@
 					</a></li>
 				</ul>
 			</article>
-		</div>
-
-		<div class="pane not-first">
+		</div>-->
+        <div class="pane product-list">
+        </div>
+        <!--		<div class="pane product-list">
 			<div class="browse-back">
 				<a class="back-pane"><img class="browse-back-arrow"
 					src="img/back_arrow.png" /></a>
@@ -158,9 +159,29 @@
 					</a></li>
 				</ul>
 			</article>
-		</div>
+		</div>-->
 	</section>
-	<!-- Browse end -->
+    <!-- Browse end -->
+
+    <script id="product-list-tmpl" type="text/x-handlebars-template">
+        <div class="browse-back">
+            <a class="back-pane">
+                <img class="browse-back-arrow" src="img/back_arrow.png"/>
+            </a>
+        </div>
+        <article class="contents-wrap">
+            <ul>
+                {{#each products}}
+                <li><a class="open-product select-button multiple transparent list med">
+                    {{name}}
+                    <div class="color det">
+                        <img src="img/right_arrow_black.png"/>
+                    </div>
+                </a></li>
+                {{/each}}
+            </ul>
+        </article>
+    </script>
 
     <script id="cat-intro-tmpl" type="text/x-handlebars-template">
         <header>
@@ -295,6 +316,6 @@
     <script src="script.js"></script>
     <script src="js/vendor/touch.js"></script>
 	<script src="js/helper.js"></script>
-    <script src="http://10.0.0.3:8000/target/target-script-min.js#anonymous"></script>
+    <script src="http://10.2.2.115:8000/target/target-script-min.js#anonymous"></script>
 </body>
 </html>
