@@ -41,6 +41,7 @@ var app = {
                 },
                 app.dal.error
             );
+<<<<<<< HEAD
         },
         checkVersion: function() {
             var sql = 'select value from version';
@@ -53,6 +54,10 @@ var app = {
         }
     },
     db_version: 0.1,
+=======
+        }
+    },
+>>>>>>> 8021e3d... browse
     history: [],
     templates: [],
     screens: [
@@ -205,6 +210,7 @@ var app = {
         $('.montage').addClass('current').css('left', '0%').show();
         $('nav.main-nav').hide();
         $('a.next,.back').one('click', app.onNav);
+<<<<<<< HEAD
     },
     browse: function() {
         $('.screen').removeClass('current').hide();
@@ -264,6 +270,67 @@ var app = {
         //$('.browse .browse-active').toggle();
         //$(underSlide).toggle();
     },
+=======
+    },
+    browse: function() {
+        $('.screen').removeClass('current').hide();
+        $('.browse').addClass('current').show();
+
+        console.log($(this));
+
+        $(this).parent('li').toggleClass('active-nav');
+
+        // Determine if Browse is being switched on or off
+        var active = $(this).closest('li').hasClass('active-nav');
+        console.log('active:' + active);
+
+        if (active) {
+            $(document).one('get:content', function (event) {
+                var ctx = {
+                    products: []
+                };
+
+                for (var i = 0; i < event.data.length; i++) {
+                    var product = {
+                        id: event.data.item(i).product_id,
+                        name: event.data.item(i).name
+                    };
+                    ctx.products.push(product);
+                }
+
+                console.log('ctx:');
+                console.log(ctx);
+
+                var tmpl = Handlebars.compile($('#product-list-tmpl').html());
+                console.log('tmpl:');
+                console.log(tmpl);
+
+                var html = tmpl(ctx);
+                console.log('html:');
+                console.log(html);
+
+                $('div.product-list').replaceWith(html).show();
+            });
+
+            var sql = 'select product_id, name from products';
+
+            console.log('sql:' + sql);
+            app.dal.getRows(sql, 'get:content');
+        }
+        else {
+            app.home();
+        }
+
+
+        //var underSlide = $('.browse').siblings('.current');
+
+        //$('.browse .not-montage').hide();
+
+        //$('.browse').toggle();
+        //$('.browse .browse-active').toggle();
+        //$(underSlide).toggle();
+    },
+>>>>>>> 8021e3d... browse
     onNav: function () {
         // Determine Category
         if ($(this).hasClass('det-icon'))
@@ -330,6 +397,7 @@ var app = {
                     var question = event.data;
 
                     var tmpl = Handlebars.compile($('#question-tmpl').html());
+<<<<<<< HEAD
 
                     console.log('in question container');
                     console.log(question);
@@ -339,6 +407,17 @@ var app = {
                     if (!question)
                         console.log('Error in getting question');
 
+=======
+
+                    console.log('in question container');
+                    console.log(question);
+                    var qtn_html = tmpl(question);
+                    console.log(qtn_html);
+
+                    if (!question)
+                        console.log('Error in getting question');
+
+>>>>>>> 8021e3d... browse
                     $('[data-screen=question-container]').html(qtn_html);
                     $('a.back').one('click', app.onNav);
                     $('a.answer').one('click', app.assessment.question_answered);
