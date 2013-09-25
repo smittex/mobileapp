@@ -1,9 +1,11 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.example.hello" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.theshinebox.3m" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>3M</name>
     <description>
     </description>
-    <author email="dev@callback.apache.org" href="http://cordova.io">
+    <author email="jessie@theshinebox.com" href="http://www.theshinebox.com/">
+    </author>
+    <author email="bryan.smith@solutiondesign.com" href="http://solutiondesign.com/">
     </author>
     <content src="index.html" />
     <access origin="*" />
