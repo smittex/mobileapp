@@ -102,7 +102,7 @@ nav ul li a.open-browse{
 /*End footer nav styles*/
 
 /*Opening page nav styles*/
-/*nav.cat-nav {
+nav.cat-nav {
 	position: relative;
 	width: 100%;
 	border-top: none;
@@ -117,7 +117,7 @@ nav.cat-nav ul {
 nav.cat-nav ul li {
 	display: inline-block;
 	list-style-type: none;
-	width:100%;
+	/*width:100%;*/
 	padding-top: 0;
 	padding-bottom: 0;
 	height:auto;
@@ -137,21 +137,21 @@ nav.cat-nav ul li a{
 }
 
 nav.cat-nav ul li a.det-icon{
-    background-color: #2d9298;
-	/*background-image: url(img/detection.png);
+    /*background-color: #2d9298;*/
+	background-image: url(img/detection.png);
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-position: center top;*/
+	background-position: center top;
 }
 
 nav.cat-nav ul li a.pro-icon{
-    background-color: #21409a;
-	/*background-image: url(img/protection.png);
+    /*background-color: #21409a;*/
+	background-image: url(img/protection.png);
 	background-repeat: no-repeat;
 	background-size: contain;
-	background-position: center top;*/
+	background-position: center top;
 }
-                           */
+
 /*End opening page nav styles*/
 
 

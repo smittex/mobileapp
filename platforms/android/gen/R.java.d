@@ -1,4 +1,4 @@
-/home/bryan/dev/mobileapp/platforms/android/gen/com/example/hello/R.java \
+/home/bryan/dev/mobileapp/platforms/android/gen/com/theshinebox/threeM/R.java \
  : /home/bryan/dev/mobileapp/platforms/android/res/drawable-xhdpi/icon.png \
 /home/bryan/dev/mobileapp/platforms/android/res/drawable-xhdpi/ic_launcher.png \
 /home/bryan/dev/mobileapp/platforms/android/res/values/strings.xml \
