@@ -33,8 +33,12 @@ var app = {
                         [],
                         function (tx, results) {
                             console.log('got results');
-                            app.dal.results = results.rows;
-                            $(document.body).trigger(id, results.rows);
+                            try {
+                                app.dal.results = results.rows;
+                                $(document.body).trigger(id, results.rows);
+                            } catch(err){
+                                console.log(err.message);
+                            }
                         },
                         app.dal.error
                     );
@@ -281,6 +285,7 @@ var app = {
         console.log('id:'+id);
 
         app.rndrCont('product-page', id);
+        app.moveScr($('.browse'), $('.screen[data-screen=product-page]'), 'next');
     },
     onNav: function () {
         // Determine Category

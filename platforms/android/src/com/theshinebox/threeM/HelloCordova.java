@@ -11,7 +11,7 @@ public class HelloCordova extends DroidGap
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-/*        try
+        try
         {
             String pName = this.getClass().getPackage().getName();
             this.copy("Databases.db","/data/data/"+pName+"/app_database/");
@@ -20,7 +20,7 @@ public class HelloCordova extends DroidGap
         catch (IOException e)
         {
             e.printStackTrace();
-        }*/
+        }
 
         super.onCreate(savedInstanceState);
         // Set by <content src="index.html" /> in config.xml
@@ -28,7 +28,7 @@ public class HelloCordova extends DroidGap
         //super.loadUrl("file:///android_asset/www/index.html")
     }
 
-/*    void copy(String file, String folder) throws IOException
+    void copy(String file, String folder) throws IOException
     {
         File CheckDirectory;
         CheckDirectory = new File(folder);
@@ -44,6 +44,6 @@ public class HelloCordova extends DroidGap
         byte[] buf = new byte[1024];
         int len; while ((len = in.read(buf)) > 0) out.write(buf, 0, len);
         in.close(); out.close();
-    }*/
+    }
 }
 
