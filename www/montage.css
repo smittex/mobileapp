@@ -1,0 +1,139 @@
+.screen {
+	left: 0;
+}
+
+.splash {
+	animation:fadeout 1s;
+	-webkit-animation:fadeout 1s; /* Safari and Chrome */
+	animation-delay:7s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	}
+	
+	@keyframes fadeout
+	{
+	0%   {opacity:1;}
+	100% {opacity:0;}
+	}
+	
+	@-webkit-keyframes myfirst /* Safari and Chrome */
+	{
+	0%   {opacity:1;}
+	100% {opacity:0;}
+	}
+	
+.splash video {
+	margin: 10em auto 0;
+	position: relative;
+	display: block;
+}
+
+.splash h3 {
+	text-align: center;
+}
+	
+
+
+.slogans {
+	width: 100%;
+	position: fixed;
+	bottom:0;
+	padding-bottom: 2em;
+}
+
+h4.bolder {
+    font-size: 1.4em;
+    font-weight: 400;
+    margin: 0.75em 0 0;
+    text-align: center;
+    padding: 0;
+}
+
+h4 {
+    color: #000000;
+    font-family: 'Archivo Narrow',sans-serif;
+    font-size: 1.1em;
+    font-weight: 100;
+    text-align: center;
+    margin: 0;
+}
+
+.opening {
+	animation:fadein 1s;
+	-webkit-animation:fadein 1s; /* Safari and Chrome */
+	animation-delay:7s;
+	-webkit-animation-fill-mode: forwards;
+	animation-fill-mode: forwards;
+	}
+	
+	@keyframes fadein
+	{
+	0%   {opacity:0;}
+	100% {opacity:1;}
+	}
+	
+	@-webkit-keyframes myfirst /* Safari and Chrome */
+	{
+	0%   {opacity:0;}
+	100% {opacity:1;}
+	}
+
+
+/*Opening page nav styles*/
+nav.cat-nav {
+	position: relative;
+	width: 100%;
+	border-top: none;
+	background-color: #ffffff;
+	padding-bottom: 0.6em;
+	height:auto;
+}
+
+nav.cat-nav ul {
+	text-align: center;
+}
+
+nav.cat-nav ul li {
+	display: inline-block;
+	list-style-type: none;
+	width:100%;
+	padding-top: 0;
+	padding-bottom: 0;
+	height:auto;
+	
+}
+
+nav.cat-nav ul li a{
+	color: #FFFFFF;
+	display: block;
+	font-family: 'Helvetica Neue',arial,sans-serif;
+	font-weight: 100;
+	margin: 0.05em auto 0;
+	padding: 0.75em 0;
+	text-align: center;
+	text-decoration: none;
+	width: 100%;
+	font-weight:200;
+	font-size: 1.3em;
+
+}
+
+
+nav.cat-nav ul li a.det-icon{
+	background-color: #2d9298;
+	background-image: none;
+}
+
+nav.cat-nav ul li a.pro-icon{
+	background-color: #21409a;
+	background-image: none;
+}
+
+nav.cat-nav ul li a.com-icon{
+	background-color: #777777;
+	background-image: none;
+}
+
+nav.cat-nav ul li a.browse-icon{
+	background-color: #b3b6bf;
+}

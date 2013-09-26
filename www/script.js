@@ -41,8 +41,18 @@ var app = {
                 },
                 app.dal.error
             );
+        },
+        checkVersion: function() {
+            var sql = 'select value from version';
+
+            $(document).one('get:content', function (event) {
+                console.log('version: '+event.data.item(0).value);
+            });
+            console.log('sql:'+sql);
+            app.dal.getRows(sql, 'get:content');
         }
     },
+    db_version: 0.1,
     history: [],
     templates: [],
     screens: [
@@ -236,7 +246,7 @@ var app = {
                 $('div.product-list').replaceWith(html).show();
             });
 
-            var sql = 'select product_id, name from products';
+            var sql = 'select product_id, name from products where category=\''+app.category+'\'';
 
             console.log('sql:' + sql);
             app.dal.getRows(sql, 'get:content');
