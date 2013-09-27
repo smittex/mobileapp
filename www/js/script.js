@@ -1,7 +1,5 @@
 var app = {
     events: {
-        onDeviceReady: function () {
-        },
         onOnline: function () {
             // Stub for when device comes online
         },
@@ -50,29 +48,6 @@ var app = {
                 app.dal.error
             );
         },
-        databaseVersion: function() {
-            var rtn = true;
-
-            $(document).one('db:version', function (event) {
-                console.log('in db:version');
-
-                var version = event.data.item(0).value;
-                console.log('version: '+version);
-
-                if (version >= app.db_version)
-                    rtn = false;
-            });
-            var sql = 'select value from version';
-
-            console.log('sql:'+sql);
-            var tmp = app.dal.getRows(sql, 'db:version');
-
-            console.log('tmp==null:');
-            console.log(tmp == null);
-
-            console.log('rtn:');
-            console.log(rtn);
-        }   ,
         updateDatabase: function() {
             switch (app.dal.db.version) {
                 case '':
@@ -234,8 +209,9 @@ var app = {
     initialize: function () {
         if (!app.dal.db)
             app.dal.open();
+        if (app.dal.db.version = '')
+            app.dal.updateDatabase();
 
-        document.addEventListener('deviceready', this.events.onDeviceReady, false);
         document.addEventListener('online', this.events.onOnline, false);
         document.addEventListener('offline', this.events.onOffline, false);
         $('.splash')[0].addEventListener('webkitAnimationEnd', this.home, false)
@@ -499,41 +475,8 @@ $('.splash').show()
 
 
 
-//document.addEventListener("deviceready", onDeviceReady, false);
-
-/*function onDeviceReady() {
-    console.log('db:');
-    console.log(db);
-
-    console.log('trying to open db');
-    db = window.openDatabase(
-        'products.db',
-        '',
-        'products',
-        2000000
-    );
-
-    console.log('db:');
-    console.log(db);*/
-
-/*
-    var db = window.openDatabase("test", "1.0", "Test DB", 1000000);
-*/
-//}
-
-
-
-
 
 $(function () {
-    /*	$('a.det-icon, a.pro-icon, a.com-icon').click(function(){
-     $('nav.main-nav').show();
-     });
-
-     $('a.main-page').click(function(){
-     $('nav.main-nav').hide();
-     });*/
-
     //Open Browse functionality
     $('a.open-browse').click(app.browse);
 

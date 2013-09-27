@@ -80,21 +80,21 @@ nav ul li a{
 }
 
 nav ul li a.home{
-	background-image: url(img/home.png);
+	background-image: url(../img/home.png);
 	background-repeat: no-repeat;
 	background-size: 35% auto;
 	background-position: center top;
 }
 
 nav ul li a.open-assessments{
-	background-image: url(img/assessments.png);
+	background-image: url(../img/assessments.png);
 	background-repeat: no-repeat;
 	background-size: 35% auto;
 	background-position: center top;
 }
 
 nav ul li a.open-browse{
-	background-image: url(img/browse.png);
+	background-image: url(../img/browse.png);
 	background-repeat: no-repeat;
 	background-size: 35% auto;
 	background-position: center top;
@@ -138,7 +138,7 @@ nav.cat-nav ul li a{
 
 nav.cat-nav ul li a.det-icon{
     /*background-color: #2d9298;*/
-	background-image: url(img/detection.png);
+	background-image: url(../img/detection.png);
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center top;
@@ -146,7 +146,7 @@ nav.cat-nav ul li a.det-icon{
 
 nav.cat-nav ul li a.pro-icon{
     /*background-color: #21409a;*/
-	background-image: url(img/protection.png);
+	background-image: url(../img/protection.png);
 	background-repeat: no-repeat;
 	background-size: contain;
 	background-position: center top;
@@ -259,14 +259,14 @@ h4.bolder {
 /*End Headlines*/
 
 .detection {
-	background-image: url(img/bg_top.jpg), url(img/bg_bottom.jpg);
+	background-image: url(../img/bg_top.jpg), url(../img/bg_bottom.jpg);
 	background-size: contain, contain;
 	background-repeat: no-repeat, no-repeat;
 	background-position: center top, center bottom;
 }
 
 .protection {
-    background-image: url(img/general_bg_top.jpg), url(img/general_bg_bottom.jpg);
+    background-image: url(../img/general_bg_top.jpg), url(../img/general_bg_bottom.jpg);
     background-size: contain, contain;
     background-repeat: no-repeat, no-repeat;
     background-position: center top, center bottom;
@@ -500,7 +500,7 @@ img.select-thumb {
 }
 
 .general {
-	background-image: url(img/general_bg.jpg);
+	background-image: url(../img/general_bg.jpg);
 	background-size: cover;
 	background-repeat:no-repeat;
 	background-position: center top;
@@ -538,7 +538,7 @@ img.select-thumb {
 }
 
 .active-nav a.open-browse {
-	background-image: url(img/browse_white.png);
+	background-image: url(../img/browse_white.png);
 	background-repeat: no-repeat;
 	background-size: 35% auto;
 	background-position: center top;

@@ -4,87 +4,31 @@
 <html class="no-js">
 <!--<![endif]-->
 <head>
-<meta charset="utf-8">
-<title></title>
-<meta name="description" content="">
-<meta name="HandheldFriendly" content="True">
-<meta name="MobileOptimized" content="320">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="cleartype" content="on">
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="cleartype" content="on">
 
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/touch/apple-touch-icon-144x144-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/touch/apple-touch-icon-114x114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/touch/apple-touch-icon-72x72-precomposed.png">
-<link rel="apple-touch-icon-precomposed" href="img/touch/apple-touch-icon-57x57-precomposed.png">
-<link rel="shortcut icon" href="img/touch/apple-touch-icon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/touch/apple-touch-icon-144x144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/touch/apple-touch-icon-114x114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/touch/apple-touch-icon-72x72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="img/touch/apple-touch-icon-57x57-precomposed.png">
+    <link rel="shortcut icon" href="img/touch/apple-touch-icon.png">
 
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="viewport" id="vp" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
-<meta name="viewport" id="vp" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="viewport" id="vp" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+    <meta name="viewport" id="vp" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" />
 
-<link href='http://fonts.googleapis.com/css?family=Archivo+Narrow' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Archivo+Narrow' rel='stylesheet' type='text/css'>
 
-<link rel="stylesheet" href="css/normalize.css">
-<link rel="stylesheet" href="css/main.css">
-<link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/style.css">
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-
-        // Wait for device API libraries to load
-        //
-        function onLoad() {
-            document.addEventListener("deviceready", onDeviceReady, false);
-        }
-
-        // device APIs are available
-        //
-        function onDeviceReady() {
-            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-        }
-
-        function gotFS(fileSystem) {
-            console.log('gotFS');
-            fileSystem.root.getFile("readme.txt", null, gotFileEntry, fail);
-        }
-
-        function gotFileEntry(fileEntry) {
-            console.log('gotFileEntry');
-            fileEntry.file(gotFile, fail);
-        }
-
-        function gotFile(file){
-            console.log('gotFile');
-            readDataUrl(file);
-            readAsText(file);
-        }
-
-        function readDataUrl(file) {
-            console.log('readDataUrl');
-            var reader = new FileReader();
-            reader.onloadend = function(evt) {
-                console.log("Read as data URL");
-                console.log(evt.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function readAsText(file) {
-            console.log('readAsText');
-            var reader = new FileReader();
-            reader.onloadend = function(evt) {
-                console.log("Read as text");
-                console.log(evt.target.result);
-            };
-            reader.readAsText(file);
-        }
-
-        function fail(evt) {
-            console.log('error');
-            console.log(evt.target.error.code);
-        }
-
-    </script>
 </head>
 <body>
 
@@ -316,6 +260,6 @@
     <script src="js/vendor/handlebars.js"></script>
     <script src="js/vendor/touch.js"></script>
     <script src="js/helper.js"></script>
-    <script src="script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
