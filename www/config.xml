@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.theshinebox.threeM" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.theshinebox.threeM" version="0.0.4" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>3M</name>
     <description>
     </description>
@@ -11,8 +11,4 @@
     <access origin="*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
-	<!--If this next line of code is all we need to have a black opaque status bar in ios, let's include it-->
-    <preference name="ios-statusbarstyle" value="black-opaque" />
-	<!-- HTML Video AutoPlayback   -->
-     <preference name="AllowInlineMediaPlayback" value="true" /> 
 </widget>
