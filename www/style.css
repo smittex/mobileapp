@@ -24,7 +24,7 @@ section {
 	position: absolute;
 	min-height: 100%;
 	background-color: #ffffff;
-	display:  block;
+	display: none;
 }
 
 
@@ -581,29 +581,34 @@ img.select-thumb {
 
 /*Opening page nav styles*/
 
-
-
 .splash {
-	animation:fadeout 1s;
-	animation-delay:2s;
-	animation-fill-mode: forwards;
-	-webkit-animation:fadeout 1s; /* Safari and Chrome */
-	-webkit-animation-delay:2s;
-	-webkit-animation-fill-mode: forwards;
+    animation: fadeout 1s;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+    -webkit-animation: fadeout 1s; /* Safari and Chrome */
+    -webkit-animation-delay: 2s;
+    -webkit-animation-fill-mode: forwards;
 
-	}
+}
 
-	@keyframes fadeout
-	{
-	0%   {opacity:1;}
-	100% {opacity:0;}
-	}
+@keyframes fadeout {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
 
-	@-webkit-keyframes fadeout /* Safari and Chrome */
-	{
-	0%   {opacity:1;}
-	100% {opacity:0;}
-	}
+@-webkit-keyframes fadeout /* Safari and Chrome */
+{
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
 
 .splash img {
 	margin: 0 auto;
