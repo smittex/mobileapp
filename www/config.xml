@@ -11,6 +11,5 @@
     <access origin="*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
-	<!--If this next line of code is all we need to have a black opaque status bar in ios, let's include it-->
      <preference name="AllowInlineMediaPlayback" value="true" /> 
 </widget>
