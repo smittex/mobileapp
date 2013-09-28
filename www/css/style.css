@@ -743,10 +743,10 @@ nav.cat-nav ul li a.det-icon{
 	background-image: none;
 	right: 100%;
 	animation:slidein 1s;
-	animation-delay:2.2s;
+	animation-delay:0s;
 	animation-fill-mode: forwards;
 	-webkit-animation:slidein 1s;
-	-webkit-animation-delay:2.2s;
+	-webkit-animation-delay:0s;
 	-webkit-animation-fill-mode: forwards;
 
 }
@@ -756,10 +756,10 @@ nav.cat-nav ul li a.pro-icon{
 	background-color: #21409a;
 	background-image: none;
 	animation:slidein 1s;
-	animation-delay:2.3s;
+	animation-delay:0s;
 	animation-fill-mode: forwards;
 	-webkit-animation:slidein 1s;
-	-webkit-animation-delay:2.3s;
+	-webkit-animation-delay:0s;
 	-webkit-animation-fill-mode: forwards;
 
 }
@@ -773,10 +773,10 @@ nav.cat-nav ul li a.browse-icon{
 	right: 100%;
 	background-color: #b3b6bf;
 	animation:slidein 1s;
-	animation-delay:2.3s;
+	animation-delay:0s;
 	animation-fill-mode: forwards;
 	-webkit-animation:slidein 1s;
-	-webkit-animation-delay:2.3s;
+	-webkit-animation-delay:0s;
 	-webkit-animation-fill-mode: forwards;
 
 }

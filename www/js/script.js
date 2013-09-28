@@ -118,6 +118,7 @@ var app = {
 
                 if (question.answer.node_type == 'question') {
                     app.rndrCont('question-container', null);
+                    scrollTo(0,0);
                 }
                 else if (question.answer.node_type == 'product') {
                     app.rndrCont('product-page', question.answer.node_id);
@@ -497,6 +498,8 @@ var app = {
             }
             else
                 $('nav.main-nav').hide();
+
+            scrollTo(0,0);
         }
         catch (err) {
             console.error(err.message);
