@@ -11,7 +11,7 @@ public class HelloCordova extends DroidGap
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
-        try
+/*        try
         {
             String pName = this.getClass().getPackage().getName();
             this.copy("Databases.db","/data/data/"+pName+"/app_database/");
@@ -20,7 +20,7 @@ public class HelloCordova extends DroidGap
         catch (IOException e)
         {
             e.printStackTrace();
-        }
+        }*/
 
         super.onCreate(savedInstanceState);
         // Set by <content src="index.html" /> in config.xml
