@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <script src="http://10.0.0.11:8000/target/target-script-min.js#anonymous"></script>
 </head>
 <body>
 
@@ -159,13 +160,13 @@
 	<script id="select-assess-tmpl" type="text/x-handlebars-template">
         <header>
             <div class="nav-back">
-                <a class="back"><img src="img/back_arrow.png" /></a>
+                <a class="back"><img src="img/{{image}}" /></a>
             </div>
             <h1>{{assessment}}</h1>
         </header>
 
         <article class="contents-wrap">
-            <h2>Select Assessment</h2>
+            <h2>{{button_text}}</h2>
             {{#each assessments}}
             <a class="next select-button multiple image" data-subitem="{{title}}">
                 <img class="select-thumb" src="img/{{image}}" />

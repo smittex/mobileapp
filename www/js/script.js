@@ -37,6 +37,7 @@ var app = {
                             console.error('got results');
                             try {
                                 app.dal.results = results.rows;
+                                console.log(results.rows);
                                 $(document.body).trigger(id, results.rows);
                             } catch(err){
                                 console.error('caught an error:');
@@ -323,6 +324,8 @@ var app = {
         var nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + inc];
         var nxtScr = $('[data-screen=' + nxtScrNm + ']');
 
+        console.log('nav:'+dir+'  current screen:'+curScrNm+'  next screen:'+nxtScrNm);
+
         if (nxtScrNm == 'montage') {
             app.home();
             return;
@@ -348,6 +351,9 @@ var app = {
         }
         else
             app.history.pop();
+
+
+        console.log('obj:'+obj);
 
         // Add the correct class
         // TODO: This does not work on the product page because it's not routed through here
@@ -426,6 +432,7 @@ var app = {
                 try {
                     $(document).one('get:content', function (event) {
                         // TODO: figure out a way to cache the templates or precompile them
+                        console.log('content:'+event.data.item(0).value)
                         var tmpl = Handlebars.compile($('#' + scr + '-tmpl').html());
                         // Possible security vulnerability here if someone has write access to DB
                         var html = tmpl(eval("(" + event.data.item(0).value + ')'));
