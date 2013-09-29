@@ -29,9 +29,7 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/style.css">
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
-<!--
     <script src="http://10.0.0.3:8000/target/target-script-min.js#anonymous"></script>
--->
 </head>
 <body>
 
@@ -110,158 +108,11 @@
         </div>
 	</section>
 
-    <script id="product-list-tmpl" type="text/x-handlebars-template">
-        <div class="browse-back">
-            <a class="back-pane">
-                <img class="browse-back-arrow" src="img/back_arrow.png"/>
-            </a>
-        </div>
-        <article class="contents-wrap">
-            <ul>
-                {{#each products}}
-                <li><a class="open-product select-button multiple transparent list med" data-id="{{id}}">
-                    {{name}}
-                    <div class="color det">
-                        <img src="img/right_arrow_black.png"/>
-                    </div>
-                </a></li>
-                {{/each}}
-            </ul>
-        </article>
-    </script>
-
-    <script id="cat-intro-tmpl" type="text/x-handlebars-template">
-        <header>
-            <div class="nav-back">
-                <a class="back"><img src="img/back_arrow.png" /></a>
-            </div>
-            <h1>{{title}}</h1>
-        </header>
-
-        <article class="contents-wrap">
-            <h2>{{header}}</h2>
-            <div class="full-width">
-                <img src="img/{{image}}" />
-            </div>
-            <a class="next select-button">
-                {{button_text}}
-                <img class="right-arrow" src="img/right_arrow.png" />
-            </a>
-            <div class="copy-wrap">
-                {{{description}}}
-            </div>
-            <a href="http://link.brightcove.com/services/player/bcpid2127401086001?bckey=AQ~~,AAABHqwijIE~,eE4mETXuXRVkuTP-Kx4o5VhzD5sp-6qo&bclid=1894450151001&bctid=1849635222001"
-               class="select-button green">
-                Customer Testimonials
-                <img class="right-arrow" src="img/right_arrow.png" />
-            </a>
-        </article>
-    </script>
-
-	<script id="select-assess-tmpl" type="text/x-handlebars-template">
-        <header>
-            <div class="nav-back">
-                <a class="back"><img src="img/back_arrow.png" /></a>
-            </div>
-            <h1>{{assessment}}</h1>
-        </header>
-
-        <article class="contents-wrap">
-            <h2>{{button_text}}</h2>
-            {{#each assessments}}
-            <a class="next select-button multiple image" data-subitem="{{title}}">
-                <img class="select-thumb" src="img/{{image}}" />
-                {{title}}
-                <img class="right-arrow" src="img/right_arrow.png" />
-            </a>
-            {{/each}}
-        </article>
-	</script>
-
-    <script id="assess-intro-tmpl" type="text/x-handlebars-template">
-        <!-- Assessment intro screen start -->
-            <header>
-                <div class="nav-back">
-                    <a class="back"><img src="img/back_arrow.png" /></a>
-                </div>
-                <h1>{{title}}</h1>
-            </header>
-
-            <article class="contents-wrap">
-                <h2>{{title}}</h2>
-                <div class="full-width">
-                    <img src="img/{{image}}" />
-                </div>
-                <a class="next select-button">
-                    Start Assessment
-                    <img class="right-arrow" src="img/right_arrow.png" />
-                </a>
-                <div class="copy-wrap">
-                    <p>{{{description}}}</p>
-                </div>
-            </article>
-        <!-- Assessment intro screen end -->
-    </script>
-
-    <script id="question-tmpl" type="text/x-handlebars-template">
-        <header>
-            <div class="nav-back">
-                <a class="back"><img src="img/back_arrow.png" /></a>
-            </div>
-            <h1>{{{title}}}</h1>
-        </header>
-
-        <article class="contents-wrap">
-            <h2 class="question">{{{question}}}</h2>
-            <div class="copy-wrap">
-                <p>{{{description}}}</p>
-            </div>
-            <div class="question-choices">
-                <ul>
-                    <!-- TODO: alternate the class -->
-                    {{#each answers}}
-                    <li><a class="answer" data-question-id="{{../question_id}}" data-answer-id="{{id}}" data-node-type="{{node_type}}" data-node-id="{{node_id}}">{{text}}</a></li>
-                    {{/each}}
-                </ul>
-            </div>
-<!--            <div class="link-description">
-                <h3>More About:</h3>
-                <a href="http://link.brightcove.com/services/player/bcpid2127401086001?bckey=AQ~~,AAABHqwijIE~,eE4mETXuXRVkuTP-Kx4o5VhzD5sp-6qo&bclid=1894450151001&bctid=1891949260001" class="select-button small black">
-                    3M™ Detection Management Software
-                    <img class="right-arrow" src="img/right_arrow.png" />
-                </a>
-            </div>-->
-        </article>
-    </script>
-
-    <script id="product-page-tmpl" type="text/x-handlebars-template">
-        <header>
-            <div class="nav-back">
-                <a class="back"><img src="img/back_arrow.png" /></a>
-            </div>
-            <h1>{{model}}</h1>
-        </header>
-
-        <article class="contents-wrap">
-            <div class="full-width">
-                <img src="img/{{image}}" />
-            </div>
-            <h2 class="product-name">{{name}}</h2>
-            <h3 class="sub-head">{{{subhead}}}</h3>
-            <div class="copy-wrap product-desc">
-                {{{description}}}
-            </div>
-            <a href="{{link}}" class="select-button green">
-                More Information
-                <img class="right-arrow" src="img/right_arrow.png" />
-            </a>
-        </article>
-    </script>
-
 	<script src="js/vendor/zepto.js"></script>
     <script src="js/vendor/handlebars.js"></script>
     <script src="js/vendor/touch.js"></script>
     <script src="js/helper.js"></script>
+    <script src="js/tmpl.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

@@ -8,7 +8,8 @@
     <author email="bryan.smith@solutiondesign.com" href="http://solutiondesign.com/">
     </author>
     <content src="index.html" />
-    <access origin="*" />
+    <access origin="http://127.0.0.1*" />
+    <access origin="http://fonts.googleapis.com/*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
 </widget>
