@@ -1,5 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.theshinebox.threeM" version="0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="com.theshinebox.threeM"
+        version="0.4"
+        xmlns="http://www.w3.org/ns/widgets"
+        xmlns:gap="http://phonegap.com/ns/1.0">
     <name>3M</name>
     <description>
     </description>
@@ -12,4 +15,9 @@
     <access origin="http://fonts.googleapis.com/*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
+    <preference name="orienation" value="portrait" />
+    <preference name="target-device" value="handset" />
+    <icon src="icon.png" />
+    <gap:platform name="ios" />
+    <gap:platform name="android" />
 </widget>
