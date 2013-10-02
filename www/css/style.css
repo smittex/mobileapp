@@ -794,5 +794,14 @@ nav.cat-nav ul li a.browse-icon{
 }
 
 
+.product-name-browse {
+    float:left;
+    font-size: 0.875em;
+    width: 70%;
+}
 
-
+.test-name {
+    font-size: 0.875em;
+    float: left;
+    width: 120%;
+}
