@@ -34,9 +34,6 @@ var app = {
                         function (tx, results) {
                             console.log('got results');
                             app.dal.results = results.rows;
-
-                            printAttr('db results', results);
-
                             $(document.body).trigger(id, results.rows);
                         },
                         app.dal.error
