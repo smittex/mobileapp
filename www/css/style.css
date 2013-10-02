@@ -187,7 +187,7 @@ h1 {
 .detection h2 {
 	color: #2D9298;
 	font-family: 'Archivo Narrow',sans-serif;
-	font-size: 2.5em;
+	font-size: 2em;
 	font-weight: 100;
 	margin-bottom: 0.2em;
 	margin-left: 0.3em;
@@ -204,7 +204,7 @@ h1 {
 .protection h2 {
     color: #21409a;
     font-family: 'Archivo Narrow',sans-serif;
-    font-size: 2.5em;
+    font-size: 2em;
     font-weight: 100;
     margin-bottom: 0.2em;
     margin-left: 0.3em;
@@ -451,11 +451,11 @@ img.select-thumb {
 	color: #FFFFFF;
 	display: block;
 	font-weight: 200;
-	padding: 1.5em 0;
+	padding: 1em 0;
 	text-align: center;
 	width: 100%;
-	text-transform: uppercase;
-	font-size: 1.688em;
+	text-transform: none;
+	font-size: 1.3em;
 }
 
 .detection .question-choices li:nth-of-type(1) {
@@ -504,6 +504,7 @@ img.select-thumb {
 	background-size: cover;
 	background-repeat:no-repeat;
 	background-position: center top;
+	background-attachment: fixed;
 }
 
 .browse {
