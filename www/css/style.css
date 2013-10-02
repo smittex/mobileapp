@@ -805,3 +805,24 @@ nav.cat-nav ul li a.browse-icon{
     float: left;
     width: 120%;
 }
+.match-list {
+    padding: 0;
+}
+
+.match {
+    background-color: transparent;
+    width: 10%;
+}
+
+.product-name-match {
+    float: left;
+    font-size: 0.75em;
+    width: 64%;
+    padding: 0.5em 0.5em 0;
+
+}
+
+img.prod-thumb {
+    float: left;
+    position: relative;
+}

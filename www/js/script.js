@@ -101,38 +101,6 @@ var app = {
 			}
 			return null;
 		},
-		question_answered: function () {
-			// Determine answer and route user to next screen {question, product}
-			var question_id = $(this).data('question-id');
-			var answer_id = $(this).data('answer-id');
-
-			console.log('question_id:' + question_id);
-			console.log('answer_id:' + answer_id);
-			try {
-				var question = app.assessment.questions.pop();
-				if (question != null) {
-					question.answer = app.assessment.getAnswerById(question, answer_id);
-				}
-
-				app.assessment.answers.push(question);
-
-				if (question.answer.type == 'question') {
-					app.rndrCont('question-container', null);
-					scrollTo(0,0);
-				}
-				else if (question.answer.type == 'product') {
-					if (question.answer.nodes.length > 1) {
-						app.rndrCont('product-list', question.answer.nodes);
-					}
-					else {
-						app.rndrCont('product-page', question.answer.nodes[0]);
-					}
-				}
-
-			} catch (err) {
-				console.error(err.message);
-			}
-		},
 		getQuestion: function () {
 			console.log('in getQuestion');
 			if (app.assessment.answers.length) {
@@ -188,15 +156,15 @@ var app = {
 
 		document.addEventListener('online', this.events.onOnline, false);
 		document.addEventListener('offline', this.events.onOffline, false);
-		$('.splash')[0].addEventListener('webkitAnimationEnd', this.home, false)
+		$('.splash')[0].addEventListener('webkitAnimationEnd', this.home, false);
 
 		this.dal.updateDatabase();
 	},
 	home: function () {
 		app.history = [];
 		app.assessment.answers = [];
-		$('.screen').removeClass('current').hide();
-		$('.montage').addClass('current').css('left', '0%').show();
+		$('.screen').hide();
+		$('.montage').css('left', '0%').show();
 		$('nav.main-nav').hide();
 		$('a.next,.back').one('click', app.onNav);
 	},
@@ -204,11 +172,11 @@ var app = {
 		var id = $(this).data('id');
 		console.error('id:' + id);
 
-		app.rndrCont('product-page', id);
+		app.rndrCont('product-page', id, function(){});
 	   // $('.screen[data-screen=product-page]').removeClass('protection').removeClass('detection').addClass(app.category);
 	},
 	closeProduct: function() {
-		app.moveScr( $('.screen[data-screen=product-page]'),$('.browse') , 'back');
+		app.moveScr( $('.screen[data-screen=product-page]'),$('.browse') , 'back', function(){});
 	},
 	onNav: function () {
 		console.log('history:');
@@ -221,7 +189,7 @@ var app = {
 			app.category = 'protection';
 
 		if ($(this).hasClass('open-browse')) {
-			app.rndrCont('browse', null);
+			app.rndrCont('browse', null, function(){});
 			return;
 		}
 
@@ -240,32 +208,73 @@ var app = {
 			dir = 'back';
 			inc = -1;
 		}
-		else
-			return;
 
-		// Determine screen to navigate to
-		var nxtScrNm, nxtScr;
-		if (curScrNm == 'question-container'  || curScrNm == 'product-page') {
-			app.assessment.answers = [];
-			nxtScrNm = 'assess-intro';
-		} else {
-			nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + inc];
-		}
-		nxtScr = $('[data-screen=' + nxtScrNm + ']');
+        // Determine screen to navigate to
+        var nxtScrNm;
+        if (curScrNm != 'question-container'  && curScrNm != 'product-page') {
+            //app.assessment.answers = [];
+            //nxtScrNm = 'assess-intro';
+            nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + inc];
+        }
+        //nxtScr = $('[data-screen=' + nxtScrNm + ']');
+
+
+
+
+        if (nxtScrNm == 'montage') {
+            app.home();
+            return;
+        }
+
+        // Get contextual information on the navigation
+        var obj = $(this).data('subitem');
+        if (!obj)
+            obj = '';
+        else
+            obj = obj.toLowerCase().replace(' ', '-');
+
+
+
+
+        if ($(this).hasClass('answer')) {
+            // Determine answer and route user to next screen {question, product}
+            var question_id = $(this).data('question-id');
+            var answer_id = $(this).data('answer-id');
+
+            console.log('question_id:' + question_id);
+            console.log('answer_id:' + answer_id);
+            try {
+                var question = app.assessment.questions.pop();
+                if (question != null) {
+                    question.answer = app.assessment.getAnswerById(question, answer_id);
+                }
+
+                app.assessment.answers.push(question);
+
+                if (question.answer.type == 'question') {
+                    nxtScrNm = 'question-container';
+                }
+                else if (question.answer.type == 'product') {
+                    if (question.answer.nodes.length > 1) {
+                        nxtScrNm = 'product-list';
+                        obj = question.answer.nodes;
+                    }
+                    else {
+                        nxtScrNm = 'product-page';
+                        obj = question.answer.nodes[0];
+                    }
+                }
+
+            } catch (err) {
+                console.error(err.message);
+            }
+        }
+
+
+
 
 		console.log('nav:' + dir + '  current screen:' + curScrNm + '  next screen:' + nxtScrNm);
 
-		if (nxtScrNm == 'montage') {
-			app.home();
-			return;
-		}
-
-		// Get contextual information on the navigation
-		var obj = $(this).data('subitem');
-		if (!obj)
-			obj = '';
-		else
-			obj = obj.toLowerCase().replace(' ', '-');
 
 		// Get obj for going back to assess-intro
 		if (dir == 'back' && nxtScrNm == 'assess-intro') {
@@ -290,11 +299,35 @@ var app = {
 		console.log('cat: ' + app.category + '  obj:' + obj);
 
 		// Prepare content and perform transitions
-		app.rndrCont(nxtScrNm, obj);
-		app.moveScr(curScr, nxtScr, dir);
+        app.rndrCont(nxtScrNm, obj, function () {
+                app.moveScr(curScrNm, nxtScrNm, dir, function () {
+                    console.log('in moveScr callback');
+                })
+            }
+        );
+
+        if (nxtScrNm != 'montage') {
+            try{
+                $('nav.main-nav').show();
+                ///$('a.open-browse').on('click',app.onNav);
+                // TODO: Bind these at the document level
+                /*
+                 if (app.category == 'detection')
+                 $('a.open-assessments').text('Assessments').on('click', app.openAssess());
+                 else if (app.category == 'protection')
+                 $('a.open-assessments').text('Protection Types').on('click', app.openAssess());
+                 */
+            }
+            catch(err) {
+                console.error(err.message);
+            }
+        }
+        else {
+           $('nav.main-nav').hide();
+        }
 
 	},
-	rndrCont: function (scr, obj) {
+	rndrCont: function (scr, obj, callback) {
 		try {
 			console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
 
@@ -349,8 +382,10 @@ var app = {
 						console.log(html);
 
 						$('[data-screen=question-container]').html(html);
-						$('a.back').one('click', app.onNav);
-						$('a.answer').one('click', app.assessment.question_answered);
+
+                        $('a.answer').one('click', app.assessment.question_answered);
+                        callback.apply();
+
 					});
 					app.assessment.getQuestion();
 					break;
@@ -374,10 +409,11 @@ var app = {
 						console.log(html);
 						$('[data-screen=product-page]').html(html);
 
-						app.moveScr($('[data-screen=question-container]'), $('[data-screen=product-page]'), 'next');
+						//app.moveScr($('[data-screen=question-container]'), $('[data-screen=product-page]'), 'next');
 
-						$('a.back').one('click', app.onNav);
+						//$('a.back').one('click', app.onNav);
 						$('a.open-product').one('click', app.openProduct);
+                        callback.apply();
 					});
 
 					var clause = '';
@@ -407,16 +443,11 @@ var app = {
 
 							var html = Handlebars.templates['product-page'](product);
 							$('[data-screen=product-page]').html(html);
-							if (app.browsing) {
-								$('a.back').one('click', app.closeProduct());
-							}
-							else {
-								$('a.back').one('click', app.onNav);
-							}
-							var screen = app.browsing?$('.browse'):$('[data-screen=question-container]');
 
+							//var screen = app.browsing?$('.browse'):$('[data-screen=question-container]');
 
-							app.moveScr(screen, $('[data-screen=product-page]'), 'next');
+                            callback.apply();
+							//app.moveScr(screen, $('[data-screen=product-page]'), 'next');
 						} catch (err) {
 							console.error(err.message);
 						}
@@ -439,39 +470,25 @@ var app = {
 							// Possible security vulnerability here if someone has write access to DB
 							var html = Handlebars.templates[scr](eval("(" + data + ')'));
 
-
 							console.log('data:');
 							console.log(data);
 							console.log('html:');
 							console.log(html);
 
                             $('.montage').hide();
-
-
-                            //app.slider.slidePage($(html));
-
 							$('[data-screen=' + scr + ']').html(html);
-							$('a.next,.back').one('click', app.onNav);
+
+                            callback.apply();
 						});
 					} catch (err) {
 						console.error(err.message);
 					}
+
 					console.log('sql:' + content[scr]);
 					app.dal.getRows(content[scr], 'get:content');
 
 					break;
 			}
-
-			if (app.category == 'detection') {
-				$('a.open-assessments').text('Assessments');
-			}
-			else if (app.category == 'protection') {
-				$('a.open-assessments').text('Protection Types');
-			}
-
-			// Add the correct class
-			$('section[data-screen=' + scr + ']').removeClass('protection').removeClass('detection').addClass(app.category);
-
 		}
 		catch (err) {
 			console.error(err.message);
@@ -479,60 +496,63 @@ var app = {
 	},
 	openAssess: function() {
 		console.log('in openAssess');
-		app.rndrCont('select-assess', null);
-		app.moveScr($(this).parents('.screen'), $('[data-screen=select-assess]'), 'next');
+		app.rndrCont('select-assess', null, function(){});
+		app.moveScr($(this).parents('.screen'), $('[data-screen=select-assess]'), 'next', function(){});
 	},
-	moveScr: function (from, to, direction) {
-		try {
-			console.log('in MoveScr');
-			//var percent = {'next': [-10, 0], 'back': [100, 0]};
+    moveScr: function (from, to, direction, callback) {
+        console.log('in MoveScr');
+        //var percent = {'next': [-10, 0], 'back': [100, 0]};
 
-			to.show();
-            from.hide();
+        try {
+            $('[data-screen=' + from + ']').hide();
+            $('[data-screen=' + to + ']').show().removeClass('protection').removeClass('detection').addClass(app.category);
 
-			to.addClass('current');
-			from.removeClass('current');
-/*
-			from.animate(
-				{left: percent[direction][0] + '%'},
-				400,
-				'linear',
-				function () {
-					from.hide();
-				}
-			);
+            // TODO: Bind this at the document level
+            $('a.next,.answer').on('click', app.onNav);
 
-			to.animate(
-				{left: percent[direction][1] + '%'},
-				400,
-				'linear',
-				function () {
-					to.show();
-				}
-			);*/
+            if (app.browsing) {
+                $('a.back').on('click', app.closeProduct());
+            }
+            else {
+                $('a.back').on('click', app.onNav);
+            }
 
-			$('a.next,.back').one('click', app.onNav);
+            scrollTo(0,0);
 
-			if (to.data('screen') != 'montage') {
-				$('nav.main-nav').show();
-			}
-			else
-				$('nav.main-nav').hide();
+            callback.apply();
+        }
+        catch (err) {
+            console.error('error');
+            console.error(err.message);
+        }
 
-			scrollTo(0,0);
-		}
-		catch (err) {
-			console.error(err.message);
-		}
+        /*
+         from.animate(
+         {left: percent[direction][0] + '%'},
+         400,
+         'linear',
+         function () {
+         from.hide();
+         }
+         );
+
+         to.animate(
+         {left: percent[direction][1] + '%'},
+         400,
+         'linear',
+         function () {
+         to.show();
+         }
+         );*/
 	}
 };
 
 app.initialize();
-$('.splash').show()
+$('.splash').show();
 
 $(function () {
-	$('a.open-browse').on('click',app.onNav);
-	$('a.open-assessments').on('click',app.openAssess);
+
+    //$('a.open-assessments').on('click',app.openAssess);
 
    /* $('a.open-product').on('click', app.openProduct);
 	$('a.answer').on('click', app.assessment.question_answered);
