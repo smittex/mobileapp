@@ -519,7 +519,8 @@ var app = {
 function printAttr(msg, obj) {
     console.log(msg);
     for (var att in obj) {
-        console.log(att+':'+obj[att]);
+        if (obj.hasOwnProperty(att))
+            console.log(att+':'+obj[att]);
 
     }
 }
