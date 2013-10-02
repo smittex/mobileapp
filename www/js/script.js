@@ -34,14 +34,9 @@ var app = {
 						[],
 						function (tx, results) {
 							console.log('got results');
-							try {
 								app.dal.results = results.rows;
 								console.log(results.rows);
 								$(document.body).trigger(id, results.rows);
-							} catch (err) {
-								console.error('caught an error:');
-								console.error(err.message);
-							}
 						},
 						app.dal.error
 					);
@@ -126,7 +121,6 @@ var app = {
 			sql += 'group by q.question_id order by q.question_id limit 0,1';
 
 			$(document).one('get:content', function (event) {
-				try {
 					console.log('got question');
 					var tmp = event.data.item(0);
 					var question = {
@@ -142,10 +136,6 @@ var app = {
 					app.assessment.questions.push(question);
 
 					$(document.body).trigger('question:ready', question);
-				}
-				catch (err) {
-					console.error(err.message);
-				}
 			});
 
 			console.error('sql:' + sql);
@@ -243,7 +233,6 @@ var app = {
 
             console.log('question_id:' + question_id);
             console.log('answer_id:' + answer_id);
-            try {
                 var question = app.assessment.questions.pop();
                 if (question != null) {
                     question.answer = app.assessment.getAnswerById(question, answer_id);
@@ -265,9 +254,6 @@ var app = {
                     }
                 }
 
-            } catch (err) {
-                console.error(err.message);
-            }
         }
 
 
@@ -307,7 +293,6 @@ var app = {
         );
 
         if (nxtScrNm != 'montage') {
-            try{
                 $('nav.main-nav').show();
                 ///$('a.open-browse').on('click',app.onNav);
                 // TODO: Bind these at the document level
@@ -317,10 +302,6 @@ var app = {
                  else if (app.category == 'protection')
                  $('a.open-assessments').text('Protection Types').on('click', app.openAssess());
                  */
-            }
-            catch(err) {
-                console.error(err.message);
-            }
         }
         else {
            $('nav.main-nav').hide();
@@ -328,7 +309,6 @@ var app = {
 
 	},
 	rndrCont: function (scr, obj, callback) {
-		try {
 			console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
 
 			switch (scr) {
@@ -431,7 +411,6 @@ var app = {
 
 					$(document).one('get:content', function (event) {
 						var data = event.data.item(0);
-						try {
 							var product = {
 								name: data.name,
 								model: data.model,
@@ -448,9 +427,6 @@ var app = {
 
                             callback.apply();
 							//app.moveScr(screen, $('[data-screen=product-page]'), 'next');
-						} catch (err) {
-							console.error(err.message);
-						}
 					});
 
 					console.error('sql:' + sql);
@@ -464,7 +440,6 @@ var app = {
 						'assess-intro': 'select value from content where screen=\'assess-intro\' and key=\'' + obj + '\''
 					};
 
-					try {
 						$(document).one('get:content', function (event) {
 							var data = event.data.item(0).value;
 							// Possible security vulnerability here if someone has write access to DB
@@ -480,19 +455,12 @@ var app = {
 
                             callback.apply();
 						});
-					} catch (err) {
-						console.error(err.message);
-					}
 
 					console.log('sql:' + content[scr]);
 					app.dal.getRows(content[scr], 'get:content');
 
 					break;
 			}
-		}
-		catch (err) {
-			console.error(err.message);
-		}
 	},
 	openAssess: function() {
 		console.log('in openAssess');
@@ -503,7 +471,6 @@ var app = {
         console.log('in MoveScr');
         //var percent = {'next': [-10, 0], 'back': [100, 0]};
 
-        try {
             $('[data-screen=' + from + ']').hide();
             $('[data-screen=' + to + ']').show().removeClass('protection').removeClass('detection').addClass(app.category);
 
@@ -520,11 +487,6 @@ var app = {
             scrollTo(0,0);
 
             callback.apply();
-        }
-        catch (err) {
-            console.error('error');
-            console.error(err.message);
-        }
 
         /*
          from.animate(
