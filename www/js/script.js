@@ -22,28 +22,29 @@ var app = {
 		},
 		error: function (err) {
 			console.error('in dal.error');
-			console.error(err);
-			console.error(err.message);
-			return null;
-		},
-		getRows: function (sql, id) {
-			app.dal.db.transaction(
-				function (tx) {
-					tx.executeSql(
-						sql,
-						[],
-						function (tx, results) {
-							console.log('got results');
-								app.dal.results = results.rows;
-								console.log(results.rows);
-								$(document.body).trigger(id, results.rows);
-						},
-						app.dal.error
-					);
-				},
-				app.dal.error
-			);
-		},
+            printAttr('db error', err);
+            return null;
+        },
+        getRows: function (sql, id) {
+            app.dal.db.transaction(
+                function (tx) {
+                    tx.executeSql(
+                        sql,
+                        [],
+                        function (tx, results) {
+                            console.log('got results');
+                            app.dal.results = results.rows;
+
+                            printAttr('db results', results);
+
+                            $(document.body).trigger(id, results.rows);
+                        },
+                        app.dal.error
+                    );
+                },
+                app.dal.error
+            );
+        },
 		updateDatabase: function () {
 			switch (app.dal.db.version) {
 				case '':
@@ -122,6 +123,11 @@ var app = {
 
 			$(document).one('get:content', function (event) {
 					console.log('got question');
+
+                printAttr('event',event);
+                printAttr('event.data',event.data);
+
+
 					var tmp = event.data.item(0);
 					var question = {
 						question_id: tmp.question_id,
@@ -508,6 +514,15 @@ var app = {
          );*/
 	}
 };
+
+
+function printAttr(msg, obj) {
+    console.log(msg);
+    for (var att in obj) {
+        console.log(att+':'+obj[att]);
+
+    }
+}
 
 app.initialize();
 $('.splash').show();
