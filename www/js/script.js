@@ -207,7 +207,7 @@ var app = {
 
         // Determine screen to navigate to
         //var nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + (inc)];
-        
+
         /*if (curScrNm == 'question-container' || curScrNm == 'product-page') {
             //app.assessment.answers = [];
             //nxtScrNm = 'assess-intro';
@@ -404,7 +404,7 @@ var app = {
 
 						console.log('html:');
 						console.log(html);
-						$('[data-screen=product-list').html(html);
+						$('[data-screen=product-list]').html(html);
 
 						//app.moveScr($('[data-screen=question-container]'), $('[data-screen=product-page]'), 'next');
 
@@ -535,7 +535,7 @@ $(function () {
 
 	app.initialize();
 	$('.splash').show();
-	
+
     //$('a.open-assessments').on('click',app.openAssess);
 
    /* $('a.open-product').on('click', app.openProduct);

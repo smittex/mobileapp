@@ -11,9 +11,12 @@
     <feature name="App">
         <param name="android-package" value="org.apache.cordova.App" />
     </feature>
-    <access origin="*" />
+    <access origin="http://127.0.0.1*" />
+    <access origin="http://fonts.googleapis.com/*" />
     <preference name="useBrowserHistory" value="true" />
     <preference name="exit-on-suspend" value="false" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
+    <preference name="orienation" value="portrait" />
+    <preference name="target-device" value="handset" />
 </widget>
