@@ -143,7 +143,33 @@ var app = {
 
 			console.log('sql:' + sql);
 			app.dal.getRows(sql, 'get:content');
-		}},
+        },
+        onAnswer: function(question_id, answer_id, callback) {
+            var question = app.assessment.questions.pop();
+            if (question != null)
+                question.answer = app.assessment.getAnswerById(question, answer_id);
+
+            app.assessment.answers.push(question);
+
+            var nxtScrNm, obj;
+
+            if (question.answer.type == 'question') {
+                nxtScrNm = 'question-container';
+            }
+            else if (question.answer.type == 'product') {
+                if (question.answer.nodes.length > 1) {
+                    nxtScrNm = 'product-list';
+                    obj = question.answer.nodes;
+                }
+                else {
+                    nxtScrNm = 'product-page';
+                    obj = question.answer.nodes[0];
+                }
+            }
+
+            callback.apply(nxtScrNm, obj);
+        }
+    },
 	initialize: function () {
 		this.dal.open();
 
@@ -159,32 +185,41 @@ var app = {
 		$('.screen').hide();
 		$('.montage').css('left', '0%').show();
 		$('nav.main-nav').hide();
-		//origional line
-		//$('a.next,.back').one('click', app.onNav);
-		
-		//Implementing first Fast Button AWG
+
 		$('a.next,.back').onpress(app.onNav);
-		
-
-
 	},
 	closeProduct: function() {
 		app.moveScr( $('.screen[data-screen=product-page]'),$('.browse') , 'back', function(){});
 	},
+    // Controller
 	onNav: function () {
 		console.log('history:');
 		console.log(app.history);
 
-		// Determine Category
+		// Determine Category or route elsewhere
 		if ($(this).hasClass('det-icon'))
 			app.category = 'detection';
 		else if ($(this).hasClass('pro-icon'))
 			app.category = 'protection';
+        else if ($(this).hasClass('com-icon'))
+            app.category = 'communication';
 
-		if ($(this).hasClass('open-browse')) {
+
+        // Determine if the bottom navigation has been used and short-circuit this function
+        if ($(this).hasClass('open-browse')) {
 			app.rndrCont('browse', null, function(){});
 			return;
 		}
+        else if ($(this).hasClass('open-assessments')) {
+            app.openAssess();
+            return;
+        }
+        else if ($(this).hasClass('open-browse')) {
+             // Browse
+        }
+
+
+
 
 
 		// Determine screen coming from
@@ -193,39 +228,15 @@ var app = {
 
 		// Determine direction of navigation
 		var nxtScrNm
-		var dir, inc; // Chad remove this in the future
+		var dir; // Chad remove this in the future
 		if ($(this).hasClass('next')) {
 			nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + 1];
 			dir = 'next';
-			inc = 1;
 		}
 		else if ($(this).hasClass('back')) {
 			dir = 'back';
-			inc = -1;
 			nxtScrNm = app.history[app.history.length - 1];
 		}
-
-        // Determine screen to navigate to
-        //var nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + (inc)];
-
-        /*if (curScrNm == 'question-container' || curScrNm == 'product-page') {
-            //app.assessment.answers = [];
-            //nxtScrNm = 'assess-intro';
-            nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + inc];
-        } else if(curScrNm == 'montage') {
-        	nxtScrNm = 'cat-intro';
-        } else if(curScrNm == 'cat-intro') {
-        	nxtScrNm = 'select-assess';
-        } else if(curScrNm == 'select-assess') {
-        	nxtScrNm = 'assess-intro';
-        } else if(curScrNm == 'assess-intro') {
-        	nxtScrNm = 'question-container';
-        }
-        */
-        //nxtScr = $('[data-screen=' + nxtScrNm + ']');
-
-
-
 
         if (nxtScrNm == 'montage') {
             app.home();
@@ -239,9 +250,6 @@ var app = {
         else
             obj = obj.toLowerCase().replace(' ', '-');
 
-
-
-
         if ($(this).hasClass('answer')) {
             // Determine answer and route user to next screen {question, product}
             var question_id = $(this).data('question-id');
@@ -249,26 +257,11 @@ var app = {
 
             console.log('question_id:' + question_id);
             console.log('answer_id:' + answer_id);
-                var question = app.assessment.questions.pop();
-                if (question != null) {
-                    question.answer = app.assessment.getAnswerById(question, answer_id);
-                }
 
-                app.assessment.answers.push(question);
-
-                if (question.answer.type == 'question') {
-                    nxtScrNm = 'question-container';
-                }
-                else if (question.answer.type == 'product') {
-                    if (question.answer.nodes.length > 1) {
-                        nxtScrNm = 'product-list';
-                        obj = question.answer.nodes;
-                    }
-                    else {
-                        nxtScrNm = 'product-page';
-                        obj = question.answer.nodes[0];
-                    }
-                }
+            app.assessment.onAnswer(question_id, answer_id, function(next, id) {
+                nxtScrNm = next;
+                obj = id;
+            });
 
         }
         else if ($(this).hasClass('open-product')) {
@@ -276,25 +269,9 @@ var app = {
             obj = $(this).data('id');
 
             console.error('id:' + obj);
-
-
-
-/*            app.rndrCont('product-page', id, function(){
-                app.moveScr(curScrNm, 'product-page', 'next', function () {
-                    console.log('in moveScr callback');
-                    console.log('still in moveScr callback');
-                })
-            });*/
-            // $('.screen[data-screen=product-page]').removeClass('protection').removeClass('detection').addClass(app.category);
-
-
         }
 
-
-
-
 		console.log('dir:' + dir + '  current screen:' + curScrNm + '  next screen:' + nxtScrNm);
-
 
 		// Get obj for going back to assess-intro
 		if (dir == 'back' && nxtScrNm == 'assess-intro') {
@@ -328,21 +305,18 @@ var app = {
         );
 
         if (nxtScrNm != 'montage') {
-                $('nav.main-nav').show();
-                ///$('a.open-browse').on('click',app.onNav);
-                // TODO: Bind these at the document level
-                /*
-                 if (app.category == 'detection')
-                 $('a.open-assessments').text('Assessments').on('click', app.openAssess());
-                 else if (app.category == 'protection')
-                 $('a.open-assessments').text('Protection Types').on('click', app.openAssess());
-                 */
+            $('nav.main-nav').show();
+            // TODO: Bind these at the document level
+            if (app.category == 'detection')
+                $('a.open-assessments').text('Assessments');
+            else if (app.category == 'protection')
+                $('a.open-assessments').text('Protection Types');
         }
         else {
-           $('nav.main-nav').hide();
+            $('nav.main-nav').hide();
         }
 
-	},
+    },
 	rndrCont: function (scr, obj, callback) {
 			console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
 
