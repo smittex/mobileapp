@@ -159,7 +159,14 @@ var app = {
 		$('.screen').hide();
 		$('.montage').css('left', '0%').show();
 		$('nav.main-nav').hide();
-		$('a.next,.back').one('click', app.onNav);
+		//origional line
+		//$('a.next,.back').one('click', app.onNav);
+		
+		//Implementing first Fast Button AWG
+		$('a.next,.back').onpress(app.onNav);
+		
+
+
 	},
 	openProduct: function () {
 		var id = $(this).data('id');
@@ -353,7 +360,12 @@ var app = {
 
 						$('div.product-list').html(html).show();
 						$('.browse').addClass('current').show();
-						$('a.open-product').one('click', app.openProduct);
+
+						//Implementing Fast Button AWG
+						//$('a.open-product').one('click', app.openProduct);
+						$('a.open-product').onpress(app.openProduct);
+						
+						
 
 					});
 
@@ -380,7 +392,9 @@ var app = {
 
 						$('[data-screen=question-container]').html(html);
 
-                        $('a.answer').one('click', app.assessment.question_answered);
+                        //Implementing Fast Button AWG
+                        //$('a.answer').one('click', app.assessment.question_answered);
+                        $('a.answer').onpress(app.assessment.question_answered);
                         callback.apply();
 
 					});
@@ -409,7 +423,10 @@ var app = {
 						//app.moveScr($('[data-screen=question-container]'), $('[data-screen=product-page]'), 'next');
 
 						//$('a.back').one('click', app.onNav);
-						$('a.open-product').one('click', app.openProduct);
+
+						//Implementing first Fast Button AWG
+						//$('a.open-product').one('click', app.openProduct);
+						$('a.open-product').onpress(app.openProduct);
                         callback.apply();
 					});
 
@@ -492,8 +509,14 @@ var app = {
             $('[data-screen=' + to + ']').show().removeClass('protection').removeClass('detection').addClass(app.category);
 
             // TODO: Bind this at the document level
-            $('a.next,.answer').on('click', app.onNav);
-            $('a.back').on('click', app.onNav);
+
+            //Fastbutton AWG
+            //$('a.next,.answer').on('click', app.onNav);
+            $('a.next,.answer').onpress(app.onNav);
+            
+            //Fastbutton AWG
+            //$('a.back').on('click', app.onNav);
+            $('a.back').onpress(app.onNav);
 
 
             scrollTo(0,0);
