@@ -22,26 +22,26 @@ var app = {
 		},
 		error: function (err) {
 			console.error('in dal.error');
-            printAttr('db error', err);
-            return null;
-        },
-        getRows: function (sql, id) {
-            app.dal.db.transaction(
-                function (tx) {
-                    tx.executeSql(
-                        sql,
-                        [],
-                        function (tx, results) {
-                            console.log('got results');
-                            app.dal.results = results.rows;
-                            $(document.body).trigger(id, results.rows);
-                        },
-                        app.dal.error
-                    );
-                },
-                app.dal.error
-            );
-        },
+            console.error(err.message);
+			return null;
+		},
+		getRows: function (sql, id) {
+			app.dal.db.transaction(
+				function (tx) {
+					tx.executeSql(
+						sql,
+						[],
+						function (tx, results) {
+							console.log('got results');
+							app.dal.results = results.rows;
+							$(document.body).trigger(id, results.rows);
+						},
+						app.dal.error
+					);
+				},
+				app.dal.error
+			);
+		},
 		updateDatabase: function () {
 			switch (app.dal.db.version) {
 				case '':
@@ -67,6 +67,7 @@ var app = {
 		}
 	},
 	history: [],
+	direction: '',
 	browsing: false,
 	templates: [],
 	screens: [
@@ -94,15 +95,15 @@ var app = {
 			}
 			return null;
 		},
-		getQuestion: function () {
-			console.log('in getQuestion');
+		getNextQuestion: function () {
+			console.log('in getNextQuestion');
 			if (app.assessment.answers.length) {
 				if (app.assessment.answers[app.assessment.answers.length - 1].answer.type != 'question') {
-					return null;
+					return;
 				}
 			}
 			if (!app.assessment.assessment) {
-				return null;
+				return;
 			}
 
 			var sql = 'select q.question_id, q.question_text, q.description, \'[\'||group_concat(a.answers)||\']\' answers ' +
@@ -119,237 +120,245 @@ var app = {
 			sql += 'group by q.question_id order by q.question_id limit 0,1';
 
 			$(document).one('get:content', function (event) {
-					console.log('got question');
+				console.log('got question');
 
-                printAttr('event',event);
-                printAttr('event.data',event.data);
+				var tmp = event.data.item(0);
+				var question = {
+					question_id: tmp.question_id,
+					title: tmp.title,
+					question: tmp.question_text,
+					description: tmp.description,
+					answers: eval("(" + tmp.answers + ')')
+				};
 
+				console.log('question:');
+				console.log(question);
+				app.assessment.questions.push(question);
 
-					var tmp = event.data.item(0);
-					var question = {
-						question_id: tmp.question_id,
-						title: tmp.title,
-						question: tmp.question_text,
-						description: tmp.description,
-						answers: eval("(" + tmp.answers + ')')
-					};
-
-					console.log('question:');
-					console.log(question);
-					app.assessment.questions.push(question);
-
-					$(document.body).trigger('question:ready', question);
+				$(document.body).trigger('question:ready', question);
 			});
 
 			console.log('sql:' + sql);
 			app.dal.getRows(sql, 'get:content');
-        }
-    },
+		}
+	},
 	initialize: function () {
 		this.dal.open();
+		this.dal.updateDatabase();
 
 		document.addEventListener('online', this.events.onOnline, false);
 		document.addEventListener('offline', this.events.onOffline, false);
-		$('.splash')[0].addEventListener('webkitAnimationEnd', this.home, false);
 
-		this.dal.updateDatabase();
+        $('section').onpress('a.next,.back', function() {
+            console.log('in outer');
+            app.onNav($(this));
+        });
+
+        // Add nav event handlers
+        $('nav.main-nav').onpress('a#navBtn_home', function() {
+            console.log('home button clicked');
+            app.home();
+        });
+
+		$('.splash')[0].addEventListener('webkitAnimationEnd', function() {
+            console.log('in webkitAnimationEnd event handler');
+            app.home();
+        }, false);
+		$('.splash').show();
 	},
 	home: function () {
 		app.history = [];
-		app.assessment.answers = [];
+        app.assessment.questions = [];
+        app.assessment.answers = [];
 		$('.screen').hide();
 		$('.montage').css('left', '0%').show();
 		$('nav.main-nav').hide();
+    },
+	closeProduct: function () {
+		app.moveScr($('.screen[data-screen=product-page]'), $('.browse'), function () {
+		});
+	},
+	// Controller
+	onNav: function (that) {
+        // TODO: Handle case for external links
 
-		$('a.next,.back').onpress(app.onNav);
-	},
-	closeProduct: function() {
-		app.moveScr( $('.screen[data-screen=product-page]'),$('.browse') , 'back', function(){});
-	},
-    // Controller
-	onNav: function () {
 		console.log('history:');
 		console.log(app.history);
 
 		// Determine Category or route elsewhere
-		if ($(this).hasClass('det-icon'))
+		if (that.hasClass('det-icon'))
 			app.category = 'detection';
-		else if ($(this).hasClass('pro-icon'))
+		else if (that.hasClass('pro-icon'))
 			app.category = 'protection';
-        else if ($(this).hasClass('com-icon'))
-            app.category = 'communication';
+		else if (that.hasClass('com-icon')) //app.category = 'communication';
+            return;
 
-
-        // Determine if the bottom navigation has been used and short-circuit this function
-        if ($(this).hasClass('open-browse')) {
-			app.rndrCont('browse', null, function(){});
+		// Determine if the bottom navigation has been used and short-circuit this function
+		if (that.hasClass('open-browse')) {
+			app.rndrCont('browse', null, function () {});
 			return;
 		}
-        else if ($(this).hasClass('open-assessments')) {
-            app.openAssess();
-            return;
-        }
-        else if ($(this).hasClass('SOMETHING')) {
-             // Do something
-        }
+		else if (that.hasClass('open-assessments')) {
+			app.openAssess();
+			return;
+		}
 
 
 		// Determine screen coming from
-		var curScr = $(this).parents('.screen');
+		var curScr = that.parents('.screen');
 		var curScrNm = curScr.data('screen');
 
 		// Determine direction of navigation
-		var nxtScrNm, dir;
-		if ($(this).hasClass('next')) {
-            dir = 'next';
+		var nxtScrNm;
+		if (that.hasClass('next')) {
+			app.direction = 'next';
 			nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + 1];
 		}
-		else if ($(this).hasClass('back')) {
-			dir = 'back';
-			nxtScrNm = app.history[app.history.length - 1];
-        }
+		else if (that.hasClass('back')) {
+			app.direction = 'back';
+			nxtScrNm = app.history[app.history.length - 1].split(':')[0];
+		}
 
-
-        // Go home of show bottom navigation
         if (nxtScrNm == 'montage') {
             app.home();
             return;
-        } else {
-            $('nav.main-nav').show();
-            $('a#navBtn_home').onpress(app.home);
-            if (app.category == 'detection')
-                $('a.open-assessments').text('Assessments');
-            else if (app.category == 'protection')
-                $('a.open-assessments').text('Protection Types');
         }
+
+        $('nav.main-nav').show();
+        if (app.category == 'detection')
+            $('a.open-assessments').text('Assessments');
+        else if (app.category == 'protection')
+            $('a.open-assessments').text('Protection Types');
 
 
         // Get contextual information on the navigation
-        var obj = $(this).data('subitem');
-        if (!obj)
-            obj = '';
-        else
-            obj = obj.toLowerCase().replace(' ', '-');
+		var obj = that.data('subitem');
+		if (!obj)
+			obj = '';
+		else
+			obj = obj.toLowerCase().replace(' ', '-');
 
 
-        // Determine if this is an answer and handle
-        if ($(this).hasClass('answer')) {
-            var question_id = $(this).data('question-id');
-            var answer_id = $(this).data('answer-id');
+		// Determine if this is an answer and handle
+		if (that.hasClass('answer')) {
+			var question_id = that.data('question-id');
+			var answer_id = that.data('answer-id');
 
-            console.log('question_id:' + question_id);
-            console.log('answer_id:' + answer_id);
+			console.log('question_id:' + question_id);
+			console.log('answer_id:' + answer_id);
 
-            var question = app.assessment.questions.pop();
-            if (question != null)
-                question.answer = app.assessment.getAnswerById(question, answer_id);
+			var question = app.assessment.questions.pop();
+			if (question != null)
+				question.answer = app.assessment.getAnswerById(question, answer_id);
 
-            app.assessment.answers.push(question);
+			app.assessment.answers.push(question);
 
 
-            if (question.answer.type == 'question') {
-                nxtScrNm = 'question-container';
-            }
-            else if (question.answer.type == 'product') {
-                if (question.answer.nodes.length > 1) {
-                    nxtScrNm = 'product-list';
-                    obj = question.answer.nodes;
-                }
-                else {
-                    nxtScrNm = 'product-page';
-                    obj = question.answer.nodes[0];
-                }
-            }
-        }
+			if (question.answer.type == 'question') {
+				nxtScrNm = 'question-container';
+			}
+			else if (question.answer.type == 'product') {
+				if (question.answer.nodes.length > 1) {
+					nxtScrNm = 'product-list';
+					obj = question.answer.nodes;
+				}
+				else {
+					nxtScrNm = 'product-page';
+					obj = question.answer.nodes[0];
+				}
+			}
+		}
 
-        // Determine if this was an item in a product list and handle
-        if ($(this).hasClass('open-product')) {
-            nxtScrNm = 'product-page';
-            obj = $(this).data('id');
+		// Determine if this was an item in a product list and handle
+		if (that.hasClass('open-product')) {
+			nxtScrNm = 'product-page';
+			obj = that.data('id');
 
-            console.log('id:' + obj);
-        }
+			console.log('id:' + obj);
+		}
 
-		console.log('dir:' + dir + '  current screen:' + curScrNm + '  next screen:' + nxtScrNm);
+		console.log('app.direction:' + app.direction + '  current screen:' + curScrNm + '  next screen:' + nxtScrNm);
 
 		// Get obj for going back to assess-intro
-		if (dir == 'back' && nxtScrNm == 'assess-intro') {
+		if (app.direction == 'back' && nxtScrNm == 'assess-intro') {
+			app.assessment.questions = [];
+			app.assessment.answers = [];
 			obj = app.assessment.assessment;
 		}
 
-        // Keep track of the navigation history
-        if (dir == 'next') {
-            var toPush = curScrNm;
-            toPush += obj != '' ? ':' + obj : '';
-            console.log('pushing on the history')
-            app.history.push(toPush);
+		// Keep track of the navigation history
+		if (app.direction == 'next') {
+			var toPush = curScrNm;
+			toPush += obj != '' ? ':' + obj : '';
+			console.log('pushing on the history');
+			app.history.push(toPush);
 
-            // Keep track of the assessment they're using
-            if (curScrNm == 'select-assess')
-                app.assessment.assessment = obj;
-        }
-        else if (curScrNm != 'question-container') {
-            console.log('popping off the history')
-            app.history.pop();
-        }
+			// Keep track of the assessment they're using
+			if (curScrNm == 'select-assess')
+				app.assessment.assessment = obj;
+		}
+		else if (app.direction == 'back') {
+			console.log('popping off the history');
+			app.history.pop();
+		}
 
 		console.log('cat: ' + app.category + '  obj:' + obj);
 
 		// Prepare content and perform transitions
-        app.rndrCont(nxtScrNm, obj, function () {
-                app.moveScr(curScrNm, nxtScrNm, dir, function () {
-                    console.log('in moveScr callback');
-                })
-            }
-        );
-    },
+		app.rndrCont(nxtScrNm, obj, function () {
+				app.moveScr(curScrNm, nxtScrNm, function () {
+					console.log('in moveScr callback');
+				})
+			}
+		);
+	},
 	rndrCont: function (scr, obj, callback) {
-			console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
+		console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
 
-			switch (scr) {
-				case 'browse':
-					//$('.screen').removeClass('current').hide();
+		switch (scr) {
+			case 'browse':
+				//$('.screen').removeClass('current').hide();
 
-					//$('a.open-browse').parent('li').toggleClass('active-nav');
+				//$('a.open-browse').parent('li').toggleClass('active-nav');
 
-					// Determine if Browse is being switched on or off
-					var active = $('a.open-browse').parent('li').hasClass('active-nav');
-					console.log('active:' + active);
+				// Determine if Browse is being switched on or off
+				var active = $('a.open-browse').parent('li').hasClass('active-nav');
+				console.log('active:' + active);
 
-					$(document).one('get:products', function (event) {
-						var ctx = {products: []};
-						var data = event.data;
+				$(document).one('get:products', function (event) {
+					var ctx = {products: []};
+					var data = event.data;
 
-						for (var i = 0; i < data.length; i++) {
-							var product = {
-								id: data.item(i).product_id,
-								name: data.item(i).name
-							};
-							ctx.products.push(product);
-						}
-						var html = Handlebars.templates['product-list'](ctx);
-
-						$('div.product-list').html(html).show();
-						$('.browse').addClass('current').show();
-
-						$('a.open-product').onpress(app.onNav);
-					});
-
-					if (active) {
-						app.browsing = true;
-						var sql = 'select product_id, name from products where category=\'' + app.category + '\'';
-
-						console.log('sql:' + sql);
-						app.dal.getRows(sql, 'get:products');
+					for (var i = 0; i < data.length; i++) {
+						var product = {
+							id: data.item(i).product_id,
+							name: data.item(i).name
+						};
+						ctx.products.push(product);
 					}
-					else {
-						app.browsing = false;
-						app.home();
-					}
+					var html = Handlebars.templates['product-list'](ctx);
 
-					break;
-				case 'question-container':
+					$('div.product-list').html(html).show();
+					$('.browse').addClass('current').show();
 
+					//$('a.open-product').onpress(app.onNav);
+				});
+
+				if (active) {
+					app.browsing = true;
+					var sql = 'select product_id, name from products where category=\'' + app.category + '\'';
+
+					console.log('sql:' + sql);
+					app.dal.getRows(sql, 'get:products');
+				}
+				else {
+			/*		app.browsing = false;
+					app.home();*/
+				}
+
+				break;
+			case 'question-container':
+				if (app.direction == 'next') {
 					$(document).one('question:ready', function (event) {
 						var question = event.data;
 						var html = Handlebars.templates['question'](question);
@@ -357,246 +366,213 @@ var app = {
 						console.log(html);
 
 						$('[data-screen=question-container]').html(html);
-
-                        //Implementing Fast Button AWG
-                        //$('a.answer').one('click', app.assessment.question_answered);
-                        $('a.answer').onpress(app.assessment.question_answered);
-                        callback.apply();
+						callback.apply();
 
 					});
-					app.assessment.getQuestion();
-					break;
+					app.assessment.getNextQuestion();
 
-				case 'product-list':
-					$(document).one('get:products', function (event) {
-						var ctx = {products: []};
-						var data = event.data;
+				}
+				else if (app.direction == 'back') {
+					var question = app.assessment.answers.pop();
+					question.answer = null;
 
-						for (var i = 0; i < data.length; i++) {
-							var product = {
-								id: data.item(i).product_id,
-								name: data.item(i).name
-							};
-							ctx.products.push(product);
-						}
+					app.assessment.questions.push(question);
 
-						var html = Handlebars.templates['product-list'](ctx);
+					var html = Handlebars.templates['question'](question);
 
-						console.log('html:');
-						console.log(html);
-						$('[data-screen=product-list]').html(html);
+					console.log(html);
 
-						//app.moveScr($('[data-screen=question-container]'), $('[data-screen=product-page]'), 'next');
+					$('[data-screen=question-container]').html(html);
+					callback.apply();
+				}
+				break;
 
-						//$('a.back').one('click', app.onNav);
+			case 'product-list':
+				$(document).one('get:products', function (event) {
+					var ctx = {products: []};
+					var data = event.data;
 
-						$('a.open-product').onpress(app.onNav);
-                        callback.apply();
-					});
-
-					var clause = '';
-					for (var i = 0; i < obj.length; i++) {
-						clause += obj[i] + ',';
+					for (var i = 0; i < data.length; i++) {
+						var product = {
+							id: data.item(i).product_id,
+							name: data.item(i).name
+						};
+						ctx.products.push(product);
 					}
-					var sql = 'select product_id, name from products where product_id in ('+clause.substr(0, clause.length - 1)+')';
 
-					console.log('sql:'+sql);
-					app.dal.getRows(sql, 'get:products');
+					var html = Handlebars.templates['product-list'](ctx);
 
-					break;
-				case 'product-page':
-					var sql = 'select name, model, subhead, description, image, link from products where product_id=\'' + obj + '\'';
+					console.log('html:');
+					console.log(html);
+					$('[data-screen=product-list]').html(html);
 
-					$(document).one('get:content', function (event) {
-						var data = event.data.item(0);
-							var product = {
-								name: data.name,
-								model: data.model,
-								subhead: data.subhead,
-								description: data.description,
-								image: data.image,
-								link: data.link
-							};
+					//$('a.open-product').onpress(app.onNav);
+					callback.apply();
+				});
 
-							var html = Handlebars.templates['product-page'](product);
-							$('[data-screen=product-page]').html(html);
+				var clause = '';
+				for (var i = 0; i < obj.length; i++) {
+					clause += obj[i] + ',';
+				}
+				var sql = 'select product_id, name from products where product_id in (' + clause.substr(0, clause.length - 1) + ')';
 
-							//var screen = app.browsing?$('.browse'):$('[data-screen=question-container]');
+				console.log('sql:' + sql);
+				app.dal.getRows(sql, 'get:products');
 
-                            callback.apply();
-							//app.moveScr(screen, $('[data-screen=product-page]'), 'next');
-					});
+				break;
+			case 'product-page':
+				var sql = 'select name, model, subhead, description, image, link from products where product_id=\'' + obj + '\'';
 
-					console.log('sql:' + sql);
-					app.dal.getRows(sql, 'get:content');
-
-					break;
-				default:
-					var content = {
-						'cat-intro': 'select value from content where screen=\'cat-intro\' and category=\'' + app.category + '\'',
-						'select-assess': 'select value from content where screen=\'select-assess\' and category=\'' + app.category + '\'',
-						'assess-intro': 'select value from content where screen=\'assess-intro\' and key=\'' + obj + '\''
+				$(document).one('get:content', function (event) {
+					var data = event.data.item(0);
+					var product = {
+						name: data.name,
+						model: data.model,
+						subhead: data.subhead,
+						description: data.description,
+						image: data.image,
+						link: data.link
 					};
 
-						$(document).one('get:content', function (event) {
-							var data = event.data.item(0).value;
-							// Possible security vulnerability here if someone has write access to DB
-							var html = Handlebars.templates[scr](eval("(" + data + ')'));
+					var html = Handlebars.templates['product-page'](product);
+					$('[data-screen=product-page]').html(html);
 
-							console.log('data:');
-							console.log(data);
-							console.log('html:');
-							console.log(html);
+					//var screen = app.browsing?$('.browse'):$('[data-screen=question-container]');
 
-                            $('.montage').hide();
-							$('[data-screen=' + scr + ']').html(html);
+					callback.apply();
+				});
 
-                            callback.apply();
-						});
+				console.log('sql:' + sql);
+				app.dal.getRows(sql, 'get:content');
 
-					console.log('sql:' + content[scr]);
-					app.dal.getRows(content[scr], 'get:content');
+				break;
+			default:
+				var content = {
+					'cat-intro': 'select value from content where screen=\'cat-intro\' and category=\'' + app.category + '\'',
+					'select-assess': 'select value from content where screen=\'select-assess\' and category=\'' + app.category + '\'',
+					'assess-intro': 'select value from content where screen=\'assess-intro\' and key=\'' + obj + '\''
+				};
 
-					break;
-			}
+				$(document).one('get:content', function (event) {
+					var data = event.data.item(0).value;
+					// Possible security vulnerability here if someone has write access to DB
+					var html = Handlebars.templates[scr](eval("(" + data + ')'));
+
+					console.log('data:');
+					console.log(data);
+					console.log('html:');
+					console.log(html);
+
+					$('.montage').hide();
+					$('[data-screen=' + scr + ']').html(html);
+
+					callback.apply();
+				});
+
+				console.log('sql:' + content[scr]);
+				app.dal.getRows(content[scr], 'get:content');
+
+				break;
+		}
 	},
-	openAssess: function() {
+	openAssess: function () {
 		console.log('in openAssess');
-		app.rndrCont('select-assess', null, function(){});
-		app.moveScr($(this).parents('.screen'), $('[data-screen=select-assess]'), 'next', function(){});
+		app.rndrCont('select-assess', null, function () {
+		});
+		app.moveScr($(this).parents('.screen'), $('[data-screen=select-assess]'), function () {
+		});
 	},
-    moveScr: function (from, to, direction, callback) {
-        console.log('in MoveScr');
-        //var percent = {'next': [-10, 0], 'back': [100, 0]};
+	moveScr: function (from, to, callback) {
+		console.log('in MoveScr');
 
-            $('[data-screen=' + from + ']').hide();
-            $('[data-screen=' + to + ']').show().removeClass('protection').removeClass('detection').addClass(app.category);
+		$('[data-screen=' + from + ']').hide();
+		$('[data-screen=' + to + ']').show().removeClass('protection').removeClass('detection').addClass(app.category);
 
-            // TODO: Bind this at the document level
+		//$('a.next,.answer, .back').onpress(app.onNav);
 
-            //Fastbutton AWG
-            //$('a.next,.answer').on('click', app.onNav);
-            $('a.next,.answer').onpress(app.onNav);
-            
-            //Fastbutton AWG
-            //$('a.back').on('click', app.onNav);
-            $('a.back').onpress(app.onNav);
+		scrollTo(0, 0);
 
-
-            scrollTo(0,0);
-
-            callback.apply();
-
-        /*
-         from.animate(
-         {left: percent[direction][0] + '%'},
-         400,
-         'linear',
-         function () {
-         from.hide();
-         }
-         );
-
-         to.animate(
-         {left: percent[direction][1] + '%'},
-         400,
-         'linear',
-         function () {
-         to.show();
-         }
-         );*/
+		callback.apply();
 	}
 };
 
-
-function printAttr(msg, obj) {
-    console.log(msg);
-    for (var att in obj) {
-        if (obj.hasOwnProperty(att))
-            console.log(att+':'+obj[att]);
-
-    }
-}
-
 $(function () {
-
 	app.initialize();
-	$('.splash').show();
+});
 
-    //$('a.open-assessments').on('click',app.openAssess);
+//$('a.open-assessments').on('click',app.openAssess);
 
-   /* $('a.open-product').on('click', app.openProduct);
-	$('a.answer').on('click', app.assessment.question_answered);
-	$('a.open-product').on('click', app.openProduct);*/
+/* $('a.open-product').on('click', app.openProduct);
+ $('a.answer').on('click', app.assessment.question_answered);
+ $('a.open-product').on('click', app.openProduct);*/
 
-	//Open Browse functionality
+//Open Browse functionality
 
-	//Browse next functionality
+//Browse next functionality
 /*    $('a.browse-next').click(function () {
-		var oldSlide = $(this).parents('.pane');
-		var newSlide = $(oldSlide).next('.pane');
+ var oldSlide = $(this).parents('.pane');
+ var newSlide = $(oldSlide).next('.pane');
 
-		$(newSlide).show();
-		$(newSlide).addClass('browse-active');
-		$(oldSlide).removeClass('browse-active');
-		$(oldSlide).animate({
-			left: '-100%'
-		}, 250, 'cubic-bezier(0, 0, 0.20, 1)', function () {
-			$(oldSlide).hide();
-		});
-		$(newSlide).animate({
-			left: '0%'
-		}, 250, 'cubic-bezier(0, 0, 0.20, 1)');
-	});*/
+ $(newSlide).show();
+ $(newSlide).addClass('browse-active');
+ $(oldSlide).removeClass('browse-active');
+ $(oldSlide).animate({
+ left: '-100%'
+ }, 250, 'cubic-bezier(0, 0, 0.20, 1)', function () {
+ $(oldSlide).hide();
+ });
+ $(newSlide).animate({
+ left: '0%'
+ }, 250, 'cubic-bezier(0, 0, 0.20, 1)');
+ });*/
 
-	//Browse back functionality
+//Browse back functionality
 /*    $('a.back-pane').click(function () {
-		var oldSlide = $(this).parents('.pane');
-		var newSlide = $(oldSlide).prev('.pane');
+ var oldSlide = $(this).parents('.pane');
+ var newSlide = $(oldSlide).prev('.pane');
 
-		$(newSlide).show();
-		$(newSlide).addClass('browse-active');
-		$(oldSlide).removeClass('browse-active');
-		$(newSlide).animate({
-			left: '0%'
-		}, 250, 'cubic-bezier(0, 0, 0.20, 1)');
+ $(newSlide).show();
+ $(newSlide).addClass('browse-active');
+ $(oldSlide).removeClass('browse-active');
+ $(newSlide).animate({
+ left: '0%'
+ }, 250, 'cubic-bezier(0, 0, 0.20, 1)');
 
-		$(oldSlide).animate({
-			left: '100%'
-		}, 250, 'cubic-bezier(0, 0, 0.20, 1)', function () {
-			$(oldSlide).hide();
-		});
-	});*/
+ $(oldSlide).animate({
+ left: '100%'
+ }, 250, 'cubic-bezier(0, 0, 0.20, 1)', function () {
+ $(oldSlide).hide();
+ });
+ });*/
 
-	//Open product page
+//Open product page
 /*    $('a.open-product').click(function () {
-		var parentSection = $(this).parents('.screen');
-		var productSection = $(parentSection).siblings('.product-page');
-		var otherSlides = $(productSection).siblings('.detection');
+ var parentSection = $(this).parents('.screen');
+ var productSection = $(parentSection).siblings('.product-page');
+ var otherSlides = $(productSection).siblings('.detection');
 
-		$(productSection).show();
-		$(productSection).addClass('current');
-		$(otherSlides).removeClass('current');
-		$(otherSlides).hide();
-		$(productSection).css({left: 0});
-		$(parentSection).hide();
-		$('.pane').hide();
-		$('li.active-nav').removeClass('active-nav');
-	});*/
+ $(productSection).show();
+ $(productSection).addClass('current');
+ $(otherSlides).removeClass('current');
+ $(otherSlides).hide();
+ $(productSection).css({left: 0});
+ $(parentSection).hide();
+ $('.pane').hide();
+ $('li.active-nav').removeClass('active-nav');
+ });*/
 
-	//Back up to Select Assessment Page
+//Back up to Select Assessment Page
 
 /*    $('a.open-assessments').click(function () {
-		$('.select-assess').css({left: 0});
-		//$('.after-assess').css({left:'100%'});
-		//$('.after-assess').removeClass('current');
-		$('.cat-intro').css({left: '-10%'});
-		$('.select-assess').show();
-		$('.cat-intro').hide();
-		//$('.after-assess').hide();
-		$('cat-intro').removeClass('current');
-		$('.select-assess').addClass('current');
-		$('.browse').hide();
-		$('li.active-nav').removeClass('active-nav');
-	});*/
-});
+ $('.select-assess').css({left: 0});
+ //$('.after-assess').css({left:'100%'});
+ //$('.after-assess').removeClass('current');
+ $('.cat-intro').css({left: '-10%'});
+ $('.select-assess').show();
+ $('.cat-intro').hide();
+ //$('.after-assess').hide();
+ $('cat-intro').removeClass('current');
+ $('.select-assess').addClass('current');
+ $('.browse').hide();
+ $('li.active-nav').removeClass('active-nav');
+ });*/
