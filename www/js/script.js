@@ -143,31 +143,6 @@ var app = {
 
 			console.log('sql:' + sql);
 			app.dal.getRows(sql, 'get:content');
-        },
-        onAnswer: function(question_id, answer_id, callback) {
-            var question = app.assessment.questions.pop();
-            if (question != null)
-                question.answer = app.assessment.getAnswerById(question, answer_id);
-
-            app.assessment.answers.push(question);
-
-            var nxtScrNm, obj;
-
-            if (question.answer.type == 'question') {
-                nxtScrNm = 'question-container';
-            }
-            else if (question.answer.type == 'product') {
-                if (question.answer.nodes.length > 1) {
-                    nxtScrNm = 'product-list';
-                    obj = question.answer.nodes;
-                }
-                else {
-                    nxtScrNm = 'product-page';
-                    obj = question.answer.nodes[0];
-                }
-            }
-
-            callback.apply(nxtScrNm, obj);
         }
     },
 	initialize: function () {
@@ -214,12 +189,9 @@ var app = {
             app.openAssess();
             return;
         }
-        else if ($(this).hasClass('open-browse')) {
-             // Browse
+        else if ($(this).hasClass('SOMETHING')) {
+             // Do something
         }
-
-
-
 
 
 		// Determine screen coming from
@@ -227,21 +199,30 @@ var app = {
 		var curScrNm = curScr.data('screen');
 
 		// Determine direction of navigation
-		var nxtScrNm
-		var dir; // Chad remove this in the future
+		var nxtScrNm, dir;
 		if ($(this).hasClass('next')) {
+            dir = 'next';
 			nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + 1];
-			dir = 'next';
 		}
 		else if ($(this).hasClass('back')) {
 			dir = 'back';
 			nxtScrNm = app.history[app.history.length - 1];
-		}
+        }
 
+
+        // Go home of show bottom navigation
         if (nxtScrNm == 'montage') {
             app.home();
             return;
+        } else {
+            $('nav.main-nav').show();
+            $('a#navBtn_home').onpress(app.home);
+            if (app.category == 'detection')
+                $('a.open-assessments').text('Assessments');
+            else if (app.category == 'protection')
+                $('a.open-assessments').text('Protection Types');
         }
+
 
         // Get contextual information on the navigation
         var obj = $(this).data('subitem');
@@ -250,25 +231,43 @@ var app = {
         else
             obj = obj.toLowerCase().replace(' ', '-');
 
+
+        // Determine if this is an answer and handle
         if ($(this).hasClass('answer')) {
-            // Determine answer and route user to next screen {question, product}
             var question_id = $(this).data('question-id');
             var answer_id = $(this).data('answer-id');
 
             console.log('question_id:' + question_id);
             console.log('answer_id:' + answer_id);
 
-            app.assessment.onAnswer(question_id, answer_id, function(next, id) {
-                nxtScrNm = next;
-                obj = id;
-            });
+            var question = app.assessment.questions.pop();
+            if (question != null)
+                question.answer = app.assessment.getAnswerById(question, answer_id);
 
+            app.assessment.answers.push(question);
+
+
+            if (question.answer.type == 'question') {
+                nxtScrNm = 'question-container';
+            }
+            else if (question.answer.type == 'product') {
+                if (question.answer.nodes.length > 1) {
+                    nxtScrNm = 'product-list';
+                    obj = question.answer.nodes;
+                }
+                else {
+                    nxtScrNm = 'product-page';
+                    obj = question.answer.nodes[0];
+                }
+            }
         }
-        else if ($(this).hasClass('open-product')) {
+
+        // Determine if this was an item in a product list and handle
+        if ($(this).hasClass('open-product')) {
             nxtScrNm = 'product-page';
             obj = $(this).data('id');
 
-            console.error('id:' + obj);
+            console.log('id:' + obj);
         }
 
 		console.log('dir:' + dir + '  current screen:' + curScrNm + '  next screen:' + nxtScrNm);
@@ -278,20 +277,21 @@ var app = {
 			obj = app.assessment.assessment;
 		}
 
-		// Keep track of the navigation history
-		if (dir == 'next') {
-			var toPush = curScrNm;
-			//if (obj != '')
-				toPush += obj != '' ? ':' + obj : '';
-			    app.history.push(toPush);
+        // Keep track of the navigation history
+        if (dir == 'next') {
+            var toPush = curScrNm;
+            toPush += obj != '' ? ':' + obj : '';
+            console.log('pushing on the history')
+            app.history.push(toPush);
 
-			// Keep track of the assessment they're using
-			if (curScrNm == 'select-assess')
-				app.assessment.assessment = obj;
-		}
-		else if (curScrNm != 'question-container') {
-			app.history.pop();
-		}
+            // Keep track of the assessment they're using
+            if (curScrNm == 'select-assess')
+                app.assessment.assessment = obj;
+        }
+        else if (curScrNm != 'question-container') {
+            console.log('popping off the history')
+            app.history.pop();
+        }
 
 		console.log('cat: ' + app.category + '  obj:' + obj);
 
@@ -299,23 +299,9 @@ var app = {
         app.rndrCont(nxtScrNm, obj, function () {
                 app.moveScr(curScrNm, nxtScrNm, dir, function () {
                     console.log('in moveScr callback');
-                    console.log('still in moveScr callback');
                 })
             }
         );
-
-        if (nxtScrNm != 'montage') {
-            $('nav.main-nav').show();
-            // TODO: Bind these at the document level
-            if (app.category == 'detection')
-                $('a.open-assessments').text('Assessments');
-            else if (app.category == 'protection')
-                $('a.open-assessments').text('Protection Types');
-        }
-        else {
-            $('nav.main-nav').hide();
-        }
-
     },
 	rndrCont: function (scr, obj, callback) {
 			console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
@@ -324,7 +310,7 @@ var app = {
 				case 'browse':
 					//$('.screen').removeClass('current').hide();
 
-					$('a.open-browse').parent('li').toggleClass('active-nav');
+					//$('a.open-browse').parent('li').toggleClass('active-nav');
 
 					// Determine if Browse is being switched on or off
 					var active = $('a.open-browse').parent('li').hasClass('active-nav');
