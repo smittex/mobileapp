@@ -12,9 +12,7 @@
     </author>
     <content src="index.html" />
     <access origin="http://127.0.0.1*" />
-<!--
     <access origin="http://10.2.2.115*" />
--->
     <access origin="http://fonts.googleapis.com/*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />

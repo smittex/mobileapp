@@ -32,7 +32,7 @@ var app = {
 						sql,
 						[],
 						function (tx, results) {
-							console.log('got results');
+							//console.log('got results');
 							app.dal.results = results.rows;
 							$(document.body).trigger(id, results.rows);
 						},
@@ -120,8 +120,6 @@ var app = {
 			sql += 'group by q.question_id order by q.question_id limit 0,1';
 
 			$(document).one('get:content', function (event) {
-				console.log('got question');
-
 				var tmp = event.data.item(0);
 				var question = {
 					question_id: tmp.question_id,
@@ -138,7 +136,7 @@ var app = {
 				$(document.body).trigger('question:ready', question);
 			});
 
-			console.log('sql:' + sql);
+			//console.log('sql:' + sql);
 			app.dal.getRows(sql, 'get:content');
 		}
 	},
@@ -149,7 +147,7 @@ var app = {
 		document.addEventListener('online', this.events.onOnline, false);
 		document.addEventListener('offline', this.events.onOffline, false);
 
-        $('section').onpress('a.next,.back,.link,.answer', function() {
+        $('section').onpress('a.next,.back,.link,.answer,.open-product', function() {
             console.log('in outer');
             app.onNav($(this));
         });
@@ -199,7 +197,6 @@ var app = {
             return;
         }
 
-
 		console.log('history:');
 		console.log(app.history);
 
@@ -228,14 +225,14 @@ var app = {
 
 		// Determine direction of navigation
 		var nxtScrNm;
-		if (that.hasClass('next')) {
-			app.direction = 'next';
-			nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + 1];
-		}
-		else if (that.hasClass('back')) {
+        if (that.hasClass('back')) {
 			app.direction = 'back';
 			nxtScrNm = app.history[app.history.length - 1].split(':')[0];
 		}
+        else {
+            app.direction = 'next';
+            nxtScrNm = app.screens[app.screens.indexOf(curScrNm) + 1];
+        }
 
         if (nxtScrNm == 'montage') {
             app.home();
@@ -266,7 +263,7 @@ var app = {
 			console.log('answer_id:' + answer_id);
 
 			var question = app.assessment.questions.pop();
-			if (question != null)
+			//if (question != null)
 				question.answer = app.assessment.getAnswerById(question, answer_id);
 
 			app.assessment.answers.push(question);
@@ -308,7 +305,7 @@ var app = {
 		if (app.direction == 'next') {
 			var toPush = curScrNm;
 			toPush += obj != '' ? ':' + obj : '';
-			console.log('pushing on the history');
+			console.log('pushing on the history: '+toPush);
 			app.history.push(toPush);
 
 			// Keep track of the assessment they're using
@@ -316,9 +313,9 @@ var app = {
 				app.assessment.assessment = obj;
 		}
 		else if (app.direction == 'back') {
-			console.log('popping off the history');
-			app.history.pop();
-		}
+			var tmp = app.history.pop();
+            console.log('popping off the history: '+tmp);
+        }
 
 		console.log('cat: ' + app.category + '  obj:' + obj);
 
@@ -391,14 +388,15 @@ var app = {
 
 				}
 				else if (app.direction == 'back') {
-					var question = app.assessment.answers.pop();
+					// Pop the last question
+                    app.assessment.questions.pop();
+
+                    var question = app.assessment.answers.pop();
 					question.answer = null;
 
 					app.assessment.questions.push(question);
 
 					var html = Handlebars.templates['question'](question);
-
-					//console.log(html);
 
 					$('[data-screen=question-container]').html(html);
 					callback.apply();
@@ -413,28 +411,26 @@ var app = {
 					for (var i = 0; i < data.length; i++) {
 						var product = {
 							id: data.item(i).product_id,
-							name: data.item(i).name
+							name: data.item(i).name,
+                            image: data.item(i).image
 						};
 						ctx.products.push(product);
 					}
 
 					var html = Handlebars.templates['product-list'](ctx);
 
-					//console.log('html:');
-					//console.log(html);
-					$('[data-screen=product-list]').html(html);
+					console.log('html:');
+					console.log(html);
 
-					//$('a.open-product').onpress(app.onNav);
+					$('[data-screen=product-list]').html(html);
 					callback.apply();
 				});
 
 				var clause = '';
-				for (var i = 0; i < obj.length; i++) {
+				for (var i = 0; i < obj.length; i++)
 					clause += obj[i] + ',';
-				}
-				var sql = 'select product_id, name from products where product_id in (' + clause.substr(0, clause.length - 1) + ')';
 
-				//console.log('sql:' + sql);
+				var sql = 'select product_id, name, image from products where product_id in (' + clause.substr(0, clause.length - 1) + ')';
 				app.dal.getRows(sql, 'get:products');
 
 				break;
@@ -454,13 +450,9 @@ var app = {
 
 					var html = Handlebars.templates['product-page'](product);
 					$('[data-screen=product-page]').html(html);
-
-					//var screen = app.browsing?$('.browse'):$('[data-screen=question-container]');
-
 					callback.apply();
 				});
 
-				//console.log('sql:' + sql);
 				app.dal.getRows(sql, 'get:content');
 
 				break;

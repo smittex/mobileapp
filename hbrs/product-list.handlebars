@@ -1,19 +1,19 @@
-<div class="browse-back">
-	<a class="back-pane">
-		<img class="browse-back-arrow" src="img/back_arrow.png"/>
-	</a>
-</div>
+<header>
+    <div class="nav-back">
+        <a class="back"><img src="img/back_arrow.png" /></a>
+    </div>
+    <h1>Matching Products</h1>
+</header>
 <article class="contents-wrap">
-	<ul>
-		{{#each products}}
-			<li><a class="open-product select-button multiple transparent list med" data-id="{{id}}">
-				<div class="product-name-browse">
-				    {{name}}
-                </div>
-				<div class="color det">
-					<img src="img/right_arrow_black.png"/>
-				</div>
-			</a></li>
-		{{/each}}
-	</ul>
+    {{#each products}}
+    <a class="open-product product-button multiple list med match-list" data-id="{{id}}">
+        <img class="select-thumb prod-thumb" src="img/{{image}}" />
+        <div class="product-name-match">
+            {{name}}
+        </div>
+        <div class="color match">
+            <img src="img/right_arrow_black.png" />
+        </div>
+    </a>
+    {{/each}}
 </article>
