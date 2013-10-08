@@ -149,7 +149,7 @@ var app = {
 		document.addEventListener('online', this.events.onOnline, false);
 		document.addEventListener('offline', this.events.onOffline, false);
 
-        $('section').onpress('a.next,.back', function() {
+        $('section').onpress('a.next,.back,.link,.answer', function() {
             console.log('in outer');
             app.onNav($(this));
         });
@@ -160,7 +160,17 @@ var app = {
             app.home();
         });
 
-		$('.splash')[0].addEventListener('webkitAnimationEnd', function() {
+        $('nav.main-nav').onpress('a#navBtn_assessments', function() {
+            console.log('Assessment button clicked');
+            app.openAssess($(this));
+        });
+
+        $('nav.main-nav').onpress('a#navBtn_browse', function() {
+            console.log('Browse button clicked');
+            //app.openAssess();
+        });
+
+        $('.splash')[0].addEventListener('webkitAnimationEnd', function() {
             console.log('in webkitAnimationEnd event handler');
             app.home();
         }, false);
@@ -181,6 +191,14 @@ var app = {
 	// Controller
 	onNav: function (that) {
         // TODO: Handle case for external links
+        if (that.hasClass('link')) {
+            var url = that.data('url');
+            console.log('about to open link: '+url);
+
+            window.open(url, '_system');
+            return;
+        }
+
 
 		console.log('history:');
 		console.log(app.history);
@@ -199,7 +217,7 @@ var app = {
 			return;
 		}
 		else if (that.hasClass('open-assessments')) {
-			app.openAssess();
+			app.openAssess(that);
 			return;
 		}
 
@@ -348,7 +366,7 @@ var app = {
 					app.browsing = true;
 					var sql = 'select product_id, name from products where category=\'' + app.category + '\'';
 
-					console.log('sql:' + sql);
+					//console.log('sql:' + sql);
 					app.dal.getRows(sql, 'get:products');
 				}
 				else {
@@ -363,7 +381,7 @@ var app = {
 						var question = event.data;
 						var html = Handlebars.templates['question'](question);
 
-						console.log(html);
+						//console.log(html);
 
 						$('[data-screen=question-container]').html(html);
 						callback.apply();
@@ -380,7 +398,7 @@ var app = {
 
 					var html = Handlebars.templates['question'](question);
 
-					console.log(html);
+					//console.log(html);
 
 					$('[data-screen=question-container]').html(html);
 					callback.apply();
@@ -402,8 +420,8 @@ var app = {
 
 					var html = Handlebars.templates['product-list'](ctx);
 
-					console.log('html:');
-					console.log(html);
+					//console.log('html:');
+					//console.log(html);
 					$('[data-screen=product-list]').html(html);
 
 					//$('a.open-product').onpress(app.onNav);
@@ -416,7 +434,7 @@ var app = {
 				}
 				var sql = 'select product_id, name from products where product_id in (' + clause.substr(0, clause.length - 1) + ')';
 
-				console.log('sql:' + sql);
+				//console.log('sql:' + sql);
 				app.dal.getRows(sql, 'get:products');
 
 				break;
@@ -442,7 +460,7 @@ var app = {
 					callback.apply();
 				});
 
-				console.log('sql:' + sql);
+				//console.log('sql:' + sql);
 				app.dal.getRows(sql, 'get:content');
 
 				break;
@@ -458,10 +476,10 @@ var app = {
 					// Possible security vulnerability here if someone has write access to DB
 					var html = Handlebars.templates[scr](eval("(" + data + ')'));
 
-					console.log('data:');
-					console.log(data);
-					console.log('html:');
-					console.log(html);
+					//console.log('data:');
+					//console.log(data);
+					//console.log('html:');
+					//console.log(html);
 
 					$('.montage').hide();
 					$('[data-screen=' + scr + ']').html(html);
@@ -469,18 +487,23 @@ var app = {
 					callback.apply();
 				});
 
-				console.log('sql:' + content[scr]);
+				//console.log('sql:' + content[scr]);
 				app.dal.getRows(content[scr], 'get:content');
 
 				break;
 		}
 	},
-	openAssess: function () {
-		console.log('in openAssess');
-		app.rndrCont('select-assess', null, function () {
-		});
-		app.moveScr($(this).parents('.screen'), $('[data-screen=select-assess]'), function () {
-		});
+	openAssess: function (that) {
+        console.log('in openAssess');
+        console.log('cat: '+app.category);
+
+        app.rndrCont('select-assess', null, function () {
+            app.moveScr(that.parents('.screen'), 'select-assess', function () {
+                console.log('in openAssess.callback');
+            })
+        });
+        /*app.moveScr($(this).parents('.screen'), $('[data-screen=select-assess]'), function () {
+         });*/
 	},
 	moveScr: function (from, to, callback) {
 		console.log('in MoveScr');
