@@ -624,20 +624,20 @@ img.select-thumb {
     }
 }
 
-.splash img {
+#splash img {
 	margin: 0 auto;
 	width: 30%;
 	display: block;
 	margin-top: 10em;
 }
 
-.splash video {
+#splash video {
 	margin: 10em auto 0;
 	position: relative;
 	display: block;
 }
 
-.splash h3 {
+#splash h3 {
 	text-align: center;
 }
 
