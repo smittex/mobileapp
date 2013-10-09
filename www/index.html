@@ -24,9 +24,6 @@
 	<meta name="viewport" id="vp" content="initial-scale=1.0,user-scalable=no,maximum-scale=1" media="(device-height: 568px)" />
 
 	<link href='http://fonts.googleapis.com/css?family=Archivo+Narrow' rel='stylesheet' type='text/css'>
-<!--
-    <script src="http://10.2.2.115:8000/target/target-script-min.js#anonymous"></script>
--->
 
     <link rel="stylesheet" href="css/normalize.css">
 	<link rel="stylesheet" href="css/main.css">
@@ -38,7 +35,7 @@
 	<nav class="main-nav">
 		<ul>
 			<li><a id="navBtn_home" class="home">Home</a></li>
-			<li><a id="navBtn_assessments" class="open-assessments">Assessments</a></li>
+			<li><!--<a id="navBtn_assessments" class="open-assessments">Assessments</a>--></li>
 			<li><a id="navBtn_browse" class="open-browse">Browse</a></li>
 		</ul>
 	</nav>
@@ -69,11 +66,7 @@
 				</li>
 
 				<li>
-					<a class="next select-button com-icon">Communication Coming Soon
-<!--
-						<img class="right-arrow" src="img/right_arrow.png"/>
--->
-					</a>
+					<a class="next select-button com-icon">Communication Coming Soon</a>
 				</li>
 			</ul>
 		</nav>
@@ -82,39 +75,11 @@
 
 	<section class="screen" data-screen="cat-intro"></section>
 	<section class="screen" data-screen="select-assess"></section>
-	<section class="screen after-assess" data-screen="assess-intro"></section>
-	<section class="screen after-assess" data-screen="question-container"></section>
-    <section class="screen after-assess" data-screen="product-page"></section>
-    <section class="screen after-assess" data-screen="product-list"></section>
-
-	<section class="screen browse general">
-		<header>
-			<h1>Browse</h1>
-		</header>
-
-		<div class="pane category">
-			<article class="contents-wrap">
-				<ul>
-					<li><a class="browse-next select-button multiple transparent list med">
-							<div class="product-name-browse">
-                                3M™ Detection Solutions
-                                </div>
-							<div class="color det">
-								<img src="img/right_arrow.png" />
-							</div>
-					</a></li>
-					<li><a class="browse-next select-button multiple transparent list med">
-						3M™ Protection Solutions
-						<div class="color pro">
-							<img src="img/right_arrow.png"/>
-						</div>
-					</a></li>
-				</ul>
-			</article>
-		</div>
-		<div class="pane product-list">
-		</div>
-	</section>
+	<section class="screen" data-screen="assess-intro"></section>
+	<section class="screen" data-screen="question-container"></section>
+    <section class="screen" data-screen="product-page"></section>
+    <section class="screen" data-screen="product-list"></section>
+	<section class="screen" data-screen="browse"></section>
 
 	<script src="js/vendor/zepto.js"></script>
 	<script src="js/vendor/zepto.onpress.js"></script>

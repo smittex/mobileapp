@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.theshinebox.threeM"
-        version="0.7.1"
+        version="0.9"
         xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0">
     <name>3M Hearing Solutions Product Selection </name>
@@ -12,9 +12,6 @@
     </author>
     <content src="index.html" />
     <access origin="http://127.0.0.1*" />
-<!--
-    <access origin="http://10.2.2.115*" />
--->
     <access origin="http://fonts.googleapis.com/*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
