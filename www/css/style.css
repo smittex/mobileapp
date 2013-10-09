@@ -60,7 +60,7 @@ nav ul {
 nav ul li {
 	display: inline-block;
 	list-style-type: none;
-	width:32%;
+	width:49%;
 	padding-top: 0.3em;
 	padding-bottom: 0.1em;
 	height:100%;
@@ -82,21 +82,21 @@ nav ul li a{
 nav ul li a.home{
 	background-image: url(../img/home.png);
 	background-repeat: no-repeat;
-	background-size: 35% auto;
+	background-size: 24% auto;
 	background-position: center top;
 }
 
-nav ul li a.open-assessments{
+/*nav ul li a.open-assessments{
 	background-image: url(../img/assessments.png);
 	background-repeat: no-repeat;
-	background-size: 35% auto;
+	background-size: 20% auto;
 	background-position: center top;
-}
+}*/
 
 nav ul li a.open-browse{
 	background-image: url(../img/browse.png);
 	background-repeat: no-repeat;
-	background-size: 35% auto;
+	background-size: 24% auto;
 	background-position: center top;
 }
 /*End footer nav styles*/
@@ -777,14 +777,15 @@ nav.cat-nav ul li a.pro-icon{
 
 }
 
-nav.cat-nav ul li a.com-icon{
-	background-color: #777777;
-	background-image: none;
-}
+
 
 nav.cat-nav ul li a.com-icon{
+	background-image: url(../img/coming_soon.png);
+	background-position: left top;
+	background-repeat: no-repeat;
+	background-size: auto 100%;
 	right: 100%;
-	background-color: #b3b6bf;
+		background-color: #777777;
 	animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
@@ -793,6 +794,8 @@ nav.cat-nav ul li a.com-icon{
 	-webkit-animation-fill-mode: forwards;
 
 }
+
+
 
 @keyframes slidein
 {
@@ -838,4 +841,8 @@ nav.cat-nav ul li a.com-icon{
 img.prod-thumb {
     float: left;
     position: relative;
+}
+
+.small-text {
+	font-size: 0.5em;
 }
