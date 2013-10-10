@@ -512,8 +512,8 @@ img.select-thumb {
 }
 
 .general {
-	background-image: url(../img/general_bg.jpg);
-	background-size: cover;
+	background-image: url(../img/general_bg_top.jpg);
+	background-size: 100% auto;
 	background-repeat: no-repeat;
 	background-position: center top;
 	background-attachment: fixed;

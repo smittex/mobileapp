@@ -23,3 +23,4 @@ local.properties
 *.ipr
 *.iws
 .idea/
+*.espressostorage
