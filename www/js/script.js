@@ -185,7 +185,7 @@ var app = {
             var url = that.data('url');
             console.log('about to open link: ' + url);
 
-            window.open(url, '_system');
+            window.open(url, '_system', 'location=yes');
             return;
         }
 
