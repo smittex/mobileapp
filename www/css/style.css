@@ -781,7 +781,7 @@ nav.cat-nav ul li a.pro-icon{
 
 nav.cat-nav ul li a.com-icon{
 	background-image: url(../img/coming_soon.png);
-	background-position: left top;
+	background-position: right top;
 	background-repeat: no-repeat;
 	background-size: auto 100%;
 	right: 100%;
