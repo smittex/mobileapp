@@ -39,4 +39,5 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.InAppBrowser" />
     </feature>
+    <plugin name="InAppBrowser" value="CDVInAppBrowser" />
 </widget>
