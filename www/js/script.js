@@ -10,19 +10,19 @@ var app = {
     dal: {
         open: function () {
             if (!app.dal.db) {
-                console.error('trying to open db');
+                //console.error('trying to open db');
                 app.dal.db = window.openDatabase(
                     'products.db',
                     '',
                     'products',
                     5000000
                 );
-                console.error(app.dal.db);
+                //console.error(app.dal.db);
             }
         },
         error: function (err) {
-            console.error('in dal.error');
-            console.error(err.message);
+            //console.error('in dal.error');
+            //console.error(err.message);
             return null;
         },
         getRows: function (sql, id) {
@@ -52,19 +52,19 @@ var app = {
                     app.dal.db.transaction(
                         function (tx) {
                             for (var idx in lines) {
-                                console.log('About to execute: ' + lines[idx]);
+                                //console.log('About to execute: ' + lines[idx]);
                                 tx.executeSql(lines[idx]);
                             }
                             callback.apply();
                         },
                         function (err) {
-                            printAttr(err.message, err);
+                            //printAttr(err.message, err);
                         }
                     );
 
                     break;
                 default:
-                    console.error('No case for db version: ' + app.dal.db.version);
+                    //console.error('No case for db version: ' + app.dal.db.version);
                     callback.apply();
                     break;
             }
@@ -104,7 +104,7 @@ var app = {
             return null;
         },
         getNextQuestion: function () {
-            console.log('in getNextQuestion');
+            //console.log('in getNextQuestion');
             if (app.assessment.answers.length) {
                 if (app.assessment.answers[app.assessment.answers.length - 1].answer.type != 'question') {
                     return;
@@ -137,8 +137,8 @@ var app = {
                     answers: eval("(" + tmp.answers + ')')
                 };
 
-                console.log('question:');
-                console.log(question);
+                //console.log('question:');
+                //console.log(question);
                 app.assessment.questions.push(question);
 
                 $(document.body).trigger('question:ready', question);
@@ -150,7 +150,7 @@ var app = {
     },
     initialize: function () {
         $('#splash')[0].addEventListener('webkitAnimationEnd', function () {
-            console.log('in webkitAnimationEnd event handler');
+            //console.log('in webkitAnimationEnd event handler');
             app.home();
         }, false);
         $('#splash').show();
@@ -183,14 +183,14 @@ var app = {
         // TODO: Handle case for external links
         if (that.hasClass('link')) {
             var url = that.data('url');
-            console.log('about to open link: ' + url);
+            //console.log('about to open link: ' + url);
 
             window.open(url, '_system', 'location=yes');
             return;
         }
 
-        console.log('history:');
-        console.log(app.history);
+        //console.log('history:');
+        //console.log(app.history);
 
         // Determine Category
         if (that.hasClass('det-icon'))
@@ -200,7 +200,7 @@ var app = {
         else if (that.hasClass('com-icon')) //app.category = 'communication';
             return;
 
-        console.log('Current screen: ' + app.currentScreenName);
+        //console.log('Current screen: ' + app.currentScreenName);
 
         // Determine direction of navigation and possibly the next screen
         var nxtScrNm;
@@ -219,7 +219,7 @@ var app = {
                 nxtScrNm = '';
         }
 
-        console.log('Next screen: ' + nxtScrNm);
+        //console.log('Next screen: ' + nxtScrNm);
 
 
         // Get contextual information on the navigation
@@ -250,22 +250,22 @@ var app = {
             nxtScrNm = 'product-page';
             obj = that.data('id');
 
-            console.log('id:' + obj);
+            //console.log('id:' + obj);
         }
         else if (that.hasClass('browse-next')) {
             // Handle opening product page from browse
             nxtScrNm = 'product-page';
             obj = that.data('id');
 
-            console.log('id:' + obj);
+            //console.log('id:' + obj);
         }
         else if (that.hasClass('answer')) {
             // A question has been answered
             var question_id = that.data('question-id');
             var answer_id = that.data('answer-id');
 
-            console.log('question_id:' + question_id);
-            console.log('answer_id:' + answer_id);
+            //console.log('question_id:' + question_id);
+            //console.log('answer_id:' + answer_id);
 
             var question = app.assessment.questions.pop();
             question.answer = app.assessment.getAnswerById(question, answer_id);
@@ -287,7 +287,7 @@ var app = {
             }
         }
 
-        console.log('app.direction:' + app.direction + '  current screen:' + app.currentScreenName + '  next screen:' + nxtScrNm);
+        //console.log('app.direction:' + app.direction + '  current screen:' + app.currentScreenName + '  next screen:' + nxtScrNm);
 
         // Get obj for going back to assess-intro
         if (app.direction == 'back' && nxtScrNm == 'assess-intro') {
@@ -300,7 +300,7 @@ var app = {
         if (app.direction == 'next') {
             var toPush = app.currentScreenName;
             toPush += obj != '' ? ':' + obj : '';
-            console.log('pushing on the history: ' + toPush);
+            //console.log('pushing on the history: ' + toPush);
             app.history.push(toPush);
 
             // Keep track of the assessment they're using
@@ -309,7 +309,7 @@ var app = {
         }
         else if (app.direction == 'back') {
             var tmp = app.history.pop();
-            console.log('popping off the history: ' + tmp);
+            //console.log('popping off the history: ' + tmp);
 
             // If going back to product list, pop the history to get the products and push it back
             if (nxtScrNm == 'product-list') {
@@ -319,11 +319,11 @@ var app = {
             }
         }
 
-        console.log('cat: ' + app.category + '  obj:' + obj);
+        //console.log('cat: ' + app.category + '  obj:' + obj);
 
         // If the next screen hasn't been defined, we cannot do anything
         if (nxtScrNm == '') {
-            console.error('No screen to go to!');
+            //console.error('No screen to go to!');
             return;
         }
 
@@ -340,7 +340,7 @@ var app = {
         );
     },
     rndrCont: function (scr, obj, callback) {
-        console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
+        //console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
 
         switch (scr) {
             case 'browse':
@@ -466,15 +466,6 @@ var app = {
         scrollTo(0, 0);
     }
 };
-
-function printAttr(msg, obj) {
-    console.log(msg);
-    for (var att in obj) {
-        if (obj.hasOwnProperty(att))
-            console.log(att + ':' + obj[att]);
-
-    }
-}
 
 $(function () {
     app.initialize();
