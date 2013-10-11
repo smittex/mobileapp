@@ -424,7 +424,7 @@ var app = {
                         subhead: data.subhead,
                         description: data.description,
                         image: data.image,
-                        link: data.link
+                        link: 'window.open("' + data.link + '", "_system"); return false;'
                     };
 
                     var html = Handlebars.templates['product-page'](product);
