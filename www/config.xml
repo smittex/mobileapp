@@ -39,5 +39,4 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.InAppBrowser" />
     </feature>
-    <gap:plugin name="org.apache.cordova.core.inappbrowser" />
 </widget>
