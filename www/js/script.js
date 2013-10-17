@@ -168,6 +168,8 @@ var app = {
         $('nav').onpress('a', function () {
             app.onNav($(this));
         });
+
+
     },
     home: function () {
         app.history = [];
@@ -175,7 +177,7 @@ var app = {
         app.direction = '';
         app.assessment.questions = [];
         app.assessment.answers = [];
-        $('.screen').hide();
+        //$('.screen').hide();
         $('.montage').css('left', '0%').show();
         $('nav.main-nav').hide();
     },
@@ -456,17 +458,121 @@ var app = {
         }
     },
     moveScr: function (from, to) {
-        $('[data-screen=' + from + ']').hide();
-        $('[data-screen=' + to + ']').show()
-                                     .removeClass('protection')
-                                     .removeClass('detection')
-                                     .removeClass('general')
-                                     .addClass(app.category);
-        app.currentScreenName = to;
-        scrollTo(0, 0);
+        //$('[data-screen=' + from + ']').hide();
+            try {
+            var toScreen = $('[data-screen=' + to + ']').first();
+            var fromScreen = $('[data-screen=' + from + ']').first();
+
+            console.log('In moveScr');
+            console.log('To name: ' + to + '   From name: ' + from);
+            console.log('To: ');
+            console.log(toScreen);
+            console.log('From: ');
+            console.log(fromScreen);
+            console.log('History: ');
+            console.log(app.history);
+            console.log('Current Screen Name: ');
+            console.log(app.currentScreenName);
+            console.log('Direction: ');
+            console.log(app.direction);
+            console.log('toScreen vis: ' + toScreen.css('display'));
+            console.log('toScreen left: ' + toScreen.css('left'));
+            console.log('fromScreen vis: ' + fromScreen.css('display'));
+            console.log('fromScreen left: ' + fromScreen.css('left'));
+
+
+
+
+
+
+            toScreen.removeClass('protection')
+                    .removeClass('detection')
+                    .removeClass('general')
+                    .addClass(app.category);
+
+
+
+            if (!app.currentScreenName) {
+                toScreen.addClass('page center');
+                return;
+            }
+
+            toScreen.addClass('page transition center');
+
+            fromScreen.addClass('page transition ' + (app.direction === 'back' ? 'right' : 'left'));
+
+
+            console.log('toScreen vis: ' + toScreen.css('display'));
+            console.log('toScreen left: ' + toScreen.css('left'));
+            console.log('fromScreen vis: ' + fromScreen.css('display'));
+            console.log('fromScreen left: ' + fromScreen.css('left'));
+
+            app.currentScreenName = to;
+        }
+        catch(err) {
+            console.error(err.message);
+        }
+
+        // scrollTo(0, 0);
     }
 };
 
 $(function () {
     app.initialize();
 });
+
+function PageSlider(container) {
+
+    var container = container,
+        currentPage,
+        stateHistory = [];
+
+    // Use this function if you want PageSlider to automatically determine the sliding direction based on the state history
+    this.slidePage = function(page) {
+
+        var l = stateHistory.length,
+            state = window.location.hash;
+
+        if (l === 0) {
+            stateHistory.push(state);
+            this.slidePageFrom(page);
+            return;
+        }
+        if (state === stateHistory[l-2]) {
+            stateHistory.pop();
+            this.slidePageFrom(page, 'left');
+        } else {
+            stateHistory.push(state);
+            this.slidePageFrom(page, 'right');
+        }
+
+    }
+
+    // Use this function directly if you want to control the sliding direction outside PageSlider
+    this.slidePageFrom = function(page, from) {
+
+        container.append(page);
+
+        if (!currentPage || !from) {
+            page.attr("class", "page center");
+            currentPage = page;
+            return;
+        }
+
+        // Position the page at the starting position of the animation
+        page.attr("class", "page " + from);
+
+        currentPage.one('webkitTransitionEnd', function(e) {
+            $(e.target).remove();
+        });
+
+        // Force reflow. More information here: http://www.phpied.com/rendering-repaint-reflowrelayout-restyle/
+        container[0].offsetWidth;
+
+        // Position the new page and the current page at the ending position of their animation with a transition class indicating the duration of the animation
+        page.attr("class", "page transition center");
+        currentPage.attr("class", "page transition " + (from === "left" ? "right" : "left"));
+        currentPage = page;
+    }
+
+}
