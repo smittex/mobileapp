@@ -15,7 +15,7 @@ var app = {
                     'products.db',
                     '',
                     'products',
-                    5000000
+                    2000000
                 );
                 //console.error(app.dal.db);
             }
