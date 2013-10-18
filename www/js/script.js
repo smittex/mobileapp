@@ -177,8 +177,8 @@ var app = {
         app.direction = '';
         app.assessment.questions = [];
         app.assessment.answers = [];
-        //$('.screen').hide();
-        $('.montage').css('left', '0%').show();
+        $('.screen').not('.montage').addClass('right').hide();//css('left','100%');
+        $('.montage').addClass('center').show();//css('left', '0%');
         $('nav.main-nav').hide();
     },
     onNav: function (that) {
@@ -372,7 +372,13 @@ var app = {
                     $(document).one('question:ready', function (event) {
                         var question = event.data;
                         var html = Handlebars.templates['question'](question);
-                        $('[data-screen=question-container]').html(html);
+                        var container = $('[data-screen=question-container]');
+
+                        console.log('Question Container: ');
+                        console.log(container);
+
+
+                        container.html(html);
                         callback.apply();
 
                     });
@@ -480,27 +486,21 @@ var app = {
             console.log('fromScreen vis: ' + fromScreen.css('display'));
             console.log('fromScreen left: ' + fromScreen.css('left'));
 
-
-
-
-
-
-            toScreen.removeClass('protection')
-                    .removeClass('detection')
-                    .removeClass('general')
+            toScreen.removeClass('protection detection general')
                     .addClass(app.category);
 
-
-
             if (!app.currentScreenName) {
-                toScreen.addClass('page center');
+                toScreen.addClass('center');
                 return;
             }
 
-            toScreen.addClass('page transition center');
+            toScreen.show().addClass('transition center').removeClass('left right');
 
-            fromScreen.addClass('page transition ' + (app.direction === 'back' ? 'right' : 'left'));
+            fromScreen[0].addEventListener('webkitAnimationEnd', function() {
+                fromScreen.hide();
+            }, false);
 
+            fromScreen.removeClass('center').addClass('transition ' + (app.direction === 'back' ? 'right' : 'left'));
 
             console.log('toScreen vis: ' + toScreen.css('display'));
             console.log('toScreen left: ' + toScreen.css('left'));

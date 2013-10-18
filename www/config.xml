@@ -12,6 +12,8 @@
     </author>
     <content src="index.html" />
     <access origin="http://127.0.0.1*" />
+    <access origin="http://*.google.com/*" />
+    <access origin="http://google.com/*" />
     <access origin="http://10.2.2.115/*" />
     <access origin="http://link.brightcove.com/*" />
     <access origin="http://3m.com/*" />
@@ -20,7 +22,7 @@
     <preference name="webviewbounce" value="true" />
     <preference name="orienation" value="portrait" />
     <preference name="target-device" value="handset" />
-    <preference name="phonegap-version" value="2.9.0" />
+    <preference name="phonegap-version" value="3.0.0" />
     <icon src="icon.png" />
     <gap:platform name="ios" />
     <gap:platform name="android" />
