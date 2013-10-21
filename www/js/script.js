@@ -1,3 +1,4 @@
+;"use strict";
 var app = {
     events: {
         onOnline: function () {
@@ -91,14 +92,14 @@ var app = {
         answers: [],
         getQuestionById: function (id) {
             for (var i = 0; i < app.assessment.questions.length; i++) {
-                if (app.assessment.questions[i].question_id == id)
+                if (app.assessment.questions[i].question_id === id)
                     return app.assessment.questions[i];
             }
             return null;
         },
         getAnswerById: function (question, id) {
             for (var i = 0; i < question.answers.length; i++) {
-                if (question.answers[i].id == id)
+                if (question.answers[i].id === id)
                     return question.answers[i];
             }
             return null;
@@ -232,7 +233,7 @@ var app = {
             obj = obj.toLowerCase().replace(' ', '-');
 
 
-        if (nxtScrNm == 'montage' || that.hasClass('home')) {
+        if (nxtScrNm === 'montage' || that.hasClass('home')) {
             app.home();
             return;
         }
@@ -274,10 +275,10 @@ var app = {
 
             app.assessment.answers.push(question);
 
-            if (question.answer.type == 'question') {
+            if (question.answer.type === 'question') {
                 nxtScrNm = 'question-container';
             }
-            else if (question.answer.type == 'product') {
+            else if (question.answer.type === 'product') {
                 if (question.answer.nodes.length > 1) {
                     nxtScrNm = 'product-list';
                     obj = app.util.arrayToDelimitedString(question.answer.nodes);
@@ -292,29 +293,29 @@ var app = {
         //console.log('app.direction:' + app.direction + '  current screen:' + app.currentScreenName + '  next screen:' + nxtScrNm);
 
         // Get obj for going back to assess-intro
-        if (app.direction == 'back' && nxtScrNm == 'assess-intro') {
+        if (app.direction === 'back' && nxtScrNm === 'assess-intro') {
             app.assessment.questions = [];
             app.assessment.answers = [];
             obj = app.assessment.assessment;
         }
 
         // Keep track of the navigation history
-        if (app.direction == 'next') {
+        if (app.direction === 'next') {
             var toPush = app.currentScreenName;
             toPush += obj != '' ? ':' + obj : '';
             //console.log('pushing on the history: ' + toPush);
             app.history.push(toPush);
 
             // Keep track of the assessment they're using
-            if (app.currentScreenName == 'select-assess')
+            if (app.currentScreenName === 'select-assess')
                 app.assessment.assessment = obj;
         }
-        else if (app.direction == 'back') {
+        else if (app.direction === 'back') {
             var tmp = app.history.pop();
             //console.log('popping off the history: ' + tmp);
 
             // If going back to product list, pop the history to get the products and push it back
-            if (nxtScrNm == 'product-list') {
+            if (nxtScrNm === 'product-list') {
                 var tmp = app.history.pop();
                 obj = tmp.split(':')[1];
                 app.history.push(tmp);
@@ -324,15 +325,15 @@ var app = {
         //console.log('cat: ' + app.category + '  obj:' + obj);
 
         // If the next screen hasn't been defined, we cannot do anything
-        if (nxtScrNm == '') {
+        if (nxtScrNm === '') {
             //console.error('No screen to go to!');
             return;
         }
 
         $('nav.main-nav').show();
-        if (app.category == 'detection')
+        if (app.category === 'detection')
             $('a.open-assessments').text('Assessments');
-        else if (app.category == 'protection')
+        else if (app.category === 'protection')
             $('a.open-assessments').text('Protection Types');
 
         // Prepare content and perform transitions
@@ -368,7 +369,7 @@ var app = {
 
                 break;
             case 'question-container':
-                if (app.direction == 'next') {
+                if (app.direction === 'next') {
                     $(document).one('question:ready', function (event) {
                         var question = event.data;
                         var html = Handlebars.templates['question'](question);
@@ -385,7 +386,7 @@ var app = {
 
                     app.assessment.getNextQuestion();
                 }
-                else if (app.direction == 'back') {
+                else if (app.direction === 'back') {
                     // Pop the last question
                     app.assessment.questions.pop();
 
@@ -432,7 +433,7 @@ var app = {
                         subhead: data.subhead,
                         description: data.description,
                         image: data.image,
-                        link: "window.open(\'" + data.link + "\', \'_system\'); return false;",
+                        link: "window.open(\'" + data.link + "\', \'_system\'); return false;"
                     };
 
                     var html = Handlebars.templates['product-page'](product);
@@ -546,7 +547,7 @@ function PageSlider(container) {
             this.slidePageFrom(page, 'right');
         }
 
-    }
+    };
 
     // Use this function directly if you want to control the sliding direction outside PageSlider
     this.slidePageFrom = function(page, from) {
