@@ -33,10 +33,4 @@
     <gap:splash src="img/splash/andriod/screen-mdpi-portrait.png" gap:platform="android" gap:density="mdpi" />
     <gap:splash src="img/splash/andriod/screen-hdpi-portrait.png" gap:platform="android" gap:density="hdpi" />
     <gap:splash src="img/splash/andriod/screen-xhdpi-portrait.png" gap:platform="android" gap:density="xhdpi" />
-    <feature name="InAppBrowser">
-        <param name="ios-package" value="CDVInAppBrowser" />
-    </feature>
-    <feature name="InAppBrowser">
-        <param name="android-package" value="org.apache.cordova.InAppBrowser" />
-    </feature>
 </widget>
