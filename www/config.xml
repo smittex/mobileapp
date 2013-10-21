@@ -22,7 +22,6 @@
     <preference name="webviewbounce" value="true" />
     <preference name="orienation" value="portrait" />
     <preference name="target-device" value="handset" />
-    <preference name="phonegap-version" value="2.9.0" />
     <icon src="icon.png" />
     <gap:platform name="ios" />
     <gap:platform name="android" />
