@@ -8,12 +8,17 @@
 # Java class files
 *.class
 
-# generated files
+# Android generated files
 platforms/android/bin/
 platforms/android/gen/
 platforms/android/assets/
 platforms/android/res/xml/config.xml
 platforms/android/AndroidManifest.xml
+
+# iOS generated files
+platforms/ios/build
+platforms/ios/cordova
+platforms/ios/CordovaLib
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -24,3 +29,23 @@ local.properties
 *.iws
 .idea/
 *.espressostorage
+
+
+# Xcode
+.DS_Store
+*/build/*
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+profile
+*.moved-aside
+DerivedData
+.idea/
+*.hmap
+*.xccheckout
