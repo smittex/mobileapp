@@ -24,3 +24,6 @@ local.properties
 *.iws
 .idea/
 *.espressostorage
+
+# Cordova
+.cordova/config.json.old
