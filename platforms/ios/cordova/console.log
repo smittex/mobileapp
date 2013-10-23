@@ -1,0 +1,367 @@
+2013-10-18 08:28:46.920 3M Hearing Solutions Product Selection [1291:a0b] Multi-tasking -> Device: YES, App: YES
+2013-10-18 08:28:47.877 3M Hearing Solutions Product Selection [1291:a0b] Resetting plugins due to page load.
+2013-10-18 08:28:48.713 3M Hearing Solutions Product Selection [1291:4203] ERROR whitelist rejection: url='http://themes.googleusercontent.com/static/fonts/archivonarrow/v2/DsLzC9scoPnrGiwYYMQXplLE0juxe_YrR4_5kH0wfhI.ttf'
+2013-10-18 08:28:48.714 3M Hearing Solutions Product Selection [1291:4203] ERROR whitelist rejection: url='http://themes.googleusercontent.com/static/fonts/archivonarrow/v2/DsLzC9scoPnrGiwYYMQXplLE0juxe_YrR4_5kH0wfhI.ttf'
+2013-10-18 08:28:48.715 3M Hearing Solutions Product Selection [1291:4203] ERROR whitelist rejection: url='http://themes.googleusercontent.com/static/fonts/archivonarrow/v2/DsLzC9scoPnrGiwYYMQXplLE0juxe_YrR4_5kH0wfhI.ttf'
+2013-10-18 08:28:48.732 3M Hearing Solutions Product Selection [1291:a0b] Finished load of: file:///Users/bryan/Library/Application%20Support/iPhone%20Simulator/7.0/Applications/12012E35-DFD9-4DCC-BF9D-C1720B011128/3M%20Hearing%20Solutions%20Product%20Selection%20.app/www/index.html
+Oct 18 08:28:48 Macintosh.local 3M Hearing Solutions Product Selection [1291] <Error>: FT_Open_Face failed: error 2.
+2013-10-18 08:29:21.676 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:29:21.676 3M Hearing Solutions Product Selection [1291:a0b]  To name: cat-intro   From name: montage
+2013-10-18 08:29:21.677 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:29:21.677 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:29:21.678 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:29:21.678 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:29:21.678 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:29:21.679 3M Hearing Solutions Product Selection [1291:a0b] ["montage"]
+2013-10-18 08:29:21.679 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:29:21.679 3M Hearing Solutions Product Selection [1291:a0b]  montage
+2013-10-18 08:29:21.680 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:29:21.681 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:29:21.683 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:29:21.685 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:29:21.688 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:29:21.689 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0%
+2013-10-18 08:29:21.690 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:29:21.690 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:29:21.690 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:29:21.691 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0%
+2013-10-18 08:29:36.442 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:29:36.443 3M Hearing Solutions Product Selection [1291:a0b]  To name: cat-intro   From name: montage
+2013-10-18 08:29:36.444 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:29:36.444 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:29:36.445 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:29:36.445 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:29:36.445 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:29:36.446 3M Hearing Solutions Product Selection [1291:a0b] ["montage"]
+2013-10-18 08:29:36.446 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:29:36.447 3M Hearing Solutions Product Selection [1291:a0b]  montage
+2013-10-18 08:29:36.447 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:29:36.448 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:29:36.448 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:29:36.449 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:29:36.449 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:29:36.450 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0%
+2013-10-18 08:29:36.450 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:29:36.451 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:29:36.452 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:29:36.452 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0%
+2013-10-18 08:29:38.466 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:29:38.466 3M Hearing Solutions Product Selection [1291:a0b]  To name: select-assess   From name: cat-intro
+2013-10-18 08:29:38.467 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:29:38.467 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:29:38.467 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:29:38.468 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:29:38.468 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:29:38.470 3M Hearing Solutions Product Selection [1291:a0b] ["montage","cat-intro"]
+2013-10-18 08:29:38.471 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:29:38.472 3M Hearing Solutions Product Selection [1291:a0b]  cat-intro
+2013-10-18 08:29:38.473 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:29:38.474 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:29:38.475 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:29:38.477 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:29:38.479 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:29:38.479 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:29:38.480 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:29:38.481 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:29:38.481 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:29:38.481 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:29:40.667 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:29:40.668 3M Hearing Solutions Product Selection [1291:a0b]  To name: cat-intro   From name: select-assess
+2013-10-18 08:29:40.668 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:29:40.668 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:29:40.669 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:29:40.669 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:29:40.670 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:29:40.670 3M Hearing Solutions Product Selection [1291:a0b] ["montage"]
+2013-10-18 08:29:40.670 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:29:40.670 3M Hearing Solutions Product Selection [1291:a0b]  select-assess
+2013-10-18 08:29:40.671 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:29:40.671 3M Hearing Solutions Product Selection [1291:a0b]  back
+2013-10-18 08:29:40.671 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:29:40.671 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:29:40.672 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:29:40.672 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:29:40.672 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:29:40.673 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:29:40.673 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:29:40.673 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:29:55.301 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:29:55.302 3M Hearing Solutions Product Selection [1291:a0b]  To name: cat-intro   From name: montage
+2013-10-18 08:29:55.302 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:29:55.303 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:29:55.303 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:29:55.304 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:29:55.304 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:29:55.305 3M Hearing Solutions Product Selection [1291:a0b] ["montage"]
+2013-10-18 08:29:55.306 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:29:55.308 3M Hearing Solutions Product Selection [1291:a0b]  montage
+2013-10-18 08:29:55.310 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:29:55.312 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:29:55.314 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:29:55.315 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:29:55.316 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:29:55.317 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0%
+2013-10-18 08:29:55.318 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:29:55.319 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:29:55.319 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:29:55.320 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0%
+2013-10-18 08:30:04.804 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:30:04.805 3M Hearing Solutions Product Selection [1291:a0b]  To name: select-assess   From name: cat-intro
+2013-10-18 08:30:04.805 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:30:04.806 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:30:04.806 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:30:04.807 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:30:04.807 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:30:04.808 3M Hearing Solutions Product Selection [1291:a0b] ["montage","cat-intro"]
+2013-10-18 08:30:04.808 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:30:04.808 3M Hearing Solutions Product Selection [1291:a0b]  cat-intro
+2013-10-18 08:30:04.809 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:30:04.809 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:30:04.809 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:30:04.810 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:30:04.810 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:30:04.810 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:30:04.810 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:30:04.811 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:30:04.811 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:30:04.811 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:08.813 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:08.813 3M Hearing Solutions Product Selection [1291:a0b]  To name: assess-intro   From name: montage
+2013-10-18 08:33:08.814 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:08.814 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:08.814 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:08.815 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:08.815 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:08.816 3M Hearing Solutions Product Selection [1291:a0b] ["montage"]
+2013-10-18 08:33:08.816 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:08.817 3M Hearing Solutions Product Selection [1291:a0b]  montage
+2013-10-18 08:33:08.817 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:08.818 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:08.818 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:08.818 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:33:08.819 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:08.820 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0%
+2013-10-18 08:33:08.820 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:08.820 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:33:08.821 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:08.821 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0%
+2013-10-18 08:33:08.822 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:08.823 3M Hearing Solutions Product Selection [1291:a0b]  To name: assess-intro   From name: assess-intro
+2013-10-18 08:33:08.823 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:08.824 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:08.824 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:08.825 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:08.825 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:08.825 3M Hearing Solutions Product Selection [1291:a0b] ["montage"]
+2013-10-18 08:33:08.826 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:08.826 3M Hearing Solutions Product Selection [1291:a0b]  assess-intro
+2013-10-18 08:33:08.827 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:08.827 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:08.828 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:08.828 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:33:08.829 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:08.829 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 100%
+2013-10-18 08:33:08.829 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:08.830 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:33:08.831 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:08.832 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 100%
+2013-10-18 08:33:08.832 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:08.832 3M Hearing Solutions Product Selection [1291:a0b]  To name: assess-intro   From name: assess-intro
+2013-10-18 08:33:08.833 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:08.833 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:08.833 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:08.834 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:08.834 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:08.835 3M Hearing Solutions Product Selection [1291:a0b] ["montage"]
+2013-10-18 08:33:08.835 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:08.836 3M Hearing Solutions Product Selection [1291:a0b]  assess-intro
+2013-10-18 08:33:08.836 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:08.836 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:08.837 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:08.837 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:33:08.838 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:08.838 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 100%
+2013-10-18 08:33:08.839 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:08.839 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:33:08.840 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:08.841 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 100%
+2013-10-18 08:33:08.841 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:08.841 3M Hearing Solutions Product Selection [1291:a0b]  To name: cat-intro   From name: assess-intro
+2013-10-18 08:33:08.842 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:08.842 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:08.842 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:08.843 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:08.843 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:08.843 3M Hearing Solutions Product Selection [1291:a0b] ["montage"]
+2013-10-18 08:33:08.843 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:08.844 3M Hearing Solutions Product Selection [1291:a0b]  assess-intro
+2013-10-18 08:33:08.844 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:08.844 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:08.845 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:08.845 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:08.845 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:08.845 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 100%
+2013-10-18 08:33:08.846 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:08.846 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:08.846 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:08.846 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 100%
+2013-10-18 08:33:14.462 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:14.463 3M Hearing Solutions Product Selection [1291:a0b]  To name: cat-intro   From name: montage
+2013-10-18 08:33:14.463 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:14.464 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:14.464 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:14.464 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:14.465 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:14.465 3M Hearing Solutions Product Selection [1291:a0b] ["montage"]
+2013-10-18 08:33:14.466 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:14.467 3M Hearing Solutions Product Selection [1291:a0b]  montage
+2013-10-18 08:33:14.467 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:14.468 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:14.469 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:14.469 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:14.469 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:14.470 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0%
+2013-10-18 08:33:14.470 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:14.470 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:14.470 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:14.470 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0%
+2013-10-18 08:33:15.646 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:15.647 3M Hearing Solutions Product Selection [1291:a0b]  To name: select-assess   From name: cat-intro
+2013-10-18 08:33:15.647 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:15.649 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:15.654 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:15.657 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:15.657 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:15.657 3M Hearing Solutions Product Selection [1291:a0b] ["montage","cat-intro"]
+2013-10-18 08:33:15.658 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:15.658 3M Hearing Solutions Product Selection [1291:a0b]  cat-intro
+2013-10-18 08:33:15.658 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:15.659 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:15.659 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:15.659 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:15.660 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:15.660 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:15.660 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:15.661 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:15.661 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:15.661 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:29.099 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:29.099 3M Hearing Solutions Product Selection [1291:a0b]  To name: browse   From name: select-assess
+2013-10-18 08:33:29.100 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:29.100 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:29.100 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:29.101 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:29.101 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:29.102 3M Hearing Solutions Product Selection [1291:a0b] ["montage","cat-intro","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess"]
+2013-10-18 08:33:29.102 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:29.103 3M Hearing Solutions Product Selection [1291:a0b]  select-assess
+2013-10-18 08:33:29.103 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:29.104 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:29.104 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:29.105 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:33:29.105 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:29.105 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:29.106 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:29.106 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:33:29.107 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:29.107 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:36.492 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:36.492 3M Hearing Solutions Product Selection [1291:a0b]  To name: product-page   From name: browse
+2013-10-18 08:33:36.493 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:36.493 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:36.494 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:36.494 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:36.494 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:36.495 3M Hearing Solutions Product Selection [1291:a0b] ["montage","cat-intro","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","browse:4"]
+2013-10-18 08:33:36.495 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:36.496 3M Hearing Solutions Product Selection [1291:a0b]  browse
+2013-10-18 08:33:36.496 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:36.498 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:36.499 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:36.500 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:33:36.500 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:36.501 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:36.501 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:36.502 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 100%
+2013-10-18 08:33:36.502 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:36.503 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:56.082 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:56.082 3M Hearing Solutions Product Selection [1291:a0b]  To name: product-page   From name: product-page
+2013-10-18 08:33:56.083 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:56.083 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:56.084 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:56.084 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:56.085 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:56.085 3M Hearing Solutions Product Selection [1291:a0b] ["montage","cat-intro","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","browse:4","product-page:6"]
+2013-10-18 08:33:56.086 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:56.086 3M Hearing Solutions Product Selection [1291:a0b]  product-page
+2013-10-18 08:33:56.087 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:56.087 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:56.088 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:56.088 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:56.089 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:56.089 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:56.089 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:56.090 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:56.091 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:56.091 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:57.483 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:57.485 3M Hearing Solutions Product Selection [1291:a0b]  To name: product-page   From name: product-page
+2013-10-18 08:33:57.486 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:57.486 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:57.487 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:57.488 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:57.488 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:57.488 3M Hearing Solutions Product Selection [1291:a0b] ["montage","cat-intro","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","browse:4","product-page:6","product-page:6"]
+2013-10-18 08:33:57.489 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:57.490 3M Hearing Solutions Product Selection [1291:a0b]  product-page
+2013-10-18 08:33:57.490 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:57.491 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:57.491 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:57.492 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:57.492 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:57.493 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:57.493 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:57.494 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:57.494 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:57.495 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:58.509 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:58.509 3M Hearing Solutions Product Selection [1291:a0b]  To name: product-page   From name: product-page
+2013-10-18 08:33:58.509 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:58.510 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:58.510 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:58.511 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:58.511 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:58.512 3M Hearing Solutions Product Selection [1291:a0b] ["montage","cat-intro","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","browse:4","product-page:6","product-page:6","product-page:5"]
+2013-10-18 08:33:58.512 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:58.513 3M Hearing Solutions Product Selection [1291:a0b]  product-page
+2013-10-18 08:33:58.513 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:58.514 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:58.514 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:58.515 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:58.515 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:58.516 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:58.516 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:58.517 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:58.517 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:58.518 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:59.462 3M Hearing Solutions Product Selection [1291:a0b]  In moveScr
+2013-10-18 08:33:59.462 3M Hearing Solutions Product Selection [1291:a0b]  To name: product-page   From name: product-page
+2013-10-18 08:33:59.463 3M Hearing Solutions Product Selection [1291:a0b]  To: 
+2013-10-18 08:33:59.463 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:59.463 3M Hearing Solutions Product Selection [1291:a0b]  From: 
+2013-10-18 08:33:59.464 3M Hearing Solutions Product Selection [1291:a0b] error JSON.stringify()ing argument: TypeError: JSON.stringify cannot serialize cyclic structures.
+2013-10-18 08:33:59.464 3M Hearing Solutions Product Selection [1291:a0b]  History: 
+2013-10-18 08:33:59.464 3M Hearing Solutions Product Selection [1291:a0b] ["montage","cat-intro","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","select-assess","browse:4","product-page:6","product-page:6","product-page:5","product-page:3"]
+2013-10-18 08:33:59.465 3M Hearing Solutions Product Selection [1291:a0b]  Current Screen Name: 
+2013-10-18 08:33:59.465 3M Hearing Solutions Product Selection [1291:a0b]  product-page
+2013-10-18 08:33:59.466 3M Hearing Solutions Product Selection [1291:a0b]  Direction: 
+2013-10-18 08:33:59.466 3M Hearing Solutions Product Selection [1291:a0b]  next
+2013-10-18 08:33:59.466 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:59.467 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:59.467 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:59.468 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
+2013-10-18 08:33:59.469 3M Hearing Solutions Product Selection [1291:a0b]  toScreen vis: block
+2013-10-18 08:33:59.470 3M Hearing Solutions Product Selection [1291:a0b]  toScreen left: 0px
+2013-10-18 08:33:59.470 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen vis: block
+2013-10-18 08:33:59.471 3M Hearing Solutions Product Selection [1291:a0b]  fromScreen left: 0px
