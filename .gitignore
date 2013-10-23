@@ -5,22 +5,25 @@
 # files for the dex VM
 *.dex
 
-# Java class files
+# Java
 *.class
+*.jar
 
 # Android generated files
-platforms/android/bin/
-platforms/android/gen/
-platforms/android/assets/
+platforms/android/bin/*
+platforms/android/gen/*
+platforms/android/assets/*
+platforms/android/cordova/*
+platforms/android/.settings/*
 platforms/android/res/xml/config.xml
 
 # iOS generated files
-platforms/ios/build
-platforms/ios/cordova
-platforms/ios/CordovaLib
+platforms/ios/build/*
+platforms/ios/cordova/*
+platforms/ios/CordovaLib/*
 platforms/ios/3M Hearing Solutions Product Selection /config.xml
 platforms/ios/3M Hearing Solutions Product Selection /3M Hearing Solutions Product Selection -Info.plist
-platforms/ios/www/
+platforms/ios/www/*
 plugins/ios.json
 
 # Local configuration file (sdk path, etc)
@@ -30,11 +33,8 @@ local.properties
 *.iml
 *.ipr
 *.iws
-.idea/
+.idea/*
 *.espressostorage
-
-# Cordova
-.cordova/config.json.old
 
 # Xcode
 .DS_Store
@@ -51,6 +51,8 @@ xcuserdata
 profile
 *.moved-aside
 DerivedData
-.idea/
 *.hmap
 *.xccheckout
+
+# Misc
+*~
