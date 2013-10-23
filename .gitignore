@@ -19,6 +19,10 @@ platforms/android/AndroidManifest.xml
 platforms/ios/build
 platforms/ios/cordova
 platforms/ios/CordovaLib
+platforms/ios/3M Hearing Solutions Product Selection /config.xml
+platforms/ios/3M Hearing Solutions Product Selection /3M Hearing Solutions Product Selection -Info.plist
+platforms/ios/www/
+plugins/ios.json
 
 # Local configuration file (sdk path, etc)
 local.properties
