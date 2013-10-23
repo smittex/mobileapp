@@ -13,7 +13,6 @@ platforms/android/bin/
 platforms/android/gen/
 platforms/android/assets/
 platforms/android/res/xml/config.xml
-platforms/android/AndroidManifest.xml
 
 # iOS generated files
 platforms/ios/build
