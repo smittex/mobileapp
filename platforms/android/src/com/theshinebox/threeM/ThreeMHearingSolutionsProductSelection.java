@@ -21,13 +21,25 @@ package com.theshinebox.threeM;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
+import com.webtrends.mobile.analytics.*;
+import com.webtrends.mobile.android.*;
 
-public class ThreeMHearingSolutionsProductSelection extends CordovaActivity 
+public class ThreeMHearingSolutionsProductSelection extends CordovaActivity
 {
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        WebtrendsConfigurator.ConfigureDC(this);
+
+        WebtrendsDataCollector wtEvent = WebtrendsDataCollector.getInstance();
+
+        try {
+            wtEvent.onApplicationStart(this.getClass().getSimpleName(),null);
+        } catch (IllegalWebtrendsParameterValueException e) {
+            wtEvent.getLog().e("application onCreate Event error.",e);
+        }
+
         super.init();
         // Set by <content src="index.html" /> in config.xml
         super.loadUrl(Config.getStartUrl());

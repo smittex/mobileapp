@@ -12,8 +12,10 @@
     </author>
     <content src="index.html" />
     <access origin="http://127.0.0.1*" />
-    <access origin="http://link.brightcove.com/*" />
-    <access origin="http://3m.com/*" />
+    <access origin="http://10.2.2.115/*" />
+    <access origin="http://google.com*" />
+    <access origin="http://link.brightcove.com*" />
+    <access origin="http://3m.com*" />
     <access origin="http://fonts.googleapis.com/*" />
     <preference name="fullscreen" value="true" />
     <preference name="webviewbounce" value="true" />
