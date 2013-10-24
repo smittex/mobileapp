@@ -31,6 +31,11 @@
 		5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEE5B34173C68D80009041E /* CoreLocation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
 		92DFA1E3798249E19786C66C /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 992400788D364303876850C3 /* CDVInAppBrowser.m */; };
+		93F193771819A51500503BD3 /* Webtrends.mom in Resources */ = {isa = PBXBuildFile; fileRef = 93F193751819A51500503BD3 /* Webtrends.mom */; };
+		93F193781819A51500503BD3 /* Webtrends.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93F193761819A51500503BD3 /* Webtrends.plist */; };
+		93F1937B1819A74900503BD3 /* Webtrends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F1937A1819A74900503BD3 /* Webtrends.framework */; };
+		93F1937D1819A7E200503BD3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F1937C1819A7E200503BD3 /* SystemConfiguration.framework */; };
+		93F1937F1819A7ED00503BD3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F1937E1819A7ED00503BD3 /* CoreData.framework */; };
 		A6AD1F91AF2342F5A9B3A0E1 /* CDVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EFE419070284451B1A929ED /* CDVLogger.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
@@ -85,6 +90,11 @@
 		5EFE419070284451B1A929ED /* CDVLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVLogger.m; path = org.apache.cordova.core.console/CDVLogger.m; sourceTree = "<group>"; };
 		8079264C9C984795B2809182 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVInAppBrowser.h; path = org.apache.cordova.inappbrowser/CDVInAppBrowser.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* 3M Hearing Solutions Product Selection -Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "3M Hearing Solutions Product Selection -Info.plist"; path = "../3M Hearing Solutions Product Selection -Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		93F193751819A51500503BD3 /* Webtrends.mom */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Webtrends.mom; sourceTree = "<group>"; };
+		93F193761819A51500503BD3 /* Webtrends.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Webtrends.plist; sourceTree = "<group>"; };
+		93F1937A1819A74900503BD3 /* Webtrends.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Webtrends.framework; sourceTree = "<group>"; };
+		93F1937C1819A7E200503BD3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		93F1937E1819A7ED00503BD3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		992400788D364303876850C3 /* CDVInAppBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVInAppBrowser.m; path = org.apache.cordova.inappbrowser/CDVInAppBrowser.m; sourceTree = "<group>"; };
 		A0DC52808B55401AB8E803CD /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = org.apache.cordova.core.console/CDVLogger.h; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
@@ -96,7 +106,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93F1937F1819A7ED00503BD3 /* CoreData.framework in Frameworks */,
+				93F1937D1819A7E200503BD3 /* SystemConfiguration.framework in Frameworks */,
 				5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */,
+				93F1937B1819A74900503BD3 /* Webtrends.framework in Frameworks */,
 				301BF552109A68D80062928A /* libCordova.a in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				305D5FD1115AB8F900A74A75 /* MobileCoreServices.framework in Frameworks */,
@@ -173,6 +186,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				93F193751819A51500503BD3 /* Webtrends.mom */,
+				93F193761819A51500503BD3 /* Webtrends.plist */,
 				30A0434214DC770100060A13 /* de.lproj */,
 				30A0434514DC770100060A13 /* se.lproj */,
 				1F766FDB13BBADB100FB74C0 /* en.lproj */,
@@ -188,6 +203,9 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				93F1937E1819A7ED00503BD3 /* CoreData.framework */,
+				93F1937C1819A7E200503BD3 /* SystemConfiguration.framework */,
+				93F1937A1819A74900503BD3 /* Webtrends.framework */,
 				5AEE5B34173C68D80009041E /* CoreLocation.framework */,
 				5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */,
 				288765FC0DF74451002DB57D /* CoreGraphics.framework */,
@@ -338,6 +356,7 @@
 			files = (
 				F840E1F1165FE0F500CFE078 /* config.xml in Resources */,
 				308D05371370CCF300D202BF /* icon-72.png in Resources */,
+				93F193781819A51500503BD3 /* Webtrends.plist in Resources */,
 				308D05381370CCF300D202BF /* icon.png in Resources */,
 				308D05391370CCF300D202BF /* icon@2x.png in Resources */,
 				1F766FE113BBADB100FB74C0 /* Localizable.strings in Resources */,
@@ -346,6 +365,7 @@
 				30A0434814DC770100060A13 /* Localizable.strings in Resources */,
 				30A0434914DC770100060A13 /* Localizable.strings in Resources */,
 				3088BBBD154F3926009F9C59 /* Default-Landscape@2x~ipad.png in Resources */,
+				93F193771819A51500503BD3 /* Webtrends.mom in Resources */,
 				3088BBBE154F3926009F9C59 /* Default-Landscape~ipad.png in Resources */,
 				3088BBBF154F3926009F9C59 /* Default-Portrait@2x~ipad.png in Resources */,
 				3088BBC0154F3926009F9C59 /* Default-Portrait~ipad.png in Resources */,
@@ -441,6 +461,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/bryan/dev/mobileapp/platforms/ios,
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -462,6 +486,8 @@
 					"-force_load",
 					"\"$(BUILT_PRODUCTS_DIR)/libCordova.a\"",
 					"-ObjC",
+					"-all_load",
+					"-ObjC",
 				);
 				PRODUCT_NAME = "3M Hearing Solutions Product Selection ";
 				PROVISIONING_PROFILE = "C1B1B151-E1E2-496B-8DDB-4276B163F623";
@@ -477,6 +503,10 @@
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/bryan/dev/mobileapp/platforms/ios,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "3M Hearing Solutions Product Selection /3M Hearing Solutions Product Selection -Prefix.pch";
 				GCC_THUMB_SUPPORT = NO;
@@ -495,6 +525,8 @@
 					"-weak-lSystem",
 					"-force_load",
 					"\"$(BUILT_PRODUCTS_DIR)/libCordova.a\"",
+					"-ObjC",
+					"-all_load",
 					"-ObjC",
 				);
 				PRODUCT_NAME = "3M Hearing Solutions Product Selection ";
