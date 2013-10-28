@@ -797,6 +797,15 @@ nav.cat-nav ul li a.com-icon{
 
 
 
+.coming-soon {
+	background-image: url(../img/coming_soon.png);
+	background-position: right top;
+	background-repeat: no-repeat;
+	background-size: auto 100%;
+}
+
+
+
 @keyframes slidein
 {
 0%   {right:100%}
