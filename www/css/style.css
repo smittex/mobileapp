@@ -15,7 +15,13 @@ Communications Gray: #777777
 body {
 	font-family: 'Helvetica Neue',arial,sans-serif;
 	overflow-x: hidden;
-	padding-top: 20px;
+}
+
+.page-padding-top {
+	background-color: rgba(255,255,255,0.85);
+	height:20px;
+	width: 100%;
+	
 }
 
 section {
