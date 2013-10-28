@@ -5,7 +5,6 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -30,7 +29,6 @@
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
 		5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEE5B34173C68D80009041E /* CoreLocation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
-		92DFA1E3798249E19786C66C /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 992400788D364303876850C3 /* CDVInAppBrowser.m */; };
 		93F193771819A51500503BD3 /* Webtrends.mom in Resources */ = {isa = PBXBuildFile; fileRef = 93F193751819A51500503BD3 /* Webtrends.mom */; };
 		93F193781819A51500503BD3 /* Webtrends.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93F193761819A51500503BD3 /* Webtrends.plist */; };
 		93F1937B1819A74900503BD3 /* Webtrends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F1937A1819A74900503BD3 /* Webtrends.framework */; };
@@ -278,7 +276,7 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* 3M Hearing Solutions Product Selection  */ = {
+		1D6058900D05DD3D006BFB54 /* 3M Hearing Solutions Product Selection */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "3M Hearing Solutions Product Selection " */;
 			buildPhases = (
@@ -334,7 +332,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* 3M Hearing Solutions Product Selection  */,
+				1D6058900D05DD3D006BFB54 /* 3M Hearing Solutions Product Selection */,
 			);
 		};
 /* End PBXProject section */
@@ -404,7 +402,6 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				A6AD1F91AF2342F5A9B3A0E1 /* CDVLogger.m in Sources */,
-				92DFA1E3798249E19786C66C /* CDVInAppBrowser.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
