@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
@@ -29,6 +30,7 @@
 		30FC414916E50CA1004E6F35 /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 30FC414816E50CA1004E6F35 /* icon-72@2x.png */; };
 		5AEE5B35173C68D80009041E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AEE5B34173C68D80009041E /* CoreLocation.framework */; };
 		5B1594DD16A7569C00FEF299 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */; };
+		931E9D1E1820177200C48FAE /* CDVInAppBrowser.m in Sources */ = {isa = PBXBuildFile; fileRef = 931E9D1D1820177200C48FAE /* CDVInAppBrowser.m */; };
 		93F193771819A51500503BD3 /* Webtrends.mom in Resources */ = {isa = PBXBuildFile; fileRef = 93F193751819A51500503BD3 /* Webtrends.mom */; };
 		93F193781819A51500503BD3 /* Webtrends.plist in Resources */ = {isa = PBXBuildFile; fileRef = 93F193761819A51500503BD3 /* Webtrends.plist */; };
 		93F1937B1819A74900503BD3 /* Webtrends.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93F1937A1819A74900503BD3 /* Webtrends.framework */; };
@@ -86,14 +88,14 @@
 		5AEE5B34173C68D80009041E /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5B1594DC16A7569C00FEF299 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		5EFE419070284451B1A929ED /* CDVLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVLogger.m; path = org.apache.cordova.core.console/CDVLogger.m; sourceTree = "<group>"; };
-		8079264C9C984795B2809182 /* CDVInAppBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVInAppBrowser.h; path = org.apache.cordova.inappbrowser/CDVInAppBrowser.h; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* 3M Hearing Solutions Product Selection -Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "3M Hearing Solutions Product Selection -Info.plist"; path = "../3M Hearing Solutions Product Selection -Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		931E9D1C1820177200C48FAE /* CDVInAppBrowser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDVInAppBrowser.h; sourceTree = "<group>"; };
+		931E9D1D1820177200C48FAE /* CDVInAppBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDVInAppBrowser.m; sourceTree = "<group>"; };
 		93F193751819A51500503BD3 /* Webtrends.mom */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = Webtrends.mom; sourceTree = "<group>"; };
 		93F193761819A51500503BD3 /* Webtrends.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Webtrends.plist; sourceTree = "<group>"; };
 		93F1937A1819A74900503BD3 /* Webtrends.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Webtrends.framework; sourceTree = "<group>"; };
 		93F1937C1819A7E200503BD3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		93F1937E1819A7ED00503BD3 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		992400788D364303876850C3 /* CDVInAppBrowser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CDVInAppBrowser.m; path = org.apache.cordova.inappbrowser/CDVInAppBrowser.m; sourceTree = "<group>"; };
 		A0DC52808B55401AB8E803CD /* CDVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CDVLogger.h; path = org.apache.cordova.core.console/CDVLogger.h; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = "3M Hearing Solutions Product Selection /config.xml"; sourceTree = "<group>"; };
@@ -223,10 +225,9 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				931E9D1B1820177200C48FAE /* org.apache.cordova.inappbrowser */,
 				5EFE419070284451B1A929ED /* CDVLogger.m */,
 				A0DC52808B55401AB8E803CD /* CDVLogger.h */,
-				992400788D364303876850C3 /* CDVInAppBrowser.m */,
-				8079264C9C984795B2809182 /* CDVInAppBrowser.h */,
 			);
 			name = Plugins;
 			path = "3M Hearing Solutions Product Selection /Plugins";
@@ -273,10 +274,19 @@
 			path = se.lproj;
 			sourceTree = "<group>";
 		};
+		931E9D1B1820177200C48FAE /* org.apache.cordova.inappbrowser */ = {
+			isa = PBXGroup;
+			children = (
+				931E9D1C1820177200C48FAE /* CDVInAppBrowser.h */,
+				931E9D1D1820177200C48FAE /* CDVInAppBrowser.m */,
+			);
+			path = org.apache.cordova.inappbrowser;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* 3M Hearing Solutions Product Selection */ = {
+		1D6058900D05DD3D006BFB54 /* 3M Hearing Solutions Product Selection  */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "3M Hearing Solutions Product Selection " */;
 			buildPhases = (
@@ -332,7 +342,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* 3M Hearing Solutions Product Selection */,
+				1D6058900D05DD3D006BFB54 /* 3M Hearing Solutions Product Selection  */,
 			);
 		};
 /* End PBXProject section */
@@ -398,6 +408,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				931E9D1E1820177200C48FAE /* CDVInAppBrowser.m in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
@@ -456,7 +467,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bryan Smith (4C768769DL)";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -487,7 +498,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "3M Hearing Solutions Product Selection ";
-				PROVISIONING_PROFILE = "C1B1B151-E1E2-496B-8DDB-4276B163F623";
+				PROVISIONING_PROFILE = "4046A29C-A023-4E3F-94F6-C3495DEF7493";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 			};
@@ -498,7 +509,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Bryan Smith (4C768769DL)";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -527,7 +538,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "3M Hearing Solutions Product Selection ";
-				PROVISIONING_PROFILE = "C1B1B151-E1E2-496B-8DDB-4276B163F623";
+				PROVISIONING_PROFILE = "4046A29C-A023-4E3F-94F6-C3495DEF7493";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = "armv7 armv7s";
 			};
