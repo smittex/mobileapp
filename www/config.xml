@@ -12,16 +12,16 @@
     </author>
     <content src="index.html" />
     <access origin="http://127.0.0.1*" />
-    <access origin="http://10.2.2.115/*" />
     <access origin="http://google.com*" />
-    <access origin="http://link.brightcove.com*" />
+    <access origin="http://brightcove.com*" />
     <access origin="http://3m.com*" />
     <access origin="http://fonts.googleapis.com/*" />
     <preference name="fullscreen" value="true" />
-    <preference name="webviewbounce" value="false" />
+    <preference name="UIWebViewBounce" value="false" />
     <preference name="orienation" value="portrait" />
     <preference name="target-device" value="handset" />
     <preference name="phonegap-version" value="3.1.0" />
+    <preference name="SuppressesIncrementalRendering" value="true" />
     <icon src="icon.png" />
     <gap:platform name="ios" />
     <gap:platform name="android" />
