@@ -7,6 +7,28 @@ var app = {
             // Stub for when device goes offline
         }
     },
+    /***
+     *
+     *                dddddddd
+     *                d::::::d                  lllllll
+     *                d::::::d                  l:::::l
+     *                d::::::d                  l:::::l
+     *                d:::::d                   l:::::l
+     *        ddddddddd:::::d   aaaaaaaaaaaaa    l::::l
+     *      dd::::::::::::::d   a::::::::::::a   l::::l
+     *     d::::::::::::::::d   aaaaaaaaa:::::a  l::::l
+     *    d:::::::ddddd:::::d            a::::a  l::::l
+     *    d::::::d    d:::::d     aaaaaaa:::::a  l::::l
+     *    d:::::d     d:::::d   aa::::::::::::a  l::::l
+     *    d:::::d     d:::::d  a::::aaaa::::::a  l::::l
+     *    d:::::d     d:::::d a::::a    a:::::a  l::::l
+     *    d::::::ddddd::::::dda::::a    a:::::a l::::::l
+     *     d:::::::::::::::::da:::::aaaa::::::a l::::::l
+     *      d:::::::::ddd::::d a::::::::::aa:::al::::::l
+     *       ddddddddd   ddddd  aaaaaaaaaa  aaaallllllll
+     *
+     *
+     */
     dal: {
         open: function () {
             if (!app.dal.db) {
@@ -70,6 +92,26 @@ var app = {
             }
         }
     },
+    /***
+     *
+     *                               tttt            iiii  lllllll
+     *                            ttt:::t           i::::i l:::::l
+     *                            t:::::t            iiii  l:::::l
+     *                            t:::::t                  l:::::l
+     *    uuuuuu    uuuuuu  ttttttt:::::ttttttt    iiiiiii  l::::l
+     *    u::::u    u::::u  t:::::::::::::::::t    i:::::i  l::::l
+     *    u::::u    u::::u  t:::::::::::::::::t     i::::i  l::::l
+     *    u::::u    u::::u  tttttt:::::::tttttt     i::::i  l::::l
+     *    u::::u    u::::u        t:::::t           i::::i  l::::l
+     *    u::::u    u::::u        t:::::t           i::::i  l::::l
+     *    u::::u    u::::u        t:::::t           i::::i  l::::l
+     *    u:::::uuuu:::::u        t:::::t    tttttt i::::i  l::::l
+     *    u:::::::::::::::uu      t::::::tttt:::::ti::::::il::::::l
+     *     u:::::::::::::::u      tt::::::::::::::ti::::::il::::::l
+     *      uu::::::::uu:::u        tt:::::::::::tti::::::il::::::l
+     *        uuuuuuuu  uuuu          ttttttttttt  iiiiiiiillllllll
+     *
+     */
     util: {
         arrayToDelimitedString: function(arr) {
             var tmp = '';
@@ -148,6 +190,26 @@ var app = {
             app.dal.getRows(sql, 'get:content');
         }
     },
+    /***
+     *
+     *      iiii                      iiii           tttt
+     *     i::::i                    i::::i       ttt:::t
+     *      iiii                      iiii        t:::::t
+     *                                            t:::::t
+     *    iiiiiii nnnn  nnnnnnnn    iiiiiii ttttttt:::::ttttttt
+     *    i:::::i n:::nn::::::::nn  i:::::i t:::::::::::::::::t
+     *     i::::i n::::::::::::::nn  i::::i t:::::::::::::::::t
+     *     i::::i nn:::::::::::::::n i::::i tttttt:::::::tttttt
+     *     i::::i   n:::::nnnn:::::n i::::i       t:::::t
+     *     i::::i   n::::n    n::::n i::::i       t:::::t
+     *     i::::i   n::::n    n::::n i::::i       t:::::t
+     *     i::::i   n::::n    n::::n i::::i       t:::::t    tttttt
+     *    i::::::i  n::::n    n::::ni::::::i      t::::::tttt:::::t
+     *    i::::::i  n::::n    n::::ni::::::i      tt::::::::::::::t
+     *    i::::::i  n::::n    n::::ni::::::i        tt:::::::::::tt
+     *    iiiiiiii  nnnnnn    nnnnnniiiiiiii          ttttttttttt
+     *
+     */
     initialize: function () {
         $('#splash')[0].addEventListener('webkitAnimationEnd', function () {
             //console.log('in webkitAnimationEnd event handler');
@@ -161,6 +223,8 @@ var app = {
             }
         );
 
+        $('.screen').addClass('transition');
+
         $('section').onpress('a', function () {
             app.onNav($(this));
         });
@@ -169,16 +233,58 @@ var app = {
             app.onNav($(this));
         });
     },
+    /***
+     *
+     *    hhhhhhh
+     *    h:::::h
+     *    h:::::h
+     *    h:::::h
+     *     h::::h hhhhh          ooooooooooo      mmmmmmm    mmmmmmm       eeeeeeeeeeee
+     *     h::::hh:::::hhh     oo:::::::::::oo  mm:::::::m  m:::::::mm   ee::::::::::::ee
+     *     h::::::::::::::hh  o:::::::::::::::om::::::::::mm::::::::::m e::::::eeeee:::::ee
+     *     h:::::::hhh::::::h o:::::ooooo:::::om::::::::::::::::::::::me::::::e     e:::::e
+     *     h::::::h   h::::::ho::::o     o::::om:::::mmm::::::mmm:::::me:::::::eeeee::::::e
+     *     h:::::h     h:::::ho::::o     o::::om::::m   m::::m   m::::me:::::::::::::::::e
+     *     h:::::h     h:::::ho::::o     o::::om::::m   m::::m   m::::me::::::eeeeeeeeeee
+     *     h:::::h     h:::::ho::::o     o::::om::::m   m::::m   m::::me:::::::e
+     *     h:::::h     h:::::ho:::::ooooo:::::om::::m   m::::m   m::::me::::::::e
+     *     h:::::h     h:::::ho:::::::::::::::om::::m   m::::m   m::::m e::::::::eeeeeeee
+     *     h:::::h     h:::::h oo:::::::::::oo m::::m   m::::m   m::::m  ee:::::::::::::e
+     *     hhhhhhh     hhhhhhh   ooooooooooo   mmmmmm   mmmmmm   mmmmmm    eeeeeeeeeeeeee
+     *
+     *
+     */
     home: function () {
         app.history = [];
         app.currentScreenName = 'montage';
         app.direction = '';
         app.assessment.questions = [];
         app.assessment.answers = [];
-        $('.screen').hide();
-        $('.montage').css('left', '0%').show();
+        $('.screen').not('.montage').removeClass('left center').addClass('right').hide();//css('left','100%');
+        $('.montage').addClass('center').show();//css('left', '0%');
         $('nav.main-nav').hide();
     },
+    /***
+     *
+     *
+     *                                       NNNNNNNN        NNNNNNNN
+     *                                       N:::::::N       N::::::N
+     *                                       N::::::::N      N::::::N
+     *                                       N:::::::::N     N::::::N
+     *       ooooooooooo   nnnn  nnnnnnnn    N::::::::::N    N::::::N  aaaaaaaaaaaaa   vvvvvvv           vvvvvvv
+     *     oo:::::::::::oo n:::nn::::::::nn  N:::::::::::N   N::::::N  a::::::::::::a   v:::::v         v:::::v
+     *    o:::::::::::::::on::::::::::::::nn N:::::::N::::N  N::::::N  aaaaaaaaa:::::a   v:::::v       v:::::v
+     *    o:::::ooooo:::::onn:::::::::::::::nN::::::N N::::N N::::::N           a::::a    v:::::v     v:::::v
+     *    o::::o     o::::o  n:::::nnnn:::::nN::::::N  N::::N:::::::N    aaaaaaa:::::a     v:::::v   v:::::v
+     *    o::::o     o::::o  n::::n    n::::nN::::::N   N:::::::::::N  aa::::::::::::a      v:::::v v:::::v
+     *    o::::o     o::::o  n::::n    n::::nN::::::N    N::::::::::N a::::aaaa::::::a       v:::::v:::::v
+     *    o::::o     o::::o  n::::n    n::::nN::::::N     N:::::::::Na::::a    a:::::a        v:::::::::v
+     *    o:::::ooooo:::::o  n::::n    n::::nN::::::N      N::::::::Na::::a    a:::::a         v:::::::v
+     *    o:::::::::::::::o  n::::n    n::::nN::::::N       N:::::::Na:::::aaaa::::::a          v:::::v
+     *     oo:::::::::::oo   n::::n    n::::nN::::::N        N::::::N a::::::::::aa:::a          v:::v
+     *       ooooooooooo     nnnnnn    nnnnnnNNNNNNNN         NNNNNNN  aaaaaaaaaa  aaaa           vvv
+     *
+     */
     onNav: function (that) {
         // TODO: Handle case for external links
         if (that.hasClass('link')) {
@@ -339,6 +445,27 @@ var app = {
             }
         );
     },
+    /***
+     *                                                      dddddddd
+     *                                                      d::::::d
+     *                                                      d::::::d
+     *                                                      d::::::d
+     *                                                      d:::::d
+     *    rrrrr   rrrrrrrrr   nnnn  nnnnnnnn        ddddddddd:::::d rrrrr   rrrrrrrrr
+     *    r::::rrr:::::::::r  n:::nn::::::::nn    dd::::::::::::::d r::::rrr:::::::::r
+     *    r:::::::::::::::::r n::::::::::::::nn  d::::::::::::::::d r:::::::::::::::::r
+     *    rr::::::rrrrr::::::rnn:::::::::::::::nd:::::::ddddd:::::d rr::::::rrrrr::::::r
+     *     r:::::r     r:::::r  n:::::nnnn:::::nd::::::d    d:::::d  r:::::r     r:::::r
+     *     r:::::r     rrrrrrr  n::::n    n::::nd:::::d     d:::::d  r:::::r     rrrrrrr
+     *     r:::::r              n::::n    n::::nd:::::d     d:::::d  r:::::r
+     *     r:::::r              n::::n    n::::nd:::::d     d:::::d  r:::::r
+     *     r:::::r              n::::n    n::::nd::::::ddddd::::::dd r:::::r
+     *     r:::::r              n::::n    n::::n d:::::::::::::::::d r:::::r
+     *     r:::::r              n::::n    n::::n  d:::::::::ddd::::d r:::::r
+     *     rrrrrrr              nnnnnn    nnnnnn   ddddddddd   ddddd rrrrrrr
+     *
+     *
+     */
     rndrCont: function (scr, obj, callback) {
         //console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
 
@@ -370,7 +497,13 @@ var app = {
                     $(document).one('question:ready', function (event) {
                         var question = event.data;
                         var html = Handlebars.templates['question'](question);
-                        $('[data-screen=question-container]').html(html);
+                        var container = $('[data-screen=question-container]');
+
+                        console.log('Question Container: ');
+                        console.log(container);
+
+
+                        container.html(html);
                         callback.apply();
 
                     });
@@ -455,15 +588,88 @@ var app = {
                 break;
         }
     },
+    /***
+     *                                          iiii
+     *                                         i::::i
+     *                                          iiii
+     *
+     *      aaaaaaaaaaaaa   nnnn  nnnnnnnn    iiiiiii    mmmmmmm    mmmmmmm
+     *      a::::::::::::a  n:::nn::::::::nn  i:::::i  mm:::::::m  m:::::::mm
+     *      aaaaaaaaa:::::a n::::::::::::::nn  i::::i m::::::::::mm::::::::::m
+     *               a::::a nn:::::::::::::::n i::::i m::::::::::::::::::::::m
+     *        aaaaaaa:::::a   n:::::nnnn:::::n i::::i m:::::mmm::::::mmm:::::m
+     *      aa::::::::::::a   n::::n    n::::n i::::i m::::m   m::::m   m::::m
+     *     a::::aaaa::::::a   n::::n    n::::n i::::i m::::m   m::::m   m::::m
+     *    a::::a    a:::::a   n::::n    n::::n i::::i m::::m   m::::m   m::::m
+     *    a::::a    a:::::a   n::::n    n::::ni::::::im::::m   m::::m   m::::m
+     *    a:::::aaaa::::::a   n::::n    n::::ni::::::im::::m   m::::m   m::::m
+     *     a::::::::::aa:::a  n::::n    n::::ni::::::im::::m   m::::m   m::::m
+     *      aaaaaaaaaa  aaaa  nnnnnn    nnnnnniiiiiiiimmmmmm   mmmmmm   mmmmmm
+     *
+     */
     moveScr: function (from, to) {
-        $('[data-screen=' + from + ']').hide();
+/*        $('[data-screen=' + from + ']').hide();
         $('[data-screen=' + to + ']').show()
                                      .removeClass('protection')
                                      .removeClass('detection')
                                      .removeClass('general')
                                      .addClass(app.category);
         app.currentScreenName = to;
-        scrollTo(0, 0);
+        scrollTo(0, 0);*/
+
+        try {
+            var toScreen = $('[data-screen=' + to + ']').first();
+            var fromScreen = $('[data-screen=' + from + ']').first();
+
+            console.log('In moveScr');
+            console.log('To name: ' + to + '   From name: ' + from);
+            console.log('To: ');
+            console.log(toScreen);
+            console.log('From: ');
+            console.log(fromScreen);
+            console.log('History: ');
+            console.log(app.history);
+            console.log('Current Screen Name: ');
+            console.log(app.currentScreenName);
+            console.log('Direction: ');
+            console.log(app.direction);
+            console.log('toScreen vis: ' + toScreen.css('display'));
+            console.log('toScreen left: ' + toScreen.css('left'));
+            console.log('fromScreen vis: ' + fromScreen.css('display'));
+            console.log('fromScreen left: ' + fromScreen.css('left'));
+
+
+            toScreen.removeClass('protection detection general')
+                    .addClass(app.category);
+
+            // TODO: Why is this here?
+/*            if (!app.currentScreenName) {
+                toScreen.addClass('center');
+                return;
+            }*/
+
+            toScreen[0].addEventListener('webkitTransitionEnd', function () {
+                console.log('to screen transition complete');
+                toScreen.show();
+            }, false);
+            toScreen.removeClass('left right').addClass('center');
+
+            fromScreen[0].addEventListener('webkitTransitionEnd', function () {
+                fromScreen.hide();
+            }, false);
+
+            fromScreen.removeClass('center').addClass((app.direction === 'back' ? 'right' : 'left'));
+
+            console.log('toScreen vis: ' + toScreen.css('display'));
+            console.log('toScreen left: ' + toScreen.css('left'));
+            console.log('fromScreen vis: ' + fromScreen.css('display'));
+            console.log('fromScreen left: ' + fromScreen.css('left'));
+
+            app.currentScreenName = to;
+        }
+        catch (err) {
+            console.error(err.message);
+        }
     }
 };
 
