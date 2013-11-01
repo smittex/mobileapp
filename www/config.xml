@@ -11,10 +11,10 @@
     <author email="bryan.smith@solutiondesign.com" href="http://solutiondesign.com/">
     </author>
     <content src="index.html" />
-    <access origin="http://127.0.0.1*" />
-    <access origin="http://google.com*" />
-    <access origin="http://brightcove.com*" />
-    <access origin="http://3m.com*" />
+    <access origin="http://127.0.0.1/*" />
+    <access origin="http://10.2.2.115/*" />
+    <access origin="http://brightcove.com/*" />
+    <access origin="http://3m.com/*" />
     <access origin="http://fonts.googleapis.com/*" />
     <preference name="fullscreen" value="true" />
     <preference name="UIWebViewBounce" value="false" />

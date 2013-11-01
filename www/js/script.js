@@ -37,7 +37,7 @@ var app = {
                     'products.db',
                     '',
                     'products',
-                    5000000
+                    2000000
                 );
                 //console.error(app.dal.db);
             }
@@ -119,6 +119,10 @@ var app = {
                 tmp += arr[idx] + ',';
             }
             return tmp.substr(0, tmp.length - 1);
+        },
+        boolToInt: function(bool) {
+            var q = {true: 1, false: 0};
+            return q[bool];
         }
     },
     screens: [
@@ -131,16 +135,17 @@ var app = {
     assessment: {
         questions: [],
         answers: [],
+        containerIndex: 0,
         getQuestionById: function (id) {
             for (var i = 0; i < app.assessment.questions.length; i++) {
-                if (app.assessment.questions[i].question_id == id)
+                if (app.assessment.questions[i].question_id === id)
                     return app.assessment.questions[i];
             }
             return null;
         },
         getAnswerById: function (question, id) {
             for (var i = 0; i < question.answers.length; i++) {
-                if (question.answers[i].id == id)
+                if (question.answers[i].id === id)
                     return question.answers[i];
             }
             return null;
@@ -223,8 +228,6 @@ var app = {
             }
         );
 
-        $('.screen').addClass('transition');
-
         $('section').onpress('a', function () {
             app.onNav($(this));
         });
@@ -260,8 +263,8 @@ var app = {
         app.direction = '';
         app.assessment.questions = [];
         app.assessment.answers = [];
-        $('.screen').not('.montage').removeClass('left center').addClass('right').hide();//css('left','100%');
-        $('.montage').addClass('center').show();//css('left', '0%');
+        $('.screen').not('.montage').hide().css('left','100%');
+        $('.montage').show().css('left', '0%');
         $('nav.main-nav').hide();
     },
     /***
@@ -336,7 +339,7 @@ var app = {
             obj = obj.toLowerCase().replace(' ', '-');
 
 
-        if (nxtScrNm == 'montage' || that.hasClass('home')) {
+        if (nxtScrNm === 'montage' || that.hasClass('home')) {
             app.home();
             return;
         }
@@ -378,10 +381,10 @@ var app = {
 
             app.assessment.answers.push(question);
 
-            if (question.answer.type == 'question') {
+            if (question.answer.type === 'question') {
                 nxtScrNm = 'question-container';
             }
-            else if (question.answer.type == 'product') {
+            else if (question.answer.type === 'product') {
                 if (question.answer.nodes.length > 1) {
                     nxtScrNm = 'product-list';
                     obj = app.util.arrayToDelimitedString(question.answer.nodes);
@@ -396,30 +399,31 @@ var app = {
         //console.log('app.direction:' + app.direction + '  current screen:' + app.currentScreenName + '  next screen:' + nxtScrNm);
 
         // Get obj for going back to assess-intro
-        if (app.direction == 'back' && nxtScrNm == 'assess-intro') {
+        if (app.direction === 'back' && nxtScrNm === 'assess-intro') {
             app.assessment.questions = [];
             app.assessment.answers = [];
+            app.assessment.containerIndex = 0;
             obj = app.assessment.assessment;
         }
 
         // Keep track of the navigation history
-        if (app.direction == 'next') {
+        if (app.direction === 'next') {
             var toPush = app.currentScreenName;
             toPush += obj != '' ? ':' + obj : '';
             //console.log('pushing on the history: ' + toPush);
             app.history.push(toPush);
 
             // Keep track of the assessment they're using
-            if (app.currentScreenName == 'select-assess')
+            if (app.currentScreenName === 'select-assess')
                 app.assessment.assessment = obj;
         }
-        else if (app.direction == 'back') {
+        else if (app.direction === 'back') {
             var tmp = app.history.pop();
             //console.log('popping off the history: ' + tmp);
 
             // If going back to product list, pop the history to get the products and push it back
-            if (nxtScrNm == 'product-list') {
-                var tmp = app.history.pop();
+            if (nxtScrNm === 'product-list') {
+                tmp = app.history.pop();
                 obj = tmp.split(':')[1];
                 app.history.push(tmp);
             }
@@ -428,15 +432,15 @@ var app = {
         //console.log('cat: ' + app.category + '  obj:' + obj);
 
         // If the next screen hasn't been defined, we cannot do anything
-        if (nxtScrNm == '') {
+        if (nxtScrNm === '') {
             //console.error('No screen to go to!');
             return;
         }
 
         $('nav.main-nav').show();
-        if (app.category == 'detection')
+        if (app.category === 'detection')
             $('a.open-assessments').text('Assessments');
-        else if (app.category == 'protection')
+        else if (app.category === 'protection')
             $('a.open-assessments').text('Protection Types');
 
         // Prepare content and perform transitions
@@ -467,7 +471,7 @@ var app = {
      *
      */
     rndrCont: function (scr, obj, callback) {
-        //console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
+        console.log('in rndrCont  scr:' + scr + '  obj:' + obj);
 
         switch (scr) {
             case 'browse':
@@ -493,15 +497,18 @@ var app = {
 
                 break;
             case 'question-container':
-                if (app.direction == 'next') {
+                if (app.direction === 'next') {
                     $(document).one('question:ready', function (event) {
                         var question = event.data;
                         var html = Handlebars.templates['question'](question);
-                        var container = $('[data-screen=question-container]');
+
+                        var containers = $('[data-screen=question-container]');
+                        var container = (app.assessment.containerIndex) ?
+                            containers.last() : containers.first();
+                        app.assessment.containerIndex = !app.assessment.containerIndex;
 
                         console.log('Question Container: ');
                         console.log(container);
-
 
                         container.html(html);
                         callback.apply();
@@ -510,17 +517,21 @@ var app = {
 
                     app.assessment.getNextQuestion();
                 }
-                else if (app.direction == 'back') {
+                else if (app.direction === 'back') {
                     // Pop the last question
                     app.assessment.questions.pop();
 
                     var question = app.assessment.answers.pop();
                     question.answer = null;
-
                     app.assessment.questions.push(question);
 
                     var html = Handlebars.templates['question'](question);
-                    $('[data-screen=question-container]').html(html);
+                    var containers = $('[data-screen=question-container]');
+                    var container = (app.assessment.containerIndex) ?
+                        containers.first() : containers.last();
+                    app.assessment.containerIndex = !app.assessment.containerIndex;
+
+                    container.html(html);
                     callback.apply();
                 }
                 break;
@@ -557,7 +568,7 @@ var app = {
                         subhead: data.subhead,
                         description: data.description,
                         image: data.image,
-                        link: "window.open(\'" + data.link + "\', \'_system\'); return false;",
+                        link: "window.open(\'" + data.link + "\', \'_system\'); return false;"
                     };
 
                     var html = Handlebars.templates['product-page'](product);
@@ -608,68 +619,86 @@ var app = {
      *
      */
     moveScr: function (from, to) {
-/*        $('[data-screen=' + from + ']').hide();
-        $('[data-screen=' + to + ']').show()
-                                     .removeClass('protection')
-                                     .removeClass('detection')
-                                     .removeClass('general')
-                                     .addClass(app.category);
-        app.currentScreenName = to;
-        scrollTo(0, 0);*/
+        console.log('From: ' + from);
+        console.log('  To: ' + to);
 
-        try {
-            var toScreen = $('[data-screen=' + to + ']').first();
-            var fromScreen = $('[data-screen=' + from + ']').first();
+        var toScreens = $('[data-screen=' + to + ']');
+        var fromScreens = $('[data-screen=' + from + ']');
 
-            console.log('In moveScr');
-            console.log('To name: ' + to + '   From name: ' + from);
-            console.log('To: ');
-            console.log(toScreen);
-            console.log('From: ');
-            console.log(fromScreen);
-            console.log('History: ');
-            console.log(app.history);
-            console.log('Current Screen Name: ');
-            console.log(app.currentScreenName);
-            console.log('Direction: ');
-            console.log(app.direction);
-            console.log('toScreen vis: ' + toScreen.css('display'));
-            console.log('toScreen left: ' + toScreen.css('left'));
-            console.log('fromScreen vis: ' + fromScreen.css('display'));
-            console.log('fromScreen left: ' + fromScreen.css('left'));
+        console.log('toScreens:');
+        console.log(toScreens);
+        console.log('fromScreens:');
+        console.log(fromScreens);
+
+        var toScreen, fromScreen;
+        // app.assessment.containerIndex is inverted
+        var curIdx = app.util.boolToInt(!app.assessment.containerIndex);
+
+        console.log('curIdx: ' + curIdx);
 
 
-            toScreen.removeClass('protection detection general')
-                    .addClass(app.category);
+        if (from === 'question-container') {
+            if (curIdx)
+                fromScreen = fromScreens.first();
+            else
+                fromScreen = fromScreens.last();
+        }
+        else {
+            fromScreen = fromScreens.first();
+        }
 
-            // TODO: Why is this here?
-/*            if (!app.currentScreenName) {
-                toScreen.addClass('center');
-                return;
-            }*/
+        if (to === 'question-container') {
+                if (!curIdx)
+                    toScreen = toScreens.first();
+                else
+                    toScreen = toScreens.last();
+        }
+        else {
+            toScreen = toScreens.first();
+        }
 
-            toScreen[0].addEventListener('webkitTransitionEnd', function () {
-                console.log('to screen transition complete');
-                toScreen.show();
-            }, false);
-            toScreen.removeClass('left right').addClass('center');
+        console.log('toScreen:');
+        console.log(toScreen);
+        console.log('fromScreen:');
+        console.log(fromScreen);
 
-            fromScreen[0].addEventListener('webkitTransitionEnd', function () {
+        /*
+
+        from            to          fromScreen       toScreen
+        xxxxxxxx        question    from.first()     curIdx
+        question        question    curIdx           !curIdx
+        question        xxxxxxxx    curIdx           to.first()
+
+         */
+
+        var percent = {'next': [-100, 0], 'back': [100, 0]};
+
+        toScreen.show();
+        toScreen.removeClass('protection detection general')
+            .addClass(app.category);
+
+
+        fromScreen.animate(
+            {left: percent[app.direction][0] + '%'},
+            1000,
+            'cubic-bezier(0, 0, 0.20, 1)',
+            function () {
                 fromScreen.hide();
-            }, false);
+            }
+        );
 
-            fromScreen.removeClass('center').addClass((app.direction === 'back' ? 'right' : 'left'));
+        toScreen.animate(
+            {left: percent[app.direction][1] + '%'},
+            1000,
+            'cubic-bezier(0, 0, 0.20, 1)',
+            function () {
+                //to.show();
+            }
+        );
 
-            console.log('toScreen vis: ' + toScreen.css('display'));
-            console.log('toScreen left: ' + toScreen.css('left'));
-            console.log('fromScreen vis: ' + fromScreen.css('display'));
-            console.log('fromScreen left: ' + fromScreen.css('left'));
+        app.currentScreenName = to;
 
-            app.currentScreenName = to;
-        }
-        catch (err) {
-            console.error(err.message);
-        }
+        // scrollTo(0, 0);
     }
 };
 
