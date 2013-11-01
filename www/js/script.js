@@ -263,8 +263,9 @@ var app = {
         app.direction = '';
         app.assessment.questions = [];
         app.assessment.answers = [];
-        $('.screen').not('.montage').hide().css('left','100%');
-        $('.montage').show().css('left', '0%');
+
+        $('.screen').not('.montage').hide();
+        $('.montage').show().css('-webkit-transform','translate3d(0, 0, 0)');
         $('nav.main-nav').hide();
     },
     /***
@@ -497,20 +498,23 @@ var app = {
 
                 break;
             case 'question-container':
+                console.log('app.assessment.containerIndex:' + app.assessment.containerIndex);
+
+                var html = Handlebars.templates['question'];
+
+                var containers = $('[data-screen=question-container]');
+                var container = app.assessment.containerIndex ?
+                    containers.last() : containers.first();
+
+                console.log('Question Container: ');
+                console.log(container);
+
+
                 if (app.direction === 'next') {
                     $(document).one('question:ready', function (event) {
                         var question = event.data;
-                        var html = Handlebars.templates['question'](question);
 
-                        var containers = $('[data-screen=question-container]');
-                        var container = (app.assessment.containerIndex) ?
-                            containers.last() : containers.first();
-                        app.assessment.containerIndex = !app.assessment.containerIndex;
-
-                        console.log('Question Container: ');
-                        console.log(container);
-
-                        container.html(html);
+                        container.html(html(question));
                         callback.apply();
 
                     });
@@ -525,13 +529,7 @@ var app = {
                     question.answer = null;
                     app.assessment.questions.push(question);
 
-                    var html = Handlebars.templates['question'](question);
-                    var containers = $('[data-screen=question-container]');
-                    var container = (app.assessment.containerIndex) ?
-                        containers.first() : containers.last();
-                    app.assessment.containerIndex = !app.assessment.containerIndex;
-
-                    container.html(html);
+                    container.html(html(question));
                     callback.apply();
                 }
                 break;
@@ -619,26 +617,17 @@ var app = {
      *
      */
     moveScr: function (from, to) {
-        console.log('From: ' + from);
-        console.log('  To: ' + to);
+        console.log('in moveScr()');
 
         var toScreens = $('[data-screen=' + to + ']');
         var fromScreens = $('[data-screen=' + from + ']');
 
-        console.log('toScreens:');
-        console.log(toScreens);
-        console.log('fromScreens:');
-        console.log(fromScreens);
-
         var toScreen, fromScreen;
-        // app.assessment.containerIndex is inverted
-        var curIdx = app.util.boolToInt(!app.assessment.containerIndex);
 
-        console.log('curIdx: ' + curIdx);
-
+        console.log('container index: ' + app.assessment.containerIndex);
 
         if (from === 'question-container') {
-            if (curIdx)
+            if (app.assessment.containerIndex)
                 fromScreen = fromScreens.first();
             else
                 fromScreen = fromScreens.last();
@@ -647,40 +636,51 @@ var app = {
             fromScreen = fromScreens.first();
         }
 
+
         if (to === 'question-container') {
-                if (!curIdx)
-                    toScreen = toScreens.first();
-                else
-                    toScreen = toScreens.last();
+            if (!app.assessment.containerIndex)
+                toScreen = toScreens.first();
+            else
+                toScreen = toScreens.last();
         }
         else {
             toScreen = toScreens.first();
         }
 
-        console.log('toScreen:');
-        console.log(toScreen);
-        console.log('fromScreen:');
-        console.log(fromScreen);
+        console.log('toScreen:' + toScreen.data('screen') + (to === 'question-container' ? ':' + toScreen.data('id') : ''));
+        console.log('fromScreen:' + fromScreen.data('screen') + (from === 'question-container' ? ':' + fromScreen.data('id') : ''));
 
         /*
 
-        from            to          fromScreen       toScreen
-        xxxxxxxx        question    from.first()     curIdx
-        question        question    curIdx           !curIdx
-        question        xxxxxxxx    curIdx           to.first()
+         from            to          fromScreen       toScreen
+         xxxxxxxx        question    from.first()     curIdx
+         question        question    curIdx           !curIdx
+         question        xxxxxxxx    curIdx           to.first()
 
          */
 
         var percent = {'next': [-100, 0], 'back': [100, 0]};
+        // TODO: set the initial positions
+
+        // Reset the starting position of the next screen
+        if (app.direction === 'next') {
+            //: ;
+            toScreen.css('-webkit-transform','translate3d(100%, 0, 0)');
+        }
+        else {
+            toScreen.css('-webkit-transform','translate3d(-100%, 0, 0)');
+        }
 
         toScreen.show();
         toScreen.removeClass('protection detection general')
             .addClass(app.category);
 
 
+        //{ translate3d: '100%, 0px, 0px'},
+
         fromScreen.animate(
-            {left: percent[app.direction][0] + '%'},
-            1000,
+            {translate3d: percent[app.direction][0] + '%, 0, 0'},
+            250,
             'cubic-bezier(0, 0, 0.20, 1)',
             function () {
                 fromScreen.hide();
@@ -688,17 +688,20 @@ var app = {
         );
 
         toScreen.animate(
-            {left: percent[app.direction][1] + '%'},
-            1000,
+            {translate3d: percent[app.direction][1] + '%, 0, 0'},
+            250,
             'cubic-bezier(0, 0, 0.20, 1)',
             function () {
-                //to.show();
             }
         );
 
         app.currentScreenName = to;
 
-        // scrollTo(0, 0);
+        // Toggle the next Question container
+        if (to === 'question-container') {
+            console.log('toggling the container index');
+            app.assessment.containerIndex ^= 1;
+        }
     }
 };
 
