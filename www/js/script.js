@@ -683,6 +683,8 @@ var app = {
         }
 
         toScreen.show();
+        scrollTo(0, 0);
+
         toScreen.removeClass('protection detection general')
             .addClass(app.category);
 
