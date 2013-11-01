@@ -400,11 +400,12 @@ var app = {
         //console.log('app.direction:' + app.direction + '  current screen:' + app.currentScreenName + '  next screen:' + nxtScrNm);
 
         // Get obj for going back to assess-intro
-        if (app.direction === 'back' && nxtScrNm === 'assess-intro') {
+        if (nxtScrNm === 'assess-intro') {
             app.assessment.questions = [];
             app.assessment.answers = [];
-            app.assessment.containerIndex = 0;
-            obj = app.assessment.assessment;
+
+            if (app.direction === 'back')
+                obj = app.assessment.assessment;
         }
 
         // Keep track of the navigation history
@@ -618,6 +619,7 @@ var app = {
      */
     moveScr: function (from, to) {
         console.log('in moveScr()');
+        console.log('Direction: ' + app.direction);
 
         var toScreens = $('[data-screen=' + to + ']');
         var fromScreens = $('[data-screen=' + from + ']');
@@ -626,26 +628,35 @@ var app = {
 
         console.log('container index: ' + app.assessment.containerIndex);
 
-        if (from === 'question-container') {
-            if (app.assessment.containerIndex)
+        //if (from === 'question-container') {
+            // Next
+            //if (app.direction === 'next')
+                fromScreen = app.assessment.containerIndex ? fromScreens.first() : fromScreens.last();
+            //else
+            //    fromScreen = app.assessment.containerIndex ? fromScreens.first() : fromScreens.last();
+
+           /* if (app.assessment.containerIndex)
                 fromScreen = fromScreens.first();
             else
-                fromScreen = fromScreens.last();
-        }
-        else {
-            fromScreen = fromScreens.first();
-        }
+                fromScreen = fromScreens.last();*/
+       // }
+      //  else {
+       //     fromScreen = fromScreens.first();
+      //  }
 
 
-        if (to === 'question-container') {
-            if (!app.assessment.containerIndex)
-                toScreen = toScreens.first();
-            else
-                toScreen = toScreens.last();
-        }
+        //if (to === 'question-container') {
+            // Next
+            toScreen = !app.assessment.containerIndex ? toScreens.first() : toScreens.last();
+
+           /* if (!app.assessment.containerIndex)
+             toScreen = toScreens.first();
+             else
+             toScreen = toScreens.last();*/
+      /*  }
         else {
             toScreen = toScreens.first();
-        }
+        }*/
 
         console.log('toScreen:' + toScreen.data('screen') + (to === 'question-container' ? ':' + toScreen.data('id') : ''));
         console.log('fromScreen:' + fromScreen.data('screen') + (from === 'question-container' ? ':' + fromScreen.data('id') : ''));
@@ -698,7 +709,7 @@ var app = {
         app.currentScreenName = to;
 
         // Toggle the next Question container
-        if (to === 'question-container') {
+        if (to === 'question-container' || from === 'question-container' ) {
             console.log('toggling the container index');
             app.assessment.containerIndex ^= 1;
         }
