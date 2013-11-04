@@ -625,71 +625,26 @@ var app = {
         var fromScreens = $('[data-screen=' + from + ']');
 
         var toScreen, fromScreen;
+        var percent = {'next': [-100, 0], 'back': [100, 0]};
+
+        fromScreen = app.assessment.containerIndex ? fromScreens.first() : fromScreens.last();
+        toScreen = !app.assessment.containerIndex ? toScreens.first() : toScreens.last();
 
         console.log('container index: ' + app.assessment.containerIndex);
-
-        //if (from === 'question-container') {
-            // Next
-            //if (app.direction === 'next')
-                fromScreen = app.assessment.containerIndex ? fromScreens.first() : fromScreens.last();
-            //else
-            //    fromScreen = app.assessment.containerIndex ? fromScreens.first() : fromScreens.last();
-
-           /* if (app.assessment.containerIndex)
-                fromScreen = fromScreens.first();
-            else
-                fromScreen = fromScreens.last();*/
-       // }
-      //  else {
-       //     fromScreen = fromScreens.first();
-      //  }
-
-
-        //if (to === 'question-container') {
-            // Next
-            toScreen = !app.assessment.containerIndex ? toScreens.first() : toScreens.last();
-
-           /* if (!app.assessment.containerIndex)
-             toScreen = toScreens.first();
-             else
-             toScreen = toScreens.last();*/
-      /*  }
-        else {
-            toScreen = toScreens.first();
-        }*/
-
         console.log('toScreen:' + toScreen.data('screen') + (to === 'question-container' ? ':' + toScreen.data('id') : ''));
         console.log('fromScreen:' + fromScreen.data('screen') + (from === 'question-container' ? ':' + fromScreen.data('id') : ''));
 
-        /*
-
-         from            to          fromScreen       toScreen
-         xxxxxxxx        question    from.first()     curIdx
-         question        question    curIdx           !curIdx
-         question        xxxxxxxx    curIdx           to.first()
-
-         */
-
-        var percent = {'next': [-100, 0], 'back': [100, 0]};
-        // TODO: set the initial positions
 
         // Reset the starting position of the next screen
-        if (app.direction === 'next') {
-            //: ;
-            toScreen.css('-webkit-transform','translate3d(100%, 0, 0)');
-        }
-        else {
-            toScreen.css('-webkit-transform','translate3d(-100%, 0, 0)');
-        }
+        if (app.direction === 'next')
+            toScreen.css('-webkit-transform', 'translate3d(100%, 0, 0)');
+        else
+            toScreen.css('-webkit-transform', 'translate3d(-100%, 0, 0)');
 
-        toScreen.show();
-        scrollTo(0, 0);
 
         toScreen.removeClass('protection detection general')
-            .addClass(app.category);
-
-
-        //{ translate3d: '100%, 0px, 0px'},
+            .addClass(app.category).show();
+        scrollTo(0, 0);
 
         fromScreen.animate(
             {translate3d: percent[app.direction][0] + '%, 0, 0'},
@@ -711,7 +666,7 @@ var app = {
         app.currentScreenName = to;
 
         // Toggle the next Question container
-        if (to === 'question-container' || from === 'question-container' ) {
+        if (to === 'question-container' || from === 'question-container') {
             console.log('toggling the container index');
             app.assessment.containerIndex ^= 1;
         }

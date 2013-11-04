@@ -17,13 +17,6 @@ body {
 	overflow-x: hidden;
 }
 
-.page-padding-top {
-	background-color: rgba(255,255,255,0.85);
-	height:20px;
-	width: 100%;
-	
-}
-
 section {
     top: 0px;
 	width: 100%;
@@ -746,7 +739,6 @@ nav.cat-nav ul li a{
 	color: #FFFFFF;
 	display: block;
 	font-family: 'Helvetica Neue',arial,sans-serif;
-	font-weight: 100;
 	margin: 0.1em auto 0;
 	padding: 0.75em 0;
 	text-align: center;
@@ -802,17 +794,6 @@ nav.cat-nav ul li a.com-icon{
 
 }
 
-
-
-.coming-soon {
-	background-image: url(../img/coming_soon.png);
-	background-position: right top;
-	background-repeat: no-repeat;
-	background-size: auto 100%;
-}
-
-
-
 @keyframes slidein
 {
 0%   {right:100%}
@@ -862,23 +843,3 @@ img.prod-thumb {
 .small-text {
 	font-size: 0.5em;
 }
-
-.left {
-     -webkit-transform: translate3d(-100%, 0, 0);
-     transform: translate3d(-100%, 0, 0);
- }
-
-.center {
-     -webkit-transform: translate3d(0, 0, 0);
-     transform: translate3d(0%, 0, 0);
- }
-
-.right {
-     -webkit-transform: translate3d(100%, 0, 0);
-     transform: translate3d(100%, 0, 0);
- }
-
-.transition {
-     -webkit-transition-duration: 2s;
-     transition-duration: 2s;
- }
