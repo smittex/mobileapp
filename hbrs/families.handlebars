@@ -1,0 +1,14 @@
+<header>
+    <h1>Browse</h1>
+</header>
+<div class="pane product-list">
+    <article class="contents-wrap">
+        {{#each categories}}
+            <h1>{{name}}</h1>
+            {{#each families}}
+                <a class="family list product-button" data-id="{{name}}">{{name}}</a>
+            {{/each}}
+            <br />
+        {{/each}}
+    </article>
+</div>
