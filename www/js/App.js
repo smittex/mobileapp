@@ -1,26 +1,162 @@
-var App = (function ($, Backbone, Marionette, _, Handlebars) {
+var app = (function ($, Backbone, Marionette, _, Handlebars) {
     'use strict';
     // Use Handlebars templates instead of undescore's
-    Backbone.Marionette.TemplateCache.prototype.compileTemplate = function(compiledTemplate) {
+    Marionette.TemplateCache.prototype.compileTemplate = function(compiledTemplate) {
         return compiledTemplate;
     };
-    Backbone.Marionette.TemplateCache.prototype.loadTemplate = function(templateId){
+    Marionette.TemplateCache.prototype.loadTemplate = function(templateId){
         return Handlebars.templates[templateId];
     };
 
+    Marionette.Region.prototype.open = function(view){
+        this.$el.css('-webkit-transform', 'translate3d(100%, 0, 0)');
 
-    var App = new Marionette.Application();
+        this.$el.html(view.el);
+        this.$el.animate(
+            {translate3d: '0, 0, 0'},
+            2400,
+            'cubic-bezier(0, 0, 0.20, 1)',
+            function () {
+                //fromScreen.hide();
+            });
+    }
+
+    var app = new Marionette.Application();
+
+    app.on('error', function(error){
+        console.error(error);
+    })
+
+    app.Controller = Marionette.Controller.extend({
+        initialize: function (options) {
+            console.log('In Controller.initialize');
+
+            // store a region that will be used to show the stuff rendered by this component
+            this.mainRegion = options.mainRegion;
+        },
+
+        home: function () {
+            console.log('In Controller.home');
+            var montageView = new app.Views.MontageView();
+            this.mainRegion.show(montageView);
+
+        },
+
+        categoryIntro: function(category) {
+            if (!_.contains(['detection','protection']))
+                app.trigger('error:categoryIntro');
+
+            var that = this;
+            var selector = category === 'detection' ? 'sound-detection' : 'sound-protection';
+
+            app.DAL.getModel(
+                'select value from content where screen=\'cat-intro\' and key=\'' + selector + '\'',
+                function () {
+                    var view = new app.Views.CategoryView({
+                        className: category,
+                        model: this
+                    });
+                    that.mainRegion.show(view);
+            });
+        },
+
+        selectAssessment: function() {
+            //montageView.model = new Backbone.Model({assessment:'Sound Detection', button_text:'Select Assessment',assessments:[{image:'individual.jpg',title:'Individual'},{image:'task-based.jpg',title:'Task Based'},{image:'noise-control.jpg',title:'Noise Control'},{image:'environmental.jpg',title:'Environmental'},{image:'specialty.jpg',title:'Specialty'}]});
+
+        }
+        //app.on: function() {}
+
+
+
+
+
+
+        //click:montage
+
+
+        /*      // call the "show" method to get this thing on screen
+         show: function(){
+         // get the layout and show it
+         var layout = this._getLayout();
+         this.mainRegion.show(layout);
+         },
+
+         // build the layout and set up a "render" event handler.
+         // the event handler will set up the additional views that
+         // need to be displayed in the layout. do this in "render"
+         // so that the initial views are already rendered in to the
+         // layout when the layout is displayed in the DOM
+         _getLayout: function(){
+         var layout = new MyLayout();
+
+         this.listenTo(layout, "render", function(){
+         this._showMenuAndContent(layout);
+         }, this);
+
+         return layout;
+         },
+
+         // render the menu and the initial content in to the layout.
+         // set up an event handler so that when the menu triggers the
+         // event, the content will be changed appropriately.
+         _showMenuAndContent: function(layout){
+
+         var menu = this._addMenu(layout.menu);
+         this._initialContent(layout.content);
+
+         // this is a custom event triggered from the menu view.
+         // it doesn't matter what the event name is. it just needs
+         // to be triggered at the right time, from the menu view.
+         menu.on("some:event", function(){
+         // when the event is triggered, change the content in
+         // the "content" region of the layout
+         this._changeContent(layout.content);
+         }, this);
+         },
+
+         // add the menu to the region specified, and return it
+         // so it can be used for events, etc
+         _addMenu: function(region){
+         var menu = new MyMenu();
+         region.show(menu);
+         return menu;
+         },
+
+         // add the initial content to the region specified
+         _initialContent: function(region){
+         var view = new InitialContentView();
+         region.show(view);
+         },
+
+         // change the content in the region specified
+         _changeContent: function(region){
+         var view = new AnotherContentView();
+         region.show(view);
+         }*/
+    });
+
+
+
+
+    // TODO: Add error messaging/handling
+
+
 
     //Organize Application into regions corresponding to DOM elements
     //Regions can contain views, Layouts, or subregions nested as necessary
 
-    App.addRegions({
+    app.addRegions({
         mainRegion: "#main"
     });
 
-    App.addInitializer(function(options){
-        var montageView = new App.Views.CategoryView();
-        App.mainRegion.show(montageView);
+
+
+    app.addInitializer(function(options){
+        app.controller = new app.Controller({
+            mainRegion: app.mainRegion
+        });
+
+        app.controller.home();
     });
 
 
@@ -38,17 +174,17 @@ var App = (function ($, Backbone, Marionette, _, Handlebars) {
      });
 
      var layout = new AppLayout();
-     App.main.show(layout);
+     app.main.show(layout);
 
-     App.main.currentView.mainMenu.show(new mainMenuView.Views.menu());
-     App.main.currentView.content.show(new dashboard.Views.main());
+     app.main.currentView.mainMenu.show(new mainMenuView.Views.menu());
+     app.main.currentView.content.show(new dashboard.Views.main());
 
      // this can be a main menu navigation
      // this will change content at the "main" app screen
      // your links should include the role=nav-main-app
 
      $('a[role=nav-main-app]').click(function(e) {
-     App.Router.navigate( $(this).attr('href'), {trigger: true});
+     app.Router.navigate( $(this).attr('href'), {trigger: true});
      e.preventDefault();
      });
      */
@@ -58,7 +194,7 @@ var App = (function ($, Backbone, Marionette, _, Handlebars) {
 
     var AngryCat = Backbone.Model.extend({});
 
-    App.AngryCats = Backbone.Collection.extend({
+    app.AngryCats = Backbone.Collection.extend({
         model: AngryCat
     });
 
@@ -83,35 +219,77 @@ var App = (function ($, Backbone, Marionette, _, Handlebars) {
     });
 */
 
-    App.on('initialize:after', function() {
+    app.on('initialize:after', function () {
         Backbone.history.start();
-        App.DAL.open('products',2000000);
-    })
+        app.DAL.open('products', 2000000);
+    });
 
     // http://davidsulc.com/blog/2012/04/15/a-simple-backbone-marionette-tutorial/
 
-    return App;
+    return app;
 }($, Backbone, Marionette, _, Handlebars));
 
-App.module('Views', function(Views, $, Backbone, Marionette, _, Handlebars) {
+
+app.module('Views', function(Views, App, Backbone, Marionette, $, _, Handlebars) {
+    var AnimatedView = Marionette.ItemView.extend({
+/*        onRender: function() {
+            this.$el.animate(
+                {translate3d: '100px, 0, 0'},
+                2400,
+                'cubic-bezier(0, 0, 0.20, 1)',
+                function () {
+                    //fromScreen.hide();
+                }
+            );//hide().fadeIn();
+        },*/
+        remove: function(){
+            this.$el.fadeOut(function(){
+                $(this).remove();
+            });
+        },
+        events: {
+            'click a.back': 'onBack',
+            'click a.next': 'onNext'
+        },
+        onBack: function(e) {
+            console.log('Back button pressed');
+        },
+        onNext: function(e) {
+            console.log('Next button pressed');
+        }
+    });
+
     Views.MontageView = Marionette.ItemView.extend({
-        template: '#montage-template',
-        model: {assessment:'Sound Detection', button_text:'Select Assessment',assessments:[{image:'individual.jpg',title:'Individual'},{image:'task-based.jpg',title:'Task Based'},{image:'noise-control.jpg',title:'Noise Control'},{image:'environmental.jpg',title:'Environmental'},{image:'specialty.jpg',title:'Specialty'}]},
+        template: 'montage',
         events: {
             'click a': 'onClick'
         },
         onClick: function(e) {
-            console.log('e: ' + e);
-            alert('Click!');
+            var target = $(e.target);
+            var category;
+
+            if (target.hasClass('det-icon'))
+                category = 'detection';
+            else if (target.hasClass('pro-icon'))
+                category = 'protection';
+            else if (target.hasClass('com-icon'))
+                app.trigger('error:communication');
+
+            if (category) {
+                app.trigger('click:montage');
+                app.controller.categoryIntro(category);
+            }
+            else
+                app.trigger('error:montage');
         }
 
     });
-    Views.CategoryView = Marionette.ItemView.extend({
+    Views.CategoryView = AnimatedView.extend({
         template: 'cat-intro'
     });
 });
 
-App.module('DAL', function(DAL, $, Backbone, Marionette, _, Handlebars) {
+app.module('DAL', function(DAL, App, Backbone, Marionette, $, _, Handlebars) {
     var db, results;
 
     DAL.open = function (name, size) {
@@ -119,31 +297,51 @@ App.module('DAL', function(DAL, $, Backbone, Marionette, _, Handlebars) {
             db = window.openDatabase(name, '', name, size);
     };
 
+    // TODO: Add method to return a model
+    function getModel(sql, callback) {
+        try {
+            getRows(sql, function () {
+                callback.apply(new Backbone.Model(eval("(" + this.item(0).value + ')')));
+            })
+        }
+        catch (err) {
+            console.error(err.message);
+        }
+        finally {
+            return false;
+        }
+    }
+
     // TODO: remove this
     DAL.getRows = getRows;
+    DAL.getModel = getModel;
 
     function getRows(sql, callback) {
+        if (!db)
+            DAL.open('products', 2000000);
+
         db.transaction(
             function (tx) {
                 tx.executeSql(
                     sql,
                     [],
                     function (tx, data) {
-                        results = data.rows;
-                        callback.apply(results);
+                        console.log('Data:');
+                        console.log(data.rows.item(0));
+                        callback.apply(data.rows);
                     },
-                    function() {
+                    function(err) {
                         //TODO: raise error
-                        console.error('error')
+                        console.error('error: ' + err.message)
                     }
                 );
             },
-            function() {
+            function(err) {
                 // TODO: raise error
-                console.error('tx error')
+                console.error('tx error: ' + err.message)
             }
         );
-    };
+    }
 
     DAL.updateDatabase = function (callback) {
         switch (db.version) {
@@ -187,7 +385,7 @@ App.module('DAL', function(DAL, $, Backbone, Marionette, _, Handlebars) {
 /*
 
 
-App.module('Layout', function(Layout, App, Backbone, Marionette, $, _) {
+app.module('Layout', function(Layout, app, Backbone, Marionette, $, _) {
     Layout.Header = Marionette.ItemView.extend({
         template: '#header-template',
         events: {
@@ -199,7 +397,7 @@ App.module('Layout', function(Layout, App, Backbone, Marionette, $, _) {
     });
 });
 
-App.module('Assessments', function(Assessments, App, Backbone, Marionette, $, _) {
+app.module('Assessments', function(Assessments, app, Backbone, Marionette, $, _) {
     Assessments.Detection = Backbone.Model.extend({
         defaults: {
             title: 'Detection',
@@ -212,7 +410,7 @@ App.module('Assessments', function(Assessments, App, Backbone, Marionette, $, _)
     });
 });
 
-App.module('Assessment', function(Assessment, App, Backbone, Marionette, $, _){
+app.module('Assessment', function(Assessment, app, Backbone, Marionette, $, _){
     Assessment.Router = Marionette.AppRouter.extend({
         appRoutes: {
             'home':'home'
@@ -220,7 +418,7 @@ App.module('Assessment', function(Assessment, App, Backbone, Marionette, $, _){
     });
 
     Assessment.Controller = function() {
-        this.assessment = new App.Assessments.Detection;
+        this.assessment = new app.Assessments.Detection;
     }
 
     _.extend(Assessment.Controller.prototype, {
@@ -228,17 +426,17 @@ App.module('Assessment', function(Assessment, App, Backbone, Marionette, $, _){
             this.showHeader(this.assessment);
         },
         showHeader: function(Assessment) {
-            var header = new App.Layout.Header({
+            var header = new app.Layout.Header({
                 collection: Assessment
             })
-            App.headerRegion.show(header);
+            app.headerRegion.show(header);
         },
         home: function() {
-            App.vent.trigger('home');
+            app.vent.trigger('home');
         }
     });
 
-    App.vent.on('home', function() {
+    app.vent.on('home', function() {
         console.log('\'home\' triggered');
     })
 
@@ -253,5 +451,5 @@ App.module('Assessment', function(Assessment, App, Backbone, Marionette, $, _){
 });*/
 
 $(document).ready(function(){
-    App.start();
+    app.start();
 });

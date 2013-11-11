@@ -179,7 +179,7 @@ function createEvent(type, data) {
 
 if(typeof window.console === "undefined") {
     window.console = {
-        log:function(){}
+        log:function (s){}
     };
 }
 // there are places in the framework where we call `warn` also, so we should make sure it exists
