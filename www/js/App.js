@@ -14,7 +14,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
         this.$el.html(view.el);
         this.$el.animate(
             {translate3d: '0, 0, 0'},
-            2400,
+            250,
             'cubic-bezier(0, 0, 0.20, 1)',
             function () {
                 //fromScreen.hide();
