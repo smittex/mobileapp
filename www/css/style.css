@@ -794,6 +794,21 @@ nav.cat-nav ul li a.com-icon{
 
 }
 
+nav.cat-nav ul li a.val-icon{
+    background-image: url(../img/coming_soon.png);
+    background-position: right top;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    right: 100%;
+    background: #22a9d6;
+    animation:slidein 1s;
+    animation-delay:0s;
+    animation-fill-mode: forwards;
+    -webkit-animation:slidein 1s;
+    -webkit-animation-delay:0s;
+    -webkit-animation-fill-mode: forwards;
+}
+
 @keyframes slidein
 {
 0%   {right:100%}
