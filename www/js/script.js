@@ -435,7 +435,6 @@ var app = {
             return;
         }
 
-        $('nav.main-nav').show();
         if (app.category === 'detection')
             $('a.open-assessments').text('Assessments');
         else if (app.category === 'protection')
@@ -663,42 +662,47 @@ var app = {
         //console.log('toScreen:' + toScreen.data('screen') + (to === 'question-container' ? ':' + toScreen.data('id') : ''));
         //console.log('fromScreen:' + fromScreen.data('screen') + (from === 'question-container' ? ':' + fromScreen.data('id') : ''));
 
+        // Wait until all the images have loaded
+        var imgLoad = imagesLoaded($('[data-screen=cat-intro]'));
+        imgLoad.on('always',function(){
+            // Reset the starting position of the next screen
+            if (app.direction === 'next')
+                toScreen.css('-webkit-transform', 'translate3d(100%, 0, 0)');
+            else
+                toScreen.css('-webkit-transform', 'translate3d(-100%, 0, 0)');
 
-        // Reset the starting position of the next screen
-        if (app.direction === 'next')
-            toScreen.css('-webkit-transform', 'translate3d(100%, 0, 0)');
-        else
-            toScreen.css('-webkit-transform', 'translate3d(-100%, 0, 0)');
+            toScreen.removeClass('protection detection general')
+                .addClass(app.category).show();
 
+            fromScreen.animate(
+                {translate3d: percent[app.direction][0] + '%, 0, 0'},
+                250,
+                'cubic-bezier(0, 0, 0.20, 1)',
+                function () {
+                    fromScreen.hide();
+                }
+            );
 
-        toScreen.removeClass('protection detection general')
-            .addClass(app.category).show();
-        scrollTo(0, 0);
+            scrollTo(0, 0);
+            $('nav.main-nav').show();
 
-        fromScreen.animate(
-            {translate3d: percent[app.direction][0] + '%, 0, 0'},
-            250,
-            'cubic-bezier(0, 0, 0.20, 1)',
-            function () {
-                fromScreen.hide();
+            toScreen.animate(
+                {translate3d: percent[app.direction][1] + '%, 0, 0'},
+                250,
+                'cubic-bezier(0, 0, 0.20, 1)',
+                function () {
+
+                }
+            );
+
+            app.currentScreenName = to;
+
+            // Toggle the next Question container
+            if (to === 'question-container' || from === 'question-container') {
+                //console.log('toggling the container index');
+                app.assessment.containerIndex ^= 1;
             }
-        );
-
-        toScreen.animate(
-            {translate3d: percent[app.direction][1] + '%, 0, 0'},
-            250,
-            'cubic-bezier(0, 0, 0.20, 1)',
-            function () {
-            }
-        );
-
-        app.currentScreenName = to;
-
-        // Toggle the next Question container
-        if (to === 'question-container' || from === 'question-container') {
-            //console.log('toggling the container index');
-            app.assessment.containerIndex ^= 1;
-        }
+        });
     }
 };
 
