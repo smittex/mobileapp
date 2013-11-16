@@ -2,20 +2,20 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
     'use strict';
     // TODO: Put this into a module
     // Use Handlebars templates instead of undescore's
-    Marionette.TemplateCache.prototype.compileTemplate = function(compiledTemplate) {
+    Marionette.TemplateCache.prototype.compileTemplate = function (compiledTemplate) {
         return compiledTemplate;
     };
-    Marionette.TemplateCache.prototype.loadTemplate = function(templateId){
+    Marionette.TemplateCache.prototype.loadTemplate = function (templateId) {
         return Handlebars.templates[templateId];
     };
 
     // TODO: Put this into a module
     // Override Marionette's Region behavior to enable iOS-like transitions
-    Marionette.Region.prototype.show = function(view) {
+    Marionette.Region.prototype.show = function (view) {
         this.ensureEl();
 
-        var isViewClosed = view.isClosed || _.isUndefined(view.$el);
-        var isDifferentView = view !== this.currentView;
+        var isViewClosed = view.isClosed || _.isUndefined(view.$el),
+            isDifferentView = view !== this.currentView;
 
         view.render();
 
@@ -28,87 +28,278 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
         Marionette.triggerMethod.call(this, "show", view);
         Marionette.triggerMethod.call(view, "show");
     };
-    Marionette.Region.prototype.open = function(newView, oldView){
+    Marionette.Region.prototype.open = function (newView, oldView) {
         // If this is the first screen, just display the content and don't animate
         if (oldView === undefined) {
             console.log('Initial');
-            this.$el.html(newView.el)
+            this.$el.html(newView.el);
             return;
         }
 
         console.log('Direction: ' + app.vars.direction);
 
-        var percent = {'next': [-100, 0], 'back': [100, 0]};
-        var toScreen = newView.$el;
-        var fromScreen = oldView.$el;
+        var toScreen = newView.$el, fromScreen = oldView.$el;
 
         this.$el.append(newView.el);
 
+        // TODO: Set positions based on direction
         // Set the position to the starting point then animate
         toScreen.css('-webkit-transform', 'translate3d(100%, 0, 0)');
         fromScreen.css('-webkit-transform', 'translate3d(0, 0, 0)');
 
-        $(document).one('fromScreen:close', function () {
-            oldView.close();
-        });
-
         toScreen.animate(
             {translate3d: '0, 0, 0'},
             250,
-            'cubic-bezier(0, 0, 0.20, 1)');
+            'cubic-bezier(0, 0, 0.20, 1)'
+        );
 
         fromScreen.animate(
-            {translate3d: percent[app.vars.direction][0] + '%, 0, 0'},
+            {translate3d: app.consts.percent[app.vars.direction][0] + '%, 0, 0'},
             250,
             'cubic-bezier(0, 0, 0.20, 1)',
-            function () {
-                $(document.body).trigger('fromScreen:close')
-        });
+            $.proxy(function () {
+                this.close();
+            }, oldView)
+        );
     };
 
     var app = new Marionette.Application();
-    app.vars = {};
-
-    app.on('error', function(error){
+    app.vars = {
+        direction: null,
+        category: null,
+        assessment: null,
+        history: [],
+        containerIndex: 0
+    };
+    app.consts = {
+        percent: {'next': [-100, 0], 'back': [100, 0]}
+    };
+    app.on('error', function (error) {
         console.error(error);
-    })
+    });
+
+    app.views = {
+        'montage': Marionette.ItemView.extend({
+            template: 'montage',
+            events: {
+                'click a': 'onNext'
+            },
+            onNext: function (e) {
+                var target = $(e.currentTarget);
+
+                if (target.hasClass('det-icon')) {
+                    app.vars.category = 'detection';
+                }
+                else if (target.hasClass('pro-icon')) {
+                    app.vars.category = 'protection';
+                }
+                else if (target.hasClass('com-icon')) {
+                    app.trigger('error:communication');
+                    return;
+                }
+
+                if (app.vars.category) {
+                    app.trigger('click:montage');
+                    app.vars.direction = 'next';
+                    app.vars.history.push('montage');
+                    app.controller.categoryIntro();
+                }
+                else {
+                    app.trigger('error:montage');
+                }
+            }
+        }),
+        'cat-intro': Marionette.ItemView.extend({
+            template: 'cat-intro',
+            events: {
+                'click a.back': 'onBack',
+                'click a.next': 'onNext',
+                'click a.link': 'onLink'
+            },
+            onBack: function (e) {
+                app.vars.direction = 'back';
+                console.log('Back button pressed');
+            },
+            onNext: function (e) {
+                app.vars.direction = 'next';
+                app.vars.history.push('cat-intro');
+                app.controller.selectAssessment();
+            }
+        }),
+        'select-assess': Marionette.ItemView.extend({
+            template: 'select-assess',
+            events: {
+                'click a.back': 'onBack',
+                'click a.next': 'onNext'
+            },
+            onBack: function (e) {
+                app.vars.direction = 'back';
+                console.log('Back button pressed');
+            },
+            onNext: function (e) {
+                var target = $(e.currentTarget);
+                app.vars.assessment = target.data('subitem').toLowerCase().replace(' ', '-');
+                app.vars.direction = 'next';
+                app.vars.history.push('select-assess');
+                app.controller.assessmentIntro();
+            }
+        }),
+        'assess-intro': Marionette.ItemView.extend({
+            template: 'assess-intro',
+            events: {
+                'click a.back': 'onBack',
+                'click a.next': 'onNext'
+            },
+            onBack: function (e) {
+                app.vars.direction = 'back';
+                console.log('Back button pressed');
+            },
+            onNext: function (e) {
+                app.vars.direction = 'next';
+                app.vars.history.push('assess-intro');
+                app.controller.questionContainer();
+            }
+        }),
+        'question-container': Marionette.ItemView.extend({
+            template: 'question-container',
+            events: {
+                'click a.back': 'onBack',
+                'click a.next': 'onNext'
+            },
+            onBack: function (e) {
+                app.vars.direction = 'back';
+                console.log('Back button pressed');
+            },
+            onNext: function (e) {
+                var target = $(e.currentTarget);
+                var answerId = target.data('answer-id');
+
+                console.log('answer_id:' + answerId);
+
+                var question = app.assessment.questions.pop();
+                question.answer = app.assessment.getAnswerById(question, answerId);
+
+                app.assessment.answers.push(question);
+
+
+                app.vars.direction = 'next';
+                console.log('Next button pressed');
+
+
+
+                if (question.answer.type === 'question') {
+                    app.controller.questionContainer();
+                }
+                else if (question.answer.type === 'product') {
+                    if (question.answer.nodes.length > 1) {
+                        console.log('product-list');
+                       /* nxtScrNm = 'product-list';
+                        obj = app.util.arrayToDelimitedString(question.answer.nodes);*/
+                    }
+                    else {
+                        console.log('product-page');
+                        /*nxtScrNm = 'product-page';
+                        obj = question.answer.nodes[0];*/
+                    }
+                }
+
+
+
+
+
+
+
+
+            }
+        })
+    };
 
     app.Controller = Marionette.Controller.extend({
         initialize: function (options) {
-            console.log('In Controller.initialize');
-
-            // store a region that will be used to show the stuff rendered by this component
             this.mainRegion = options.mainRegion;
         },
 
-        home: function () {
-            console.log('In Controller.home');
-            var montageView = new app.Views.MontageView();
-            this.mainRegion.show(montageView);
+        goBack: function () {
+            var $prevScreen, prevScreen = app.vars.history.pop();
 
+
+
+            this.mainRegion.show();
         },
 
-        categoryIntro: function(category) {
-            if (!_.contains(['detection','protection']))
-                app.trigger('error:categoryIntro');
+        home: function () {
+            var montageView = new app.views['montage']();
+            this.mainRegion.show(montageView);
+        },
 
-            var that = this;
-            var selector = category === 'detection' ? 'sound-detection' : 'sound-protection';
+        categoryIntro: function () {
+            var that = this,
+                selector = app.vars.category === 'detection' ? 'sound-detection' : 'sound-protection';
 
             app.DAL.getModel(
                 'select value from content where screen=\'cat-intro\' and key=\'' + selector + '\'',
                 function () {
-                    var view = new app.Views.CategoryView({
-                        className: category,
+                    var view = new app.views['cat-intro']({
+                        className: app.vars.category,
                         model: this
                     });
                     that.mainRegion.show(view);
-            });
+                }
+            );
         },
 
-        selectAssessment: function() {
-            //montageView.model = new Backbone.Model({assessment:'Sound Detection', button_text:'Select Assessment',assessments:[{image:'individual.jpg',title:'Individual'},{image:'task-based.jpg',title:'Task Based'},{image:'noise-control.jpg',title:'Noise Control'},{image:'environmental.jpg',title:'Environmental'},{image:'specialty.jpg',title:'Specialty'}]});
+        selectAssessment: function () {
+            var that = this;
 
+            app.DAL.getModel(
+                'select value from content where screen=\'select-assess\' and category=\'' + app.vars.category + '\'',
+                function () {
+                    var view = new app.views['select-assess']({
+                        className: app.vars.category,
+                        model: this
+                    });
+                    that.mainRegion.show(view);
+                }
+            );
+        },
+
+        assessmentIntro: function() {
+            var that = this;
+
+            app.DAL.getModel(
+                'select value from content where screen=\'assess-intro\' and key=\'' + app.vars.assessment + '\'',
+                function () {
+                    var view = new app.views['assess-intro']({
+                        className: app.vars.category,
+                        model: this
+                    });
+                    that.mainRegion.show(view);
+                }
+            );
+        },
+
+        questionContainer: function() {
+            var that = this;
+            app.assessment.getNextQuestion(function () {
+                var view = new app.views['question-container']({
+                    className: app.vars.category,
+                    model: this
+                });
+                that.mainRegion.show(view);
+            });
+
+
+
+            /*            app.DAL.getModel(
+                'select value from content where screen=\'assess-intro\' and key=\'' + app.vars.assessment + '\'',
+                function () {
+                    var view = new app.views['assess-intro']({
+                        className: app.vars.category,
+                        model: this
+                    });
+                    that.mainRegion.show(view);
+                }
+            );*/
         }
     });
 
@@ -116,7 +307,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
         mainRegion: "#main"
     });
 
-    app.addInitializer(function(){
+    app.addInitializer(function () {
         app.controller = new app.Controller({
             mainRegion: app.mainRegion
         });
@@ -132,57 +323,101 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
     return app;
 }($, Backbone, Marionette, _, Handlebars));
 
+app.module('assessment', function (assessment) {
+    "use strict";
+    // Requires DAL.assessment
+    assessment.questions = [];
+    assessment.answers = [];
+    assessment.containerIndex = 0;
 
-app.module('Views', function(Views, App, Backbone, Marionette, $, _, Handlebars) {
-    Views.MontageView = Marionette.ItemView.extend({
-        template: 'montage',
-        events: {
-            'click a': 'onClick'
-        },
-
-        onClick: function(e) {
-            var target = $(e.target);
-            var category;
-
-            if (target.hasClass('det-icon'))
-                category = 'detection';
-            else if (target.hasClass('pro-icon'))
-                category = 'protection';
-            else if (target.hasClass('com-icon'))
-                app.trigger('error:communication');
-
-            if (category) {
-                app.trigger('click:montage');
-                app.vars.direction = 'next';
-                app.controller.categoryIntro(category);
+    assessment.getQuestionById = function (id) {
+        for (var i = 0; i < this.questions.length; i++) {
+            if (app.assessment.questions[i].question_id === id) {
+                return app.assessment.questions[i];
             }
-            else
-                app.trigger('error:montage');
+        }
+        return null;
+    };
+
+    assessment.getAnswerById = function (question, id) {
+        for (var i = 0; i < question.answers.length; i++) {
+            if (question.answers[i].id === id) {
+                return question.answers[i];
+            }
+        }
+        return null;
+    };
+
+    assessment.getNextQuestion = function (callback) {
+        console.log('in getNextQuestion');
+        if (!app.vars.assessment) {
+            return;
+        }
+        var questionId;
+
+        if (assessment.answers.length) {
+            if (assessment.answers[assessment.answers.length - 1].answer.type !== 'question') {
+                return;
+            }
+
+            questionId = assessment.answers[assessment.answers.length - 1].answer.nodes[0];
         }
 
-    });
-    Views.CategoryView = Marionette.ItemView.extend({
-        template: 'cat-intro',
-        events: {
-            'click a.back': 'onBack',
-            'click a.next': 'onNext'
-        },
-        onBack: function(e) {
-            app.vars.direction = 'back';
-            console.log('Back button pressed');
-        },
-        onNext: function(e) {
-            app.vars.direction = 'next';
-            console.log('Next button pressed');
-        }});
+        app.DAL.assessment.getQuestion(app.vars.assessment, questionId, function() {
+            console.log('In callback');
+            console.log(this);
+            app.assessment.questions.push(this);
+            callback.apply(this);
+        });
+    };
 });
 
-app.module('DAL', function(DAL, App, Backbone, Marionette, $, _, Handlebars) {
+app.module('DAL.assessment', function(assessmentDAL, _) {
+    "use strict";
+    // Requires DAL
+    assessmentDAL.getQuestion = function(assessment, questionId, callback) {
+        var sql = 'select q.question_id, q.question_text, q.description, \'[\'||group_concat(a.answers)||\']\' answers ' +
+            'from questions q inner join ' +
+            '(select a.question_id, \'{id:\'||a.answer_id||\',text:\'\'\'||a.answer_text||\'\'\',type:\'\'\'||a.node_type||\'\'\',nodes:[\'||group_concat(n.node_id)||\']}\' answers ' +
+            'from answers a inner join answer_nodes n on a.answer_id=n.answer_id where a.question_id = question_id ' +
+            'group by a.answer_id) a on q.question_id=a.question_id where q.assessment = \'' + assessment + '\' ';
+
+        if (typeof questionId !== 'undefined') {
+            sql += 'and q.question_id = ' + questionId + ' ';
+        }
+
+        sql += 'group by q.question_id order by q.question_id limit 0,1';
+
+        //console.log('sql:' + sql);
+        app.DAL.getRows(sql, function() {
+            //console.log('Results: ');
+            //console.log(this);
+
+            var tmp = this.item(0);
+            var question = {
+                question_id: tmp.question_id,
+                title: tmp.title,
+                question: tmp.question_text,
+                description: tmp.description,
+                answers: eval("(" + tmp.answers + ')')
+            };
+
+            //console.log('question:');
+            //console.log(question);
+
+            callback.apply(question);
+        });
+    };
+});
+
+app.module('DAL', function (DAL, App, Backbone, Marionette, $, _, Handlebars) {
+    "use strict";
     var db, results;
 
     DAL.open = function (name, size) {
-        if (!db)
+        if (!db) {
             db = window.openDatabase(name, '', name, size);
+        }
     };
 
     // TODO: Add method to return a model
@@ -190,14 +425,12 @@ app.module('DAL', function(DAL, App, Backbone, Marionette, $, _, Handlebars) {
         try {
             getRows(sql, function () {
                 callback.apply(new Backbone.Model(eval("(" + this.item(0).value + ')')));
-            })
+            });
         }
         catch (err) {
             console.error(err.message);
         }
-        finally {
-            return false;
-        }
+        return false;
     }
 
     // TODO: remove this
@@ -205,8 +438,9 @@ app.module('DAL', function(DAL, App, Backbone, Marionette, $, _, Handlebars) {
     DAL.getModel = getModel;
 
     function getRows(sql, callback) {
-        if (!db)
+        if (!db) {
             DAL.open('products', 2000000);
+        }
 
         db.transaction(
             function (tx) {
@@ -220,13 +454,13 @@ app.module('DAL', function(DAL, App, Backbone, Marionette, $, _, Handlebars) {
                     },
                     function(err) {
                         //TODO: raise error
-                        console.error('error: ' + err.message)
+                        console.error('error: ' + err.message);
                     }
                 );
             },
             function(err) {
                 // TODO: raise error
-                console.error('tx error: ' + err.message)
+                console.error('tx error: ' + err.message);
             }
         );
     }
@@ -248,7 +482,7 @@ app.module('DAL', function(DAL, App, Backbone, Marionette, $, _, Handlebars) {
                     },
                     function (err) {
                         // TODO: raise error
-                        console.error(err.message)
+                        console.error(err.message);
                     }
                 );
 
@@ -262,5 +496,6 @@ app.module('DAL', function(DAL, App, Backbone, Marionette, $, _, Handlebars) {
 });
 
 $(document).ready(function(){
+    "use strict";
     app.start();
 });
