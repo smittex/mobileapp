@@ -150,7 +150,7 @@ var app = {
             }
             return null;
         },
-        getNextQuestion: function () {
+/*        getNextQuestion: function () {
             //console.log('in getNextQuestion');
             if (app.assessment.answers.length) {
                 if (app.assessment.answers[app.assessment.answers.length - 1].answer.type != 'question') {
@@ -193,7 +193,7 @@ var app = {
 
             //console.log('sql:' + sql);
             app.dal.getRows(sql, 'get:content');
-        }
+        }*/
     },
     /***
      *

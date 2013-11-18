@@ -31,12 +31,14 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
     Marionette.Region.prototype.open = function (newView, oldView) {
         // If this is the first screen, just display the content and don't animate
         if (oldView === undefined) {
-            console.log('Initial');
+            if (app.debug)
+                console.log('Initial');
             this.$el.html(newView.el);
             return;
         }
 
-        console.log('Direction: ' + app.vars.direction);
+        if (app.debug)
+            console.log('Direction: ' + app.vars.direction);
 
         var toScreen = newView.$el, fromScreen = oldView.$el;
 
@@ -64,18 +66,36 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
     };
 
     var app = new Marionette.Application();
+    app.debug = true;
     app.vars = {
         direction: null,
         category: null,
         assessment: null,
-        history: [],
-        containerIndex: 0
+        history: []
     };
     app.consts = {
         percent: {'next': [-100, 0], 'back': [100, 0]}
     };
     app.on('error', function (error) {
-        console.error(error);
+        if (app.debug)
+            console.error(error);
+    });
+
+    app.on('initialize:after', function () {
+        Backbone.history.start();
+        app.DAL.open('products', 2000000);
+    });
+
+    app.addRegions({
+        mainRegion: "#main"
+    });
+
+    app.addInitializer(function () {
+        app.controller = new app.Controller({
+            mainRegion: app.mainRegion
+        });
+
+        app.controller.home();
     });
 
     app.views = {
@@ -118,7 +138,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             },
             onBack: function (e) {
                 app.vars.direction = 'back';
-                console.log('Back button pressed');
+                if (app.debug)
+                    console.log('Back button pressed');
             },
             onNext: function (e) {
                 app.vars.direction = 'next';
@@ -134,7 +155,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             },
             onBack: function (e) {
                 app.vars.direction = 'back';
-                console.log('Back button pressed');
+                if (app.debug)
+                    console.log('Back button pressed');
             },
             onNext: function (e) {
                 var target = $(e.currentTarget);
@@ -152,64 +174,91 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             },
             onBack: function (e) {
                 app.vars.direction = 'back';
-                console.log('Back button pressed');
+                if (app.debug)
+                    console.log('Back button pressed');
             },
             onNext: function (e) {
                 app.vars.direction = 'next';
                 app.vars.history.push('assess-intro');
-                app.controller.questionContainer();
+                app.controller.question();
             }
         }),
-        'question-container': Marionette.ItemView.extend({
-            template: 'question-container',
+        'question': Marionette.ItemView.extend({
+            template: 'question',
+            events: {
+                'click a.back': 'onBack',
+                'click a.answer': 'onNext'
+            },
+            onBack: function (e) {
+                app.vars.direction = 'back';
+                if (app.debug)
+                    console.log('Back button pressed');
+            },
+            onNext: function (e) {
+                app.vars.direction = 'next';
+                app.vars.history.push('question');
+                if (app.debug)
+                    console.log('Next button pressed');
+
+                var target = $(e.currentTarget);
+                var answerId = target.data('answer-id');
+
+                var question = app.assessment.questionAnswered(answerId);
+
+                if (question.answer.type === 'question') {
+                    app.controller.question();
+                }
+                else if (question.answer.type === 'product') {
+                    if (question.answer.nodes.length > 1) {
+                        if (app.debug)
+                            console.log('product-list');
+                        app.controller.productList(question.answer.nodes.join());
+                    }
+                    else {
+                        if (app.debug)
+                            console.log('product-page');
+                        app.controller.productPage(question.answer.nodes[0]);
+                    }
+                }
+            }
+        }),
+        'product-list': Marionette.CompositeView.extend({
+            itemView: Marionette.ItemView.extend({
+                template: 'product-item',
+                tagName: 'a',
+                className: 'open-product product-button multiple list med match-list',
+                attributes: {data: 'test'}
+            }),
+            itemViewContainer: 'article',
+            template: 'product-list',
             events: {
                 'click a.back': 'onBack',
                 'click a.next': 'onNext'
             },
             onBack: function (e) {
                 app.vars.direction = 'back';
-                console.log('Back button pressed');
+                if (app.debug)
+                    console.log('Back button pressed');
             },
             onNext: function (e) {
-                var target = $(e.currentTarget);
-                var answerId = target.data('answer-id');
-
-                console.log('answer_id:' + answerId);
-
-                var question = app.assessment.questions.pop();
-                question.answer = app.assessment.getAnswerById(question, answerId);
-
-                app.assessment.answers.push(question);
-
-
                 app.vars.direction = 'next';
-                console.log('Next button pressed');
-
-
-
-                if (question.answer.type === 'question') {
-                    app.controller.questionContainer();
-                }
-                else if (question.answer.type === 'product') {
-                    if (question.answer.nodes.length > 1) {
-                        console.log('product-list');
-                       /* nxtScrNm = 'product-list';
-                        obj = app.util.arrayToDelimitedString(question.answer.nodes);*/
-                    }
-                    else {
-                        console.log('product-page');
-                        /*nxtScrNm = 'product-page';
-                        obj = question.answer.nodes[0];*/
-                    }
-                }
-
-
-
-
-
-
-
-
+                app.vars.history.push('product-list');
+                app.controller.productPage();
+            }
+        }),
+        'product-page': Marionette.ItemView.extend({
+            template: 'product-page',
+            events: {
+                'click a.back': 'onBack',
+                'click a.link': 'onLink'
+            },
+            onBack: function (e) {
+                app.vars.direction = 'back';
+                if (app.debug)
+                    console.log('Back button pressed');
+            },
+            onLink: function (e) {
+                app.vars.history.push('product-page');
             }
         })
     };
@@ -233,214 +282,241 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
         },
 
         categoryIntro: function () {
-            var that = this,
-                selector = app.vars.category === 'detection' ? 'sound-detection' : 'sound-protection';
-
-            app.DAL.getModel(
-                'select value from content where screen=\'cat-intro\' and key=\'' + selector + '\'',
-                function () {
-                    var view = new app.views['cat-intro']({
-                        className: app.vars.category,
-                        model: this
-                    });
-                    that.mainRegion.show(view);
-                }
-            );
-        },
-
-        selectAssessment: function () {
             var that = this;
+            var selector = app.vars.category === 'detection' ? 'sound-detection' : 'sound-protection';
 
-            app.DAL.getModel(
-                'select value from content where screen=\'select-assess\' and category=\'' + app.vars.category + '\'',
-                function () {
-                    var view = new app.views['select-assess']({
-                        className: app.vars.category,
-                        model: this
-                    });
-                    that.mainRegion.show(view);
-                }
-            );
-        },
-
-        assessmentIntro: function() {
-            var that = this;
-
-            app.DAL.getModel(
-                'select value from content where screen=\'assess-intro\' and key=\'' + app.vars.assessment + '\'',
-                function () {
-                    var view = new app.views['assess-intro']({
-                        className: app.vars.category,
-                        model: this
-                    });
-                    that.mainRegion.show(view);
-                }
-            );
-        },
-
-        questionContainer: function() {
-            var that = this;
-            app.assessment.getNextQuestion(function () {
-                var view = new app.views['question-container']({
+            app.ORM.getCategoryModel(selector, function() {
+                var view = new app.views['cat-intro']({
                     className: app.vars.category,
                     model: this
                 });
                 that.mainRegion.show(view);
             });
+        },
 
+        selectAssessment: function () {
+            var that = this;
 
+            app.ORM.getAssSelModel(app.vars.category, function () {
+                var view = new app.views['select-assess']({
+                    className: app.vars.category,
+                    model: this
+                });
+                that.mainRegion.show(view);
+            });
+        },
 
-            /*            app.DAL.getModel(
-                'select value from content where screen=\'assess-intro\' and key=\'' + app.vars.assessment + '\'',
-                function () {
+        assessmentIntro: function() {
+            var that = this;
+
+            app.ORM.getAssIntroModel(app.vars.assessment, function () {
                     var view = new app.views['assess-intro']({
                         className: app.vars.category,
                         model: this
                     });
                     that.mainRegion.show(view);
-                }
-            );*/
+                });
+        },
+
+        question: function() {
+            var that = this;
+            app.assessment.getNextQuestion(function () {
+                var model = new Backbone.Model(this);
+                var view = new app.views['question']({
+                    className: app.vars.category,
+                    model: model
+                });
+                that.mainRegion.show(view);
+            });
+        },
+
+        productList: function(products) {
+            var that = this;
+
+            app.ORM.getProdListModel(products, function () {
+                var view = new app.views['product-list']({
+                    className: app.vars.category,
+                    collection: this
+                });
+                that.mainRegion.show(view);
+            });
+        },
+
+        productPage: function(product) {
+            var that = this;
+
+            app.ORM.getProductModel(product, function () {
+                var view = new app.views['product-page']({
+                    className: app.vars.category,
+                    model: this
+                });
+                that.mainRegion.show(view);
+            });
         }
-    });
-
-    app.addRegions({
-        mainRegion: "#main"
-    });
-
-    app.addInitializer(function () {
-        app.controller = new app.Controller({
-            mainRegion: app.mainRegion
-        });
-
-        app.controller.home();
-    });
-
-    app.on('initialize:after', function () {
-        Backbone.history.start();
-        app.DAL.open('products', 2000000);
     });
 
     return app;
 }($, Backbone, Marionette, _, Handlebars));
 
-app.module('assessment', function (assessment) {
+app.module('assessment', function (assessment, app) {
     "use strict";
-    // Requires DAL.assessment
-    assessment.questions = [];
-    assessment.answers = [];
-    assessment.containerIndex = 0;
+    // Requires DAL.assessment, app
+    var questions = [];
+    var answers = [];
 
-    assessment.getQuestionById = function (id) {
-        for (var i = 0; i < this.questions.length; i++) {
-            if (app.assessment.questions[i].question_id === id) {
-                return app.assessment.questions[i];
+    var getAnswerById = function (question, id) {
+        if (question.answers) {
+            for (var i = 0; i < question.answers.length; i++) {
+                if (question.answers[i].id === id) {
+                    return question.answers[i];
+                }
             }
         }
         return null;
     };
+    assessment.answers = answers;
+    assessment.questions = questions;
+    assessment.questionAnswered = function (answerId) {
+        if (app.debug)
+            console.log('answer_id:' + answerId);
 
-    assessment.getAnswerById = function (question, id) {
-        for (var i = 0; i < question.answers.length; i++) {
-            if (question.answers[i].id === id) {
-                return question.answers[i];
-            }
-        }
-        return null;
+        var question = questions.pop();
+        question.answer = getAnswerById(question, answerId);
+
+        answers.push(question);
+
+        return question;
     };
 
     assessment.getNextQuestion = function (callback) {
-        console.log('in getNextQuestion');
-        if (!app.vars.assessment) {
+        if (!app.vars.assessment)
             return;
-        }
+        
         var questionId;
 
-        if (assessment.answers.length) {
-            if (assessment.answers[assessment.answers.length - 1].answer.type !== 'question') {
+        if (!$.isEmptyObject(answers) && answers.length) {
+            // If the answer's next node type isn't a question, then there won't be a next question
+            if (answers[answers.length - 1].answer.type !== 'question')
                 return;
-            }
 
-            questionId = assessment.answers[assessment.answers.length - 1].answer.nodes[0];
+            questionId = answers[answers.length - 1].answer.nodes[0];
         }
 
         app.DAL.assessment.getQuestion(app.vars.assessment, questionId, function() {
-            console.log('In callback');
-            console.log(this);
-            app.assessment.questions.push(this);
+            questions.push(this);
             callback.apply(this);
         });
     };
 });
 
-app.module('DAL.assessment', function(assessmentDAL, _) {
+app.module('DAL.assessment', function(assessmentDAL, app) {
     "use strict";
     // Requires DAL
-    assessmentDAL.getQuestion = function(assessment, questionId, callback) {
+    assessmentDAL.getQuestion = function(assessmentType, questionId, callback) {
         var sql = 'select q.question_id, q.question_text, q.description, \'[\'||group_concat(a.answers)||\']\' answers ' +
             'from questions q inner join ' +
             '(select a.question_id, \'{id:\'||a.answer_id||\',text:\'\'\'||a.answer_text||\'\'\',type:\'\'\'||a.node_type||\'\'\',nodes:[\'||group_concat(n.node_id)||\']}\' answers ' +
             'from answers a inner join answer_nodes n on a.answer_id=n.answer_id where a.question_id = question_id ' +
-            'group by a.answer_id) a on q.question_id=a.question_id where q.assessment = \'' + assessment + '\' ';
+            'group by a.answer_id) a on q.question_id=a.question_id where q.assessment = \'' + assessmentType + '\' ';
 
-        if (typeof questionId !== 'undefined') {
+        if (typeof questionId !== 'undefined')
             sql += 'and q.question_id = ' + questionId + ' ';
-        }
 
         sql += 'group by q.question_id order by q.question_id limit 0,1';
 
-        //console.log('sql:' + sql);
         app.DAL.getRows(sql, function() {
-            //console.log('Results: ');
-            //console.log(this);
+            var question = $.extend({}, this.item(0));
 
-            var tmp = this.item(0);
-            var question = {
-                question_id: tmp.question_id,
-                title: tmp.title,
-                question: tmp.question_text,
-                description: tmp.description,
-                answers: eval("(" + tmp.answers + ')')
-            };
-
-            //console.log('question:');
-            //console.log(question);
+            // The question's answers are a JSON string that needs to be an object
+            question.answers = eval("(" + question.answers + ')');
 
             callback.apply(question);
         });
     };
 });
 
-app.module('DAL', function (DAL, App, Backbone, Marionette, $, _, Handlebars) {
+app.module('ORM', function(ORM, app) {
+    "use strict";
+    // Requires DAL
+    var getValueModel = function (sql, callback) {
+        app.DAL.getRows(sql, function(){
+            var model = new Backbone.Model(
+                eval("(" + this.item(0).value + ')')
+            );
+            callback.apply(model);
+        });
+    };
+
+    ORM.getCategoryModel = function(category, callback) {
+        var sql = 'select value from content where screen=\'cat-intro\' and key=\'' + category + '\'';
+        getValueModel(sql, callback);
+    };
+
+    ORM.getAssSelModel = function(category, callback) {
+        var sql = 'select value from content where screen=\'select-assess\' and category=\'' + category + '\'';
+        getValueModel(sql, callback);
+    };
+
+    ORM.getAssIntroModel = function(assessment, callback) {
+        var sql = 'select value from content where screen=\'assess-intro\' and key=\'' + assessment + '\'';
+        getValueModel(sql, callback);
+    };
+
+    ORM.getProdListModel = function(productList, callback) {
+        var sql = 'select product_id, name, image from products where product_id in (' + productList + ')';
+        app.DAL.getRows(sql, function(){
+            var products = new Backbone.Collection();
+
+            for (var i = 0; i < this.length; i++) {
+                var product = {
+                    id: this.item(i).product_id,
+                    name: this.item(i).name,
+                    image: this.item(i).image
+                };
+                products.add(product);
+            }
+
+            callback.apply(products);
+        });
+    };
+
+    ORM.getProductModel = function(productId, callback) {
+        var sql = 'select name, model, subhead, description, image, link from products where product_id=\'' + productId + '\'';
+
+        app.DAL.getRows(sql, function(){
+            var product = {
+                name: this.item(0).name,
+                model: this.item(0).model,
+                subhead: this.item(0).subhead,
+                description: this.item(0).description,
+                image: this.item(0).image,
+                link: this.item(0).link
+            };
+
+            callback.apply(product);
+        });
+    };
+
+});
+
+app.module('DAL', function (DAL) {
     "use strict";
     var db, results;
+    var dbName = 'products', dbSize = 2000000; // Default values
+
+    // TODO: Add initializer and remove dependence on app
 
     DAL.open = function (name, size) {
         if (!db) {
-            db = window.openDatabase(name, '', name, size);
+            dbName = name || dbName;
+            dbSize = size || dbSize;
+            db = window.openDatabase(dbName, '', dbName, dbSize);
         }
     };
 
-    // TODO: Add method to return a model
-    function getModel(sql, callback) {
-        try {
-            getRows(sql, function () {
-                callback.apply(new Backbone.Model(eval("(" + this.item(0).value + ')')));
-            });
-        }
-        catch (err) {
-            console.error(err.message);
-        }
-        return false;
-    }
-
-    // TODO: remove this
-    DAL.getRows = getRows;
-    DAL.getModel = getModel;
-
-    function getRows(sql, callback) {
-        if (!db) {
-            DAL.open('products', 2000000);
-        }
+    DAL.getRows = function (sql, callback) {
+        if (!db)
+            DAL.open();
 
         db.transaction(
             function (tx) {
@@ -448,19 +524,23 @@ app.module('DAL', function (DAL, App, Backbone, Marionette, $, _, Handlebars) {
                     sql,
                     [],
                     function (tx, data) {
-                        console.log('Data:');
-                        console.log(data.rows.item(0));
+                        if (app.debug) {
+                            console.log('Data:');
+                            console.log(data.rows.item(0));
+                        }
                         callback.apply(data.rows);
                     },
                     function(err) {
                         //TODO: raise error
-                        console.error('error: ' + err.message);
+                        if (app.debug)
+                            console.error('error: ' + err.message);
                     }
                 );
             },
             function(err) {
                 // TODO: raise error
-                console.error('tx error: ' + err.message);
+                if (app.debug)
+                    console.error('tx error: ' + err.message);
             }
         );
     }
@@ -482,13 +562,15 @@ app.module('DAL', function (DAL, App, Backbone, Marionette, $, _, Handlebars) {
                     },
                     function (err) {
                         // TODO: raise error
-                        console.error(err.message);
+                        if (app.debug)
+                            console.error(err.message);
                     }
                 );
 
                 break;
             default:
-                console.error('No case for db version: ' + app.dal.db.version);
+                if (app.debug)
+                    console.error('No case for db version: ' + app.dal.db.version);
                 callback.apply();
                 break;
         }
