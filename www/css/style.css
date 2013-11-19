@@ -217,6 +217,23 @@ h1 {
     margin-top: 1em;
 }
 
+.communication h2 {
+    color: #00a4e2;
+    font-family: 'Archivo Narrow',sans-serif;
+    font-size: 2em;
+    font-weight: 100;
+    margin-bottom: 0.2em;
+    margin-left: 0.3em;
+    margin-top: 0.2em;
+}
+
+.communication h2.question{
+    color: #00a4e2;
+    line-height: 1.1em;
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+
 h2.product-name {
 	margin-bottom: 0;
 	text-align: center;
@@ -266,6 +283,13 @@ h4.bolder {
 
 .protection {
     background-image: url(../img/prot/protection_top_bg.jpg), url(../img/prot/protection_bottom_bg.jpg);
+    background-size: contain, contain;
+    background-repeat: no-repeat, no-repeat;
+    background-position: center top, center bottom;
+}
+
+.communication{
+    background-image: url(../img/comm/communication_top_bg.jpg), url(../img/comm/communication_bottom_bg.jpg);
     background-size: contain, contain;
     background-repeat: no-repeat, no-repeat;
     background-position: center top, center bottom;
@@ -322,6 +346,10 @@ header {
 
 .protection .select-button {
     background-color: #21409A;
+}
+
+.communication .select-button {
+    background-color: #00a4e2;
 }
 
 .select-button {
@@ -494,12 +522,29 @@ img.select-thumb {
     background: #eeb111;
 }
 
+.communication .question-choices li:nth-of-type(1) {
+    background: #00a4e2;
+}
+
+.protection .question-choices li:nth-of-type(2) {
+    background: #777777;
+}
+
+.protection .question-choices li:nth-of-type(3) {
+    background: #21409a;
+}
+
+
 .detection .product-desc {
     background: #edf8f8;
 }
 
 .protection .product-desc {
     background: #e1e6f4;
+}
+
+.communication .product-desc {
+    background: #e4e4e4;
 }
 
 .product-desc h3 {
@@ -691,7 +736,20 @@ h4 {
 
 .montage-top {
 	width:100%;
+	margin-top: 10px;
 }
+
+.bottom-montage {
+	width: 100%;
+}
+
+.home-icon {
+	left: 8px;
+	position: absolute;
+	top: 6px;
+	width: 10%;
+}
+
 
 #video_background {
 	position: absolute;
@@ -740,12 +798,12 @@ nav.cat-nav ul li a{
 	display: block;
 	font-family: 'Helvetica Neue',arial,sans-serif;
 	margin: 0.1em auto 0;
-	padding: 0.75em 0;
+	padding: 0.5em 0;
 	text-align: center;
 	text-decoration: none;
 	width: 100%;
 	font-weight:200;
-	font-size: 1.3em;
+	font-size: 1.1em;
 
 }
 
@@ -779,12 +837,8 @@ nav.cat-nav ul li a.pro-icon{
 
 
 nav.cat-nav ul li a.com-icon{
-	background-image: url(../img/coming_soon.png);
-	background-position: right top;
-	background-repeat: no-repeat;
-	background-size: auto 100%;
 	right: 100%;
-		background-color: #777777;
+	background-color: #00a4e2;
 	animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
@@ -795,18 +849,19 @@ nav.cat-nav ul li a.com-icon{
 }
 
 nav.cat-nav ul li a.val-icon{
-    background-image: url(../img/coming_soon.png);
-    background-position: right top;
-    background-repeat: no-repeat;
-    background-size: auto 100%;
-    right: 100%;
-    background: #22a9d6;
-    animation:slidein 1s;
-    animation-delay:0s;
-    animation-fill-mode: forwards;
-    -webkit-animation:slidein 1s;
-    -webkit-animation-delay:0s;
-    -webkit-animation-fill-mode: forwards;
+	background-image: url(../img/coming_soon.png);
+	background-position: right top;
+	background-repeat: no-repeat;
+	background-size: auto 100%;
+	right: 100%;
+	background: #777777;
+	animation:slidein 1s;
+	animation-delay:0s;
+	animation-fill-mode: forwards;
+	-webkit-animation:slidein 1s;
+	-webkit-animation-delay:0s;
+	-webkit-animation-fill-mode: forwards;
+
 }
 
 @keyframes slidein
@@ -857,4 +912,15 @@ img.prod-thumb {
 
 .small-text {
 	font-size: 0.5em;
+}
+
+.copy-wrap-select-box {
+	padding-top: 1.3em;
+	padding-bottom: 2.5em;
+}
+
+.question-select-box {
+	display: block;
+	margin: 0.5em auto 0;
+	width: 90%;
 }
