@@ -44,20 +44,22 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
 
         this.$el.append(newView.el);
 
-        // TODO: Set positions based on direction
         // Set the position to the starting point then animate
-        toScreen.css('-webkit-transform', 'translate3d(100%, 0, 0)');
-        fromScreen.css('-webkit-transform', 'translate3d(0, 0, 0)');
+        var startPos = app.vars.direction === 'next' ? 'back' : 'next';
+        toScreen.css('-webkit-transform', 'translate3d(' + app.consts.percent[startPos][0] + '%, 0, 0)');
+        fromScreen.css('-webkit-transform', 'translate3d(' + app.consts.percent[startPos][1] + '%, 0, 0)');
+
+        scrollTo(0, 0);
 
         toScreen.animate(
-            {translate3d: '0, 0, 0'},
-            250,
+            {translate3d: app.consts.percent[app.vars.direction][1] + '%, 0, 0'},
+            1500,
             'cubic-bezier(0, 0, 0.20, 1)'
         );
 
         fromScreen.animate(
             {translate3d: app.consts.percent[app.vars.direction][0] + '%, 0, 0'},
-            250,
+            1500,
             'cubic-bezier(0, 0, 0.20, 1)',
             $.proxy(function () {
                 this.close();
@@ -137,9 +139,9 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 'click a.link': 'onLink'
             },
             onBack: function (e) {
+                app.vars.history.pop();
                 app.vars.direction = 'back';
-                if (app.debug)
-                    console.log('Back button pressed');
+                app.controller.home();
             },
             onNext: function (e) {
                 app.vars.direction = 'next';
@@ -154,9 +156,9 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 'click a.next': 'onNext'
             },
             onBack: function (e) {
+                app.vars.history.pop();
                 app.vars.direction = 'back';
-                if (app.debug)
-                    console.log('Back button pressed');
+                app.controller.categoryIntro();
             },
             onNext: function (e) {
                 var target = $(e.currentTarget);
@@ -173,9 +175,9 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 'click a.next': 'onNext'
             },
             onBack: function (e) {
+                app.vars.history.pop();
                 app.vars.direction = 'back';
-                if (app.debug)
-                    console.log('Back button pressed');
+                app.controller.selectAssessment();
             },
             onNext: function (e) {
                 app.vars.direction = 'next';
@@ -190,9 +192,16 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 'click a.answer': 'onNext'
             },
             onBack: function (e) {
+                var prevScreen = app.vars.history.pop();
                 app.vars.direction = 'back';
-                if (app.debug)
-                    console.log('Back button pressed');
+                if (prevScreen === 'question') {
+                    app.assessment.goBack();
+                    app.controller.question();
+                }
+                else if (prevScreen === 'assess-intro')
+                    app.controller.assessmentIntro();
+                else
+                    console.error('Don\'t know how to route to: ' + prevScreen);
             },
             onNext: function (e) {
                 app.vars.direction = 'next';
@@ -236,9 +245,9 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 'click a.next': 'onNext'
             },
             onBack: function (e) {
+                app.vars.history.pop();
                 app.vars.direction = 'back';
-                if (app.debug)
-                    console.log('Back button pressed');
+                app.controller.question();
             },
             onNext: function (e) {
                 app.vars.direction = 'next';
@@ -253,9 +262,15 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 'click a.link': 'onLink'
             },
             onBack: function (e) {
+                var prevScreen = app.vars.history.pop();
                 app.vars.direction = 'back';
-                if (app.debug)
-                    console.log('Back button pressed');
+
+                if (prevScreen === 'product-list')
+                    app.controller.productList();
+                else if (prevScreen === 'question')
+                    app.controller.question();
+                else
+                    console.error('Don\'t know how to route to: ' + prevScreen);
             },
             onLink: function (e) {
                 app.vars.history.push('product-page');
@@ -266,14 +281,6 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
     app.Controller = Marionette.Controller.extend({
         initialize: function (options) {
             this.mainRegion = options.mainRegion;
-        },
-
-        goBack: function () {
-            var $prevScreen, prevScreen = app.vars.history.pop();
-
-
-
-            this.mainRegion.show();
         },
 
         home: function () {
@@ -307,6 +314,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
         },
 
         assessmentIntro: function() {
+            app.assessment.refresh();
+
             var that = this;
 
             app.ORM.getAssIntroModel(app.vars.assessment, function () {
@@ -374,8 +383,20 @@ app.module('assessment', function (assessment, app) {
         }
         return null;
     };
+
+    // TODO: Remove these
     assessment.answers = answers;
     assessment.questions = questions;
+
+    assessment.refresh = function () {
+        questions = [];
+        answers = [];
+    };
+
+    assessment.goBack = function () {
+        questions.pop();
+    };
+
     assessment.questionAnswered = function (answerId) {
         if (app.debug)
             console.log('answer_id:' + answerId);
@@ -493,7 +514,7 @@ app.module('ORM', function(ORM, app) {
                 link: this.item(0).link
             };
 
-            callback.apply(product);
+            callback.apply(new Backbone.Model(product));
         });
     };
 
