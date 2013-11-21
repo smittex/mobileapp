@@ -53,13 +53,13 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
 
         toScreen.animate(
             {translate3d: app.consts.percent[app.vars.direction][1] + '%, 0, 0'},
-            1500,
+            250,
             'cubic-bezier(0, 0, 0.20, 1)'
         );
 
         fromScreen.animate(
             {translate3d: app.consts.percent[app.vars.direction][0] + '%, 0, 0'},
-            1500,
+            250,
             'cubic-bezier(0, 0, 0.20, 1)',
             $.proxy(function () {
                 this.close();
@@ -234,25 +234,32 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
         'product-list': Marionette.CompositeView.extend({
             itemView: Marionette.ItemView.extend({
                 template: 'product-item',
-                tagName: 'a',
-                className: 'open-product product-button multiple list med match-list',
-                attributes: {data: 'test'}
+                events: {
+                    'click a.back': 'onBack',
+                    'click a': 'onClick'
+                },
+                onClick: function(e) {
+                    var target = $(e.currentTarget);
+                    var productId = target.data('id');
+                    app.vars.direction = 'next';
+                    app.vars.history.push('product-list');
+                    app.controller.productPage(productId);
+                },
+                onBack: function (e) {
+                    app.vars.history.pop();
+                    app.vars.direction = 'back';
+                    app.controller.question();
+                }
             }),
-            itemViewContainer: 'article',
+            itemViewContainer: '.contents-wrap',
             template: 'product-list',
             events: {
-                'click a.back': 'onBack',
-                'click a.next': 'onNext'
+                'click a.back': 'onBack'
             },
             onBack: function (e) {
                 app.vars.history.pop();
                 app.vars.direction = 'back';
                 app.controller.question();
-            },
-            onNext: function (e) {
-                app.vars.direction = 'next';
-                app.vars.history.push('product-list');
-                app.controller.productPage();
             }
         }),
         'product-page': Marionette.ItemView.extend({
@@ -267,8 +274,10 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
 
                 if (prevScreen === 'product-list')
                     app.controller.productList();
-                else if (prevScreen === 'question')
+                else if (prevScreen === 'question') {
+                    app.assessment.goBack();
                     app.controller.question();
+                }
                 else
                     console.error('Don\'t know how to route to: ' + prevScreen);
             },
@@ -345,16 +354,17 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             app.ORM.getProdListModel(products, function () {
                 var view = new app.views['product-list']({
                     className: app.vars.category,
-                    collection: this
+                    collection: this,
+                    attributes: {'data-id':this}
                 });
                 that.mainRegion.show(view);
             });
         },
 
-        productPage: function(product) {
+        productPage: function(productId) {
             var that = this;
 
-            app.ORM.getProductModel(product, function () {
+            app.ORM.getProductModel(productId, function () {
                 var view = new app.views['product-page']({
                     className: app.vars.category,
                     model: this
@@ -395,6 +405,7 @@ app.module('assessment', function (assessment, app) {
 
     assessment.goBack = function () {
         questions.pop();
+        answers.pop();
     };
 
     assessment.questionAnswered = function (answerId) {
