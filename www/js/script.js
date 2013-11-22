@@ -266,7 +266,7 @@ var app = {
 
         $('.screen').not('.montage').hide();
         $('.montage').show().css('-webkit-transform','translate3d(0, 0, 0)');
-        $('nav.main-nav').hide();
+        $('#main-nav').hide();
     },
     /***
      *
@@ -684,7 +684,7 @@ var app = {
             );
 
             scrollTo(0, 0);
-            $('nav.main-nav').show();
+            $('#main-nav').show();
 
             toScreen.animate(
                 {translate3d: percent[app.direction][1] + '%, 0, 0'},

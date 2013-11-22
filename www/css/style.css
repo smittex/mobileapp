@@ -43,7 +43,7 @@ ul li {
 /*End Universal*/
 
 /*Footer nav styles*/
-nav.main-nav {
+#main-nav {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
@@ -51,7 +51,6 @@ nav.main-nav {
 	border-top: 1px solid #d7d7d7;
 	background-color: rgba(255,255,255,0.85);
 	height:4em;
-	display:none;
 }
 
 nav ul {
@@ -258,6 +257,7 @@ h4.bolder {
 	background-size: contain, contain;
 	background-repeat: no-repeat, no-repeat;
 	background-position: center top, center bottom;
+    background-color: white;
     position: absolute;
     width: 100%;
     top: 0;
@@ -269,6 +269,7 @@ h4.bolder {
     background-size: contain, contain;
     background-repeat: no-repeat, no-repeat;
     background-position: center top, center bottom;
+    background-color: white;
     position: absolute;
     width: 100%;
     top: 0;
@@ -583,7 +584,7 @@ img.select-thumb {
 
 /*Opening page nav styles*/
 
-.splash {
+#splash {
     animation: fadeout 1s;
     animation-delay: 2s;
     animation-fill-mode: forwards;
