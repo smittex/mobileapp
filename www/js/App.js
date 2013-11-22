@@ -302,6 +302,23 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 app.vars.history.push('product-page');
             }
         }),
+        'browse-families': Marionette.ItemView.extend({
+            template: 'families',
+            events: {
+                'click a.back': 'onBack',
+                'click a.next': 'onNext'
+            },
+            onBack: function (e) {
+                app.vars.history.pop();
+                app.vars.direction = 'back';
+                app.controller.home();
+            },
+            onNext: function (e) {
+                app.vars.direction = 'next';
+                app.vars.history.push('browse-families');
+                app.controller.browseFamilies();
+            }
+        }),
         'navigation':       Marionette.ItemView.extend({
             template:   'navigation',
             id:         'main-nav',
