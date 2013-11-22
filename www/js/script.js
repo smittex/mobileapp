@@ -481,19 +481,21 @@ var app = {
                     var data = event.data;
 
                     for (var i = 0; i < data.length; i++) {
-                        var families = data.item(i).families.split(',');
-                        var newFamilies = [];
+                        if (data.item(i).families !== null) {
+                            var families = data.item(i).families.split(',');
+                            var newFamilies = [];
 
-                        for (var index in families) {
-                            newFamilies.push({name: families[index]});
+                            for (var index in families) {
+                                newFamilies.push({name: families[index]});
+                            }
+
+                            var category = {
+                                name: data.item(i).category,
+                                families: newFamilies
+                            };
+
+                            ctx.categories.push(category);
                         }
-
-                        var category = {
-                            name: data.item(i).category,
-                            families: newFamilies
-                        };
-
-                        ctx.categories.push(category);
                     }
 
                     var html = Handlebars.templates['families'](ctx);
