@@ -837,6 +837,10 @@ nav.cat-nav ul li a.pro-icon{
 
 
 nav.cat-nav ul li a.com-icon{
+	background-image: url(../img/coming_soon.png);
+	background-position: right top;
+	background-repeat: no-repeat;
+	background-size: auto 100%;
 	right: 100%;
 	background-color: #00a4e2;
 	animation:slidein 1s;
@@ -861,8 +865,8 @@ nav.cat-nav ul li a.val-icon{
 	-webkit-animation:slidein 1s;
 	-webkit-animation-delay:0s;
 	-webkit-animation-fill-mode: forwards;
-
 }
+
 
 @keyframes slidein
 {
