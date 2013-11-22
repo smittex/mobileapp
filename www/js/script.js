@@ -309,6 +309,8 @@ var app = {
             app.category = 'protection';
         else if (that.hasClass('com-icon')) //app.category = 'communication';
             return;
+        else if (that.hasClass('val-icon')) //app.category = 'validation';
+            return;
 
         //console.log('Current screen: ' + app.currentScreenName);
 
