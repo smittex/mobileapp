@@ -289,7 +289,7 @@ h4.bolder {
 }
 
 .communication{
-    background-image: url(img/comm/communication_top_bg.jpg), url(img/comm/communication_bottom_bg.jpg);
+    background-image: url(../img/comm/communication_top_bg.jpg), url(../img/comm/communication_bottom_bg.jpg);
     background-size: contain, contain;
     background-repeat: no-repeat, no-repeat;
     background-position: center top, center bottom;
@@ -837,7 +837,7 @@ nav.cat-nav ul li a.pro-icon{
 
 
 nav.cat-nav ul li a.com-icon{
-    background-image: url(../img/coming_soon.png);
+	background-image: url(../img/coming_soon.png);
 	background-position: right top;
 	background-repeat: no-repeat;
 	background-size: auto 100%;
@@ -858,7 +858,7 @@ nav.cat-nav ul li a.val-icon{
 	background-repeat: no-repeat;
 	background-size: auto 100%;
 	right: 100%;
-	background: #777777;
+	background-color: #777777;
 	animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
@@ -866,6 +866,7 @@ nav.cat-nav ul li a.val-icon{
 	-webkit-animation-delay:0s;
 	-webkit-animation-fill-mode: forwards;
 }
+
 
 @keyframes slidein
 {
