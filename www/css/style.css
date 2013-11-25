@@ -298,7 +298,13 @@ h4.bolder {
     background-size: contain, contain;
     background-repeat: no-repeat, no-repeat;
     background-position: center top, center bottom;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
+
 .header {
     top: 0px;
     left: 0px;
@@ -814,25 +820,20 @@ nav.cat-nav ul li a.pro-icon{
 	-webkit-animation:slidein 1s;
 	-webkit-animation-delay:0s;
 	-webkit-animation-fill-mode: forwards;
-
 }
 
 
 
 nav.cat-nav ul li a.com-icon{
-    background-image: url(../img/coming_soon.png);
-	background-position: right top;
-	background-repeat: no-repeat;
-	background-size: auto 100%;
 	right: 100%;
 	background-color: #00a4e2;
+    background-image: none;
 	animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
 	-webkit-animation:slidein 1s;
 	-webkit-animation-delay:0s;
 	-webkit-animation-fill-mode: forwards;
-
 }
 
 nav.cat-nav ul li a.val-icon{

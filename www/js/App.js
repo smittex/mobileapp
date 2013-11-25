@@ -136,8 +136,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                     app.vars.category = 'protection';
                 }
                 else if (target.hasClass('com-icon')) {
-                    app.trigger('error:communication');
-                    return;
+                    app.vars.category = 'communication';
                 }
 
                 if (app.vars.category) {
