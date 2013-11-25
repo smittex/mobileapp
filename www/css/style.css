@@ -842,7 +842,7 @@ nav.cat-nav ul li a.val-icon{
 	background-repeat: no-repeat;
 	background-size: auto 100%;
 	right: 100%;
-	background: #777777;
+	background-color: #777777;
 	animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
