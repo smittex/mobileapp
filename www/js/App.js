@@ -89,7 +89,13 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
         history:    []
     };
     app.consts  = {
-        percent:    {'next': [-100, 0], 'back': [100, 0]}
+        percent:    {'next': [-100, 0], 'back': [100, 0]},
+        replRE:     '\\W+', // RegEx
+        replCh:     '-'
+    };
+    app.scrub = function(input) {
+        var re = new RegExp(app.consts.replRE, 'g');
+        return input.toLowerCase().replace(re, app.consts.replCh);
     };
 
     var MainRegion = Marionette.AnimatedRegion.extend({
@@ -108,16 +114,17 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
     });
     app.on('initialize:after', function () {
         Backbone.history.start();
-        app.DAL.open('products', 2000000);
     });
     app.addInitializer(function () {
-        app.controller = new app.Controller({
-            mainRegion: app.mainRegion,
-            navRegion: app.navRegion,
-            headRegion: app.headRegion
-        });
+        app.DAL.updateDatabase(function () {
+            app.controller = new app.Controller({
+                mainRegion: app.mainRegion,
+                navRegion: app.navRegion,
+                headRegion: app.headRegion
+            });
 
-        app.controller.home();
+            app.controller.home();
+        });
     });
 
     app.views = {
@@ -181,7 +188,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             },
             onNext: function (e) {
                 var target = $(e.currentTarget);
-                app.vars.assessment = target.data('subitem').toLowerCase().replace(' ', '-');
+                app.vars.assessment = app.scrub(target.data('subitem'));
                 app.vars.direction = 'next';
                 app.vars.history.push('select-assess');
                 app.controller.assessmentIntro();
@@ -250,6 +257,36 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 }
             }
         }),
+        'radio-selection': Marionette.ItemView.extend({
+            template: 'model-sel',
+            onRender: function(args) {
+
+            },
+            events: {
+                'click a.back': 'onBack',
+                'click a.answer': 'onNext',
+                'change select#manufacturer': 'onMfrChange',
+                'change select#model': 'onModelChange'
+            },
+            onBack: function (e) {
+                var prevScreen = app.vars.history.pop();
+                app.vars.direction = 'back';
+                if (prevScreen === 'question') {
+                    app.assessment.goBack();
+                    app.controller.question();
+                }
+                else if (prevScreen === 'assess-intro')
+                    app.controller.assessmentIntro();
+                else
+                    console.error('Don\'t know how to route to: ' + prevScreen);
+            },
+            onMfrChange: function (e) {
+
+            },
+            onModelChange: function (e) {
+
+            }
+        }),
         'product-list':     Marionette.CompositeView.extend({
             itemView: Marionette.ItemView.extend({
                 template: 'product-item',
@@ -298,7 +335,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                     console.error('Don\'t know how to route to: ' + prevScreen);
             },
             onLink: function (e) {
-                app.vars.history.push('product-page');
+                //app.vars.history.push('product-page');
             }
         }),
         'browse-families': Marionette.ItemView.extend({
@@ -366,7 +403,14 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
         },
         categoryIntro:      function () {
             var that = this;
-            var selector = app.vars.category === 'detection' ? 'sound-detection' : 'sound-protection';
+            var selector;
+
+            if (app.vars.category === 'detection')
+                selector = 'sound-detection';
+            else if (app.vars.category === 'protection')
+                selector = 'sound-protection';
+            else if (app.vars.category === 'communication')
+                selector = 'communication';
 
             app.ORM.getCategoryModel(selector, function() {
                 var view = new app.views['cat-intro']({
@@ -407,10 +451,19 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             var that = this;
             app.assessment.getNextQuestion(function () {
                 var model = new Backbone.Model(this);
-                var view = new app.views['question']({
-                    className: app.vars.category,
-                    model: model
-                });
+                var view;
+
+                if (this.type === 'button')
+                    view = new app.views['question']({
+                        className: app.vars.category,
+                        model: model
+                    });
+                else if (this.type === 'drop-down')
+                    view = new app.views['radio-selection']({
+                        className: app.vars.category,
+                        model: model
+                    });
+
                 that.mainRegion.show(view);
                 that.showHeaderFooter();
             });
@@ -461,10 +514,6 @@ app.module('assessment', function (assessment, app) {
         return null;
     };
 
-    // TODO: Remove these
-    assessment.answers = answers;
-    assessment.questions = questions;
-
     assessment.refresh = function () {
         questions = [];
         answers = [];
@@ -505,9 +554,28 @@ app.module('assessment', function (assessment, app) {
             questionId = assessment.getLastAnswer().answer.nodes[0];
         }
 
+        // Get question, determine its type, and get its question responses
         app.DAL.assessment.getQuestion(app.vars.assessment, questionId, function() {
-            questions.push(this);
-            callback.apply(this);
+            var question = this;
+
+            if (question.type === 'button') {
+                app.DAL.assessment.getAnswers(question.question_id, function() {
+                    question.answers = eval("(" + this.answers + ')');
+                    questions.push(question);
+                    callback.apply(question);
+                });
+            }
+            else if (question.type === 'drop-down') {
+                app.DAL.assessment.getRadios(question.question_id, function() {
+                    question.answers = this.answers;
+                    question.radios = this.radios;
+                    question.meta = {
+                        mfrs: _.map(_.uniq(_.pluck(this.radios, 'mfr')), function(name) {return {mfr:name};})
+                    };
+                    questions.push(question);
+                    callback.apply(question);
+                });
+            }
         });
     };
 });
@@ -516,24 +584,45 @@ app.module('DAL.assessment', function(assessmentDAL, app) {
     'use strict';
     // Requires DAL
     assessmentDAL.getQuestion = function(assessmentType, questionId, callback) {
-        var sql = 'select q.question_id, q.question_text, q.description, \'[\'||group_concat(a.answers)||\']\' answers ' +
-            'from questions q inner join ' +
-            '(select a.question_id, \'{id:\'||a.answer_id||\',text:\'\'\'||a.answer_text||\'\'\',type:\'\'\'||a.node_type||\'\'\',nodes:[\'||group_concat(n.node_id)||\']}\' answers ' +
-            'from answers a inner join answer_nodes n on a.answer_id=n.answer_id where a.question_id = question_id ' +
-            'group by a.answer_id) a on q.question_id=a.question_id where q.assessment = \'' + assessmentType + '\' ';
+        var sql = 'select question_id, question_text, description, type from questions where assessment = \'' + assessmentType + '\' ';
 
         if (typeof questionId !== 'undefined')
-            sql += 'and q.question_id = ' + questionId + ' ';
+            sql += 'and question_id = ' + questionId + ' ';
 
-        sql += 'group by q.question_id order by q.question_id limit 0,1';
+        sql += 'order by question_id limit 0,1';
 
         app.DAL.getRows(sql, function() {
-            var question = $.extend({}, this.item(0));
+            callback.apply($.extend({}, this.item(0)));
+        });
+    };
 
-            // The question's answers are a JSON string that needs to be an object
-            question.answers = eval("(" + question.answers + ')');
+    assessmentDAL.getAnswers = function(questionId, callback) {
+        var sql = 'select \'[\'||group_concat(answers)||\']\' answers from ' +
+            '(select \'{id:\'||a.answer_id||\',text:\'\'\'||a.answer_text||\'\'\',type:\'\'\'||a.node_type||\'\'\',nodes:[\'||group_concat(n.node_id)||\']}\' answers ' +
+            'from answers a inner join answer_nodes n on a.answer_id = n.answer_id where a.question_id = ' + questionId + ' group by a.answer_id )';
 
-            callback.apply(question);
+        app.DAL.getRows(sql, function() {
+            callback.apply(this.item(0));
+        });
+    };
+
+    assessmentDAL.getRadios = function(questionId, callback) {
+        this.getAnswers(questionId, function() {
+            var re0 = /text:'\{objects:\[/gi;
+            var re1 = /]}]}'/gi;
+            var answers = eval("(" + this.answers.replace(re0, 'radios:').replace(re1, ']}') + ')');
+            var radios = [];
+
+            for (var i in answers) {
+                for (var j in answers[i].radios.models) {
+                    radios.push({mfr: answers[i].radios.mfr,
+                        model: answers[i].radios.models[j],
+                        type: answers[i].type,
+                        nodes: answers[i].nodes});
+                }
+            }
+
+            callback.apply({answers: answers, radios: radios});
         });
     };
 });
@@ -604,7 +693,7 @@ app.module('ORM', function(ORM, app) {
 
 app.module('DAL', function (DAL) {
     'use strict';
-    var db, results;
+    var db;
     var dbName = 'products', dbSize = 2000000; // Default values
 
     // TODO: Add initializer and remove dependence on app
@@ -620,6 +709,11 @@ app.module('DAL', function (DAL) {
     DAL.getRows = function (sql, callback) {
         if (!db)
             DAL.open();
+
+        if (app.debug) {
+            console.log('Sql:');
+            console.log(sql);
+        }
 
         db.transaction(
             function (tx) {
@@ -646,10 +740,13 @@ app.module('DAL', function (DAL) {
                     console.error('tx error: ' + err.message);
             }
         );
-    }
+    };
 
     DAL.updateDatabase = function (callback) {
         // Requires sql.js
+        if (!db)
+            DAL.open();
+
         switch (db.version) {
             case '':
                 db.changeVersion('', '1');
@@ -679,7 +776,7 @@ app.module('DAL', function (DAL) {
                 break;
             default:
                 if (app.debug)
-                    console.error('No case for db version: ' + app.dal.db.version);
+                    console.error('No case for db version: ' + db.version);
                 callback.apply();
                 break;
         }
