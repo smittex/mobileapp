@@ -29,7 +29,7 @@
 
 #import <Cordova/CDVViewController.h>
 
-@interface AppDelegate : WTAppDelegate <UIApplicationDelegate>{}
+@interface AppDelegate : NSObject <UIApplicationDelegate>{}
 
 // invoke string is passed to your app on launch, this is only valid if you
 // edit 3M Hearing Solutions Product Selection -Info.plist to add a protocol
