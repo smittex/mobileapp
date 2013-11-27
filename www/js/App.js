@@ -82,11 +82,12 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
     var app     = new Marionette.Application();
     app.debug   = true;
     app.vars    = {
-        direction:  null,
-        category:   null,
-        assessment: null,
-        currentView:null,
-        history:    []
+        direction:          null,
+        category:           null,
+        assessment:         null,
+        assessmentTitle:    null,
+        currentView:        null,
+        history:            []
     };
     app.consts  = {
         percent:    {'next': [-100, 0], 'back': [100, 0]},
@@ -187,8 +188,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 app.controller.categoryIntro();
             },
             onNext: function (e) {
-                var target = $(e.currentTarget);
-                app.vars.assessment = app.scrub(target.data('subitem'));
+                app.vars.assessmentTitle = $(e.currentTarget).data('subitem');
+                app.vars.assessment = app.scrub(app.vars.assessmentTitle);
                 app.vars.direction = 'next';
                 app.vars.history.push('select-assess');
                 app.controller.assessmentIntro();
@@ -235,7 +236,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 if (app.debug)
                     console.log('Next button pressed');
 
-                var target = $(e.currentTarget);
+                var target = $(e.target);
                 var answerId = target.data('answer-id');
 
                 var question = app.assessment.questionAnswered(answerId);
@@ -257,16 +258,19 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 }
             }
         }),
-        'radio-selection': Marionette.ItemView.extend({
+        'radio-selection':  Marionette.Layout.extend({
             template: 'model-sel',
-            onRender: function(args) {
-
+            regions: {
+                mfrRegion: '#mfrRegion',
+                mdlRegion: '#mdlRegion'
+            },
+            ui: {
+                mfr: 'select#manufacturer',
             },
             events: {
                 'click a.back': 'onBack',
-                'click a.answer': 'onNext',
-                'change select#manufacturer': 'onMfrChange',
-                'change select#model': 'onModelChange'
+                'click a.next': 'onNext',
+                'change select#manufacturer': 'onMfrChange'
             },
             onBack: function (e) {
                 var prevScreen = app.vars.history.pop();
@@ -280,11 +284,61 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 else
                     console.error('Don\'t know how to route to: ' + prevScreen);
             },
-            onMfrChange: function (e) {
+            onMfrChange: function () {
+                var radios = _.where(this.model.attributes.radios, {
+                    mfr: this.ui.mfr[0].selectedOptions[0].value
+                });
 
+                if (!_.isEmpty(radios)) {
+                    var models = new app.views['models']({
+                        collection: new Backbone.Collection(radios)
+                    });
+                    this.mdlRegion.show(models);
+                }
+                else {
+                    this.mdlRegion.close();
+                }
             },
-            onModelChange: function (e) {
+            onNext: function (e) {
+                var radio = _.where(this.model.attributes.radios, {
+                    mfr: this.ui.mfr[0].selectedOptions[0].value,
+                    model: this.mdlRegion.currentView.ui.mdl[0].selectedOptions[0].value
+                })[0];
 
+                if (_.isEmpty(radio)) {
+                    if (app.vars.debug)
+                        console.error('Could not determine input');
+                    return;
+                }
+
+                app.vars.direction = 'next';
+                app.vars.history.push('question');
+                if (app.debug)
+                    console.log('Submit button pressed');
+
+                var question = app.assessment.questionAnswered(radio.answerId);
+
+                if (question.answer.type === 'question') {
+                    app.controller.question();
+                }
+                else if (question.answer.type === 'product') {
+                    if (question.answer.nodes.length > 1) {
+                        if (app.debug)
+                            console.log('product-list');
+                        app.controller.productList(question.answer.nodes.join());
+                    }
+                    else {
+                        if (app.debug)
+                            console.log('product-page');
+                        app.controller.productPage(question.answer.nodes[0]);
+                    }
+                }
+            }
+        }),
+        'models':           Marionette.ItemView.extend({
+            template: 'models',
+            ui: {
+                mdl: 'select#model'
             }
         }),
         'product-list':     Marionette.CompositeView.extend({
@@ -338,21 +392,42 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 //app.vars.history.push('product-page');
             }
         }),
-        'browse-families': Marionette.ItemView.extend({
+        'browse-families':  Marionette.ItemView.extend({
             template: 'families',
+            className: 'general',
             events: {
                 'click a.back': 'onBack',
-                'click a.next': 'onNext'
+                'click a.family': 'onNext'
             },
-            onBack: function (e) {
+            onBack: function () {
                 app.vars.history.pop();
                 app.vars.direction = 'back';
                 app.controller.home();
             },
             onNext: function (e) {
+                var family = $(e.target).data('family');
                 app.vars.direction = 'next';
                 app.vars.history.push('browse-families');
-                app.controller.browseFamilies();
+                app.controller.browseProducts(family);
+            }
+        }),
+        'browse-products':  Marionette.ItemView.extend({
+            template: 'browse',
+            className: 'general',
+            events: {
+                'click a.back': 'onBack',
+                'click a.next': 'onNext'
+            },
+            onBack: function () {
+                app.vars.history.pop();
+                app.vars.direction = 'back';
+                //app.controller.home();
+            },
+            onNext: function (e) {
+                var product = $(e.target).data('product');
+                app.vars.direction = 'next';
+                app.vars.history.push('browse-products');
+                //app.controller.browseProducts(family);
             }
         }),
         'navigation':       Marionette.ItemView.extend({
@@ -367,8 +442,12 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                     app.vars.direction = 'back';
                     app.controller.home();
                 }
-                else if ($(e.target).hasClass('open-browse'))
-                    console.log('Open Browse');
+                else if ($(e.target).hasClass('open-browse')) {
+                    if (app.debug)
+                        console.log('Open Browse');
+                    app.vars.direction = 'next';
+                    app.controller.browseFamilies();
+                }
             }
         }),
         'header':           Marionette.ItemView.extend({
@@ -411,6 +490,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 selector = 'sound-protection';
             else if (app.vars.category === 'communication')
                 selector = 'communication';
+            else
+                return;
 
             app.ORM.getCategoryModel(selector, function() {
                 var view = new app.views['cat-intro']({
@@ -444,7 +525,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                     model: this
                 });
                 that.mainRegion.show(view);
-                that.showHeaderFooter(this.attributes.title);
+                that.showHeaderFooter(app.vars.assessmentTitle);
             });
         },
         question:           function () {
@@ -465,7 +546,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                     });
 
                 that.mainRegion.show(view);
-                that.showHeaderFooter();
+                that.showHeaderFooter(app.vars.assessmentTitle);
             });
         },
         productList:        function (products) {
@@ -489,7 +570,29 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                     model: this
                 });
                 that.mainRegion.show(view);
-                that.showHeaderFooter(this.attributes.model);
+                that.showHeaderFooter(app.vars.assessmentTitle);
+            });
+        },
+        browseFamilies: function() {
+            var that = this;
+
+            app.ORM.getBrowseFamilyModels(function() {
+                var view = new app.views['browse-families']({
+                    model: this
+                });
+                that.mainRegion.show(view);
+                that.showHeaderFooter('Browse');
+            });
+        },
+        browseProducts: function(family) {
+            var that = this;
+
+            app.ORM.getBrowseProductModels(family, function() {
+                var view = new app.views['browse-products']({
+                    model: this
+                });
+                that.mainRegion.show(view);
+                that.showHeaderFooter('Matching Products');
             });
         }
     });
@@ -618,7 +721,9 @@ app.module('DAL.assessment', function(assessmentDAL, app) {
                     radios.push({mfr: answers[i].radios.mfr,
                         model: answers[i].radios.models[j],
                         type: answers[i].type,
-                        nodes: answers[i].nodes});
+                        nodes: answers[i].nodes,
+                        answerId: answers[i].id
+                    });
                 }
             }
 
@@ -689,12 +794,59 @@ app.module('ORM', function(ORM, app) {
         });
     };
 
+    ORM.getBrowseFamilyModels = function (callback) {
+        var sql = 'select  category, group_concat(distinct family) as families from products as c group by c.category;';
+        app.DAL.getRows(sql, function () {
+            var categories = [];
+
+            for (var i = 0; i < this.length; i++) {
+                if (this.item(i).families === null)
+                    continue;
+
+                var families = this.item(i).families.split(',');
+                var newFamilies = [];
+
+                for (var j in families) {
+                    newFamilies.push({name: families[j]});
+                }
+
+                var category = {
+                    name: this.item(i).category,
+                    families: newFamilies
+                };
+
+                categories.push(category);
+            }
+
+            callback.apply(new Backbone.Model({categories: categories}));
+        });
+    };
+
+    ORM.getBrowseProductModels = function (family, callback) {
+        var sql = 'select product_id, name, image from products where family=\'' + family + '\'';
+
+        app.DAL.getRows(sql, function () {
+            var products = [];
+
+            for (var i = 0; i < this.length; i++) {
+                var product = {
+                    id: this.item(i).product_id,
+                    name: this.item(i).name,
+                    image: this.item(i).image
+                };
+                products.push(product);
+            }
+
+            callback.apply(new Backbone.Model({products: products}));
+        });
+    };
 });
 
 app.module('DAL', function (DAL) {
     'use strict';
     var db;
     var dbName = 'products', dbSize = 2000000; // Default values
+    var latestDbVersion = '1';
 
     // TODO: Add initializer and remove dependence on app
 
@@ -773,6 +925,11 @@ app.module('DAL', function (DAL) {
                     }
                 );
 
+                break;
+            case latestDbVersion:
+                if (app.debug)
+                    console.log('The database is the latest version');
+                callback.apply();
                 break;
             default:
                 if (app.debug)
