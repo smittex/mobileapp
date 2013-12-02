@@ -520,6 +520,10 @@ img.select-thumb {
     background: #00a4e2;
 }
 
+.communication .question-choices li:nth-of-type(2) {
+    background: #a7e26c;
+}
+
 .protection .question-choices li:nth-of-type(2) {
     background: #777777;
 }
