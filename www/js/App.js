@@ -942,9 +942,9 @@ $(document).ready(function(){
     'use strict';
     app.start();
 
-    var splash = $('#splash')[0];
+    var splash = $('#splash');
 
-    splash.addEventListener('webkitAnimationEnd', function () {
+    splash[0].addEventListener('webkitAnimationEnd', function () {
         splash.remove();
         app.controller.home();
     }, false);
