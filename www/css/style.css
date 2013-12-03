@@ -270,10 +270,10 @@ h4.bolder {
 /*End Headlines*/
 
 .detection {
-	background-image: url(../img/bg_top.jpg), url(../img/bg_bottom.jpg);
-	background-size: contain, contain;
-	background-repeat: no-repeat, no-repeat;
-	background-position: center top, center bottom;
+	background-image: url(../img/bg_top.jpg);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center top;
     background-color: white;
     position: absolute;
     width: 100%;
@@ -282,10 +282,10 @@ h4.bolder {
 }
 
 .protection {
-    background-image: url(../img/prot/protection_top_bg.jpg), url(../img/prot/protection_bottom_bg.jpg);
-    background-size: contain, contain;
-    background-repeat: no-repeat, no-repeat;
-    background-position: center top, center bottom;
+    background-image: url(../img/prot/protection_top_bg.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center top;
     background-color: white;
     position: absolute;
     width: 100%;
@@ -294,10 +294,10 @@ h4.bolder {
 }
 
 .communication{
-    background-image: url(../img/comm/communication_top_bg.jpg), url(../img/comm/communication_bottom_bg.jpg);
-    background-size: contain, contain;
-    background-repeat: no-repeat, no-repeat;
-    background-position: center top, center bottom;
+    background-image: url(../img/comm/communication_top_bg.jpg);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center top;
     background-color: white;
     position: absolute;
     width: 100%;
@@ -521,17 +521,12 @@ img.select-thumb {
 }
 
 .communication .question-choices li:nth-of-type(2) {
-    background: #a7e26c;
-}
-
-.protection .question-choices li:nth-of-type(2) {
     background: #777777;
 }
 
-.protection .question-choices li:nth-of-type(3) {
+.communication .question-choices li:nth-of-type(3) {
     background: #21409a;
 }
-
 
 .detection .product-desc {
     background: #edf8f8;

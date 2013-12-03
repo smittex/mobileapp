@@ -71,16 +71,12 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
         toScreen.css({opacity: 0, 'z-index': app.vars.history.length});
         scrollTo(0, 0);
 
-        // Wait until all the images have loaded
-        var imgLoad = imagesLoaded(toScreen);
-        imgLoad.on('always',function(){
-            toScreen.animate(
-                {translate3d: app.consts.percent[app.vars.direction][1] + '%, 0, 0',
+        toScreen.animate(
+            {translate3d: app.consts.percent[app.vars.direction][1] + '%, 0, 0',
                 opacity: 1},
-                400,
-                'cubic-bezier(0, 0, 0.20, 1)'
-            );
-        });
+            250,
+            'cubic-bezier(0, 0, 0.20, 1)'
+        );
     };
 
     var app     = new Marionette.Application();
@@ -179,6 +175,9 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             onNext: function () {
                 app.vars.direction = 'next';
                 app.controller.selectAssessment();
+            },
+            onLink: function() {
+
             }
         }),
         'select-assess':    Marionette.ItemView.extend({
