@@ -709,6 +709,28 @@ var app = {
             //console.log('toggling the container index');
             app.assessment.containerIndex ^= 1;
         }
+        
+        function iOSversion() {
+          if (/iP(hone|od|ad)/.test(navigator.platform)) {
+            var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
+            return [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
+          }
+        }
+        
+        ver = iOSversion();
+        
+        if (ver[0] >= 7) {
+          var headers = document.getElementsByTagName('header');
+          	Array.prototype.forEach.call(headers, function(el) {
+          		el.style.paddingTop="20px";
+          		console.log(el.tagName);
+          	});
+          var articles = document.getElementsByTagName('article');
+          	Array.prototype.forEach.call(articles, function(el) {
+          		el.style.paddingTop="64px";
+          		console.log(el.tagName);
+          	});
+        }
     }
 };
 
