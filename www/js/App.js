@@ -464,11 +464,11 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             }
 
             if (ver[0] >= 7) {
-                var header = $('#header');
+                var header = $('.header');
                 Array.prototype.forEach.call(header, function(el) {
                     el.style.paddingTop="20px";
                 });
-                var main = $('#main');
+                var main = $('#main>div');
                 Array.prototype.forEach.call(main, function(el) {
                     el.style.paddingTop="64px";
                 });
