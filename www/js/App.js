@@ -470,7 +470,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 });
                 var main = $('#main>div');
                 Array.prototype.forEach.call(main, function(el) {
-                    el.style.paddingTop="64px";
+                    el.style.paddingTop="20px";
                 });
             }
         },
