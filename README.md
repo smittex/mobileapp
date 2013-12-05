@@ -14,3 +14,7 @@ questions:assessment
     'adaptors' => 'ptt-adaptors-cords'
 
 single quotes must be: ' (ASCII code 0x27)
+double quotes are not allowed; use &quot; or two single quotes for html tag attributes
+
+characters not allowed:
+[^\x00-\x7F|™|—|–|®|©|°|≤|’]
