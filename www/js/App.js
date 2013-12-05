@@ -256,7 +256,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             },
             onMfrChange: function () {
                 var radios = _.where(this.model.attributes.radios, {
-                    mfr: this.ui.mfr[0].selectedOptions[0].value
+                    mfr: this.ui.mfr[0].value
                 });
 
                 if (!_.isEmpty(radios)) {
@@ -271,8 +271,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             },
             onNext: function (e) {
                 var radio = _.where(this.model.attributes.radios, {
-                    mfr: this.ui.mfr[0].selectedOptions[0].value,
-                    model: this.mdlRegion.currentView.ui.mdl[0].selectedOptions[0].value
+                    mfr: this.ui.mfr[0].value,
+                    model: this.mdlRegion.currentView.ui.mdl[0].value
                 })[0];
 
                 if (_.isEmpty(radio)) {
