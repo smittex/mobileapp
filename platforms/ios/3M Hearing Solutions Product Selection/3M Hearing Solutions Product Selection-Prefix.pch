@@ -17,12 +17,10 @@
  under the License.
  */
 //
-// Prefix header for all source files of the '3M Hearing Solutions Product Selection ' target in the '3M Hearing Solutions Product Selection ' project
+// Prefix header for all source files of the '3M Hearing Solutions Product Selection' target in the '3M Hearing Solutions Product Selection' project
 //
 
 #ifdef __OBJC__
     #import <Foundation/Foundation.h>
     #import <UIKit/UIKit.h>
-
-    #import <Webtrends/Webtrends.h>
 #endif

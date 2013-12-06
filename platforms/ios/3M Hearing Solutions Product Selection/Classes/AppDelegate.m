@@ -19,7 +19,7 @@
 
 //
 //  AppDelegate.m
-//  3M Hearing Solutions Product Selection 
+//  3M Hearing Solutions Product Selection
 //
 //  Created by ___FULLUSERNAME___ on ___DATE___.
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
@@ -63,8 +63,6 @@
  */
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    [super application:application didFinishLaunchingWithOptions:launchOptions];
-    
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
 
 #if __has_feature(objc_arc)
@@ -94,7 +92,7 @@
 }
 
 // this happens while we are running ( in the background, or from within our own app )
-// only valid if 3M Hearing Solutions Product Selection -Info.plist specifies a protocol to handle
+// only valid if 3M Hearing Solutions Product Selection-Info.plist specifies a protocol to handle
 - (BOOL)application:(UIApplication*)application handleOpenURL:(NSURL*)url
 {
     if (!url) {
