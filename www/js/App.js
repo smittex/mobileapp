@@ -37,6 +37,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
     Marionette.AnimatedRegion.prototype.open    = function (newView, oldView) {
         // If this is the first screen, just display the content and don't animate
         if (oldView === undefined) {
+            if (app.debug)
+                console.log('Initial');
             this.$el.html(newView.el);
             return;
         }
@@ -44,6 +46,11 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
         // Keep track of the history
         if (app.vars.direction === 'next')
             app.vars.history.push(oldView.template);
+
+        if (app.debug) {
+            console.log('Direction: ' + app.vars.direction);
+            console.log('Switching from view ' + oldView.template + ' to view ' + newView.template);
+        }
 
         var toScreen = newView.$el, fromScreen = oldView.$el;
 
@@ -75,7 +82,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
     };
 
     var app     = new Marionette.Application();
-    app.debug   = false;
+    app.debug   = true;
     app.vars    = {
         direction:          null,
         category:           null,
@@ -173,6 +180,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             },
             onLink: function(e) {
                 var url = $(e.target).data('url');
+                if (app.debug)
+                    console.log('Trying to open ' + url + ' in a new browser window');
                 window.open(url, '_system', 'location=yes');
             }
         }),
@@ -210,13 +219,16 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             template: 'question',
             events: {
                 'click a.back': 'onBack',
-                'click a.answer': 'onNext'
+                'click a.answer': 'onNext',
+                'click a.link': 'onLink'
             },
             onBack: function () {
                 app.controller.goBack();
             },
             onNext: function (e) {
                 app.vars.direction = 'next';
+                if (app.debug)
+                    console.log('Next button pressed');
 
                 var target = $(e.target);
                 var answerId = target.data('answer-id');
@@ -228,13 +240,23 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 }
                 else if (question.answer.type === 'product') {
                     if (question.answer.nodes.length > 1) {
+                        if (app.debug)
+                            console.log('product-list');
                         app.controller.productList(question.answer.nodes.join());
                     }
                     else {
+                        if (app.debug)
+                            console.log('product-page');
                         app.vars.productId = question.answer.nodes[0];
                         app.controller.productPage(app.vars.productId);
                     }
                 }
+            },
+            onLink: function(e) {
+                var url = $(e.target).data('url');
+                if (app.debug)
+                    console.log('Trying to open ' + url + ' in a new browser window');
+                window.open(url, '_system', 'location=yes');
             }
         }),
         'model-sel':        Marionette.Layout.extend({
@@ -282,6 +304,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 }
 
                 app.vars.direction = 'next';
+                if (app.debug)
+                    console.log('Submit button pressed');
 
                 var question = app.assessment.questionAnswered(radio.answerId);
 
@@ -290,9 +314,13 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 }
                 else if (question.answer.type === 'product') {
                     if (question.answer.nodes.length > 1) {
+                        if (app.debug)
+                            console.log('product-list');
                         app.controller.productList(question.answer.nodes.join());
                     }
                     else {
+                        if (app.debug)
+                            console.log('product-page');
                         app.vars.productId = question.answer.nodes[0];
                         app.controller.productPage(app.vars.productId);
                     }
@@ -338,6 +366,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             },
             onLink: function (e) {
                 var url = $(e.target).data('url');
+                if (app.debug)
+                    console.log('Trying to open ' + url + ' in a new browser window');
                 window.open(url, '_system', 'location=yes');
             }
         }),
@@ -387,6 +417,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                     app.controller.home();
                 }
                 else if ($(e.target).hasClass('open-browse')) {
+                    if (app.debug)
+                        console.log('Open Browse');
                     app.vars.direction = 'next';
                     app.controller.browseFamilies();
                 }
@@ -456,22 +488,20 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
             this.headRegion.show(new app.views.header({model: new Backbone.Model({header: headerText})}));
             this.navRegion.show(new app.views.navigation());
 
-            var ver;
-
             if (/iP(hone|od|ad)/.test(navigator.platform)) {
                 var v = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/);
-                ver = [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
-            }
+                var ver = [parseInt(v[1], 10), parseInt(v[2], 10), parseInt(v[3] || 0, 10)];
 
-            if (ver[0] >= 7) {
-                var header = $('.header');
-                Array.prototype.forEach.call(header, function(el) {
-                    el.style.paddingTop="20px";
-                });
-                var main = $('#main>div');
-                Array.prototype.forEach.call(main, function(el) {
-                    el.style.paddingTop="20px";
-                });
+                if (ver[0] >= 7) {
+                    var header = $('.header');
+                    Array.prototype.forEach.call(header, function(el) {
+                        el.style.paddingTop="20px";
+                    });
+                    var main = $('#main>div');
+                    Array.prototype.forEach.call(main, function(el) {
+                        el.style.paddingTop="20px";
+                    });
+                }
             }
         },
         hideHeaderFooter:   function () {
@@ -642,6 +672,9 @@ app.module('assessment',        function (assessment, app) {
             answers.pop();
     };
     assessment.questionAnswered = function (answerId) {
+        if (app.debug)
+            console.log('answer_id:' + answerId);
+
         var question = questions.pop();
         question.answer = getAnswerById(question, answerId);
 
@@ -719,7 +752,19 @@ app.module('DAL.assessment',    function (assessmentDAL, app) {
         this.getAnswers(questionId, function() {
             var re0 = /text:'\{objects:\[/gi;
             var re1 = /]}]}'/gi;
-            var answers = eval("(" + this.answers.replace(re0, 'radios:').replace(re1, ']}') + ')');
+
+            try {
+                var answers = eval("(" + this.answers.replace(re0, 'radios:').replace(re1, ']}') + ')');
+            }
+            catch (e) {
+                console.error(e);
+                console.error('Could not parse radios; Please check the answers.answer_text format for question_id ' + questionId);
+                console.error('The following should be a valid JSON object:');
+                console.error(this.answers.replace(re0, 'radios:').replace(re1, ']}'));
+                return;
+            }
+
+
             var radios = [];
 
             for (var i in answers) {
@@ -859,12 +904,21 @@ app.module('DAL',               function (DAL) {
         if (!db)
             DAL.open();
 
+        if (app.debug) {
+            console.log('Sql:');
+            console.log(sql);
+        }
+
         db.transaction(
             function (tx) {
                 tx.executeSql(
                     sql,
                     [],
                     function (tx, data) {
+                        if (app.debug) {
+                            console.log('Data:');
+                            console.log(data.rows.item(0));
+                        }
                         callback.apply(data.rows);
                     },
                     function(err) {
@@ -914,6 +968,8 @@ app.module('DAL',               function (DAL) {
 
                 break;
             case latestDbVersion:
+                if (app.debug)
+                    console.log('The database is the latest version');
                 callback.apply();
                 break;
             default:
