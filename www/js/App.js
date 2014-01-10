@@ -149,9 +149,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                     app.vars.category = 'communication';
                 }
                 else if (target.hasClass('val-icon')) {
-                    // Not implemented yet
-                    return;
-                    //app.vars.category = 'validation';
+                    app.vars.category = 'validation';
                 }
 
                 if (app.vars.category) {
@@ -528,6 +526,8 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
                 selector = 'sound-protection';
             else if (app.vars.category === 'communication')
                 selector = 'communication';
+            else if (app.vars.category === 'validation')
+                selector = 'validation';
             else
                 return;
 
