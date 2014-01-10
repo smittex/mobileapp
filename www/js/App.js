@@ -839,14 +839,11 @@ app.module('ORM',               function (ORM, app) {
         });
     };
     ORM.getBrowseFamilyModels   = function (callback) {
-        var sql = 'select  category, group_concat(distinct family) as families from products as c group by c.category;';
+        var sql = 'select c.category, c.families, o.id from (select category, group_concat(distinct family) as families from products group by category) as c inner join category_order as o on c.category = o.category where families is not null order by o.id asc;';
         app.DAL.getRows(sql, function () {
             var categories = [];
 
             for (var i = 0; i < this.length; i++) {
-                if (this.item(i).families === null)
-                    continue;
-
                 var families = this.item(i).families.split(',');
                 var newFamilies = [];
 
