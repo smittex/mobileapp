@@ -7,7 +7,6 @@
 
 # Java
 *.class
-*.jar
 
 # Android generated files
 platforms/android/bin/*
