@@ -823,8 +823,17 @@ h4 {
 .home-icon {
 	left: 8px;
 	position: absolute;
-	top: 12px;
-	width: 10%;
+	top: 4px;
+	height:48px;
+
+}
+
+#overlap {
+top: 84px;
+}
+
+#last-icon {
+top: 166px;
 }
 
 #video_background {
