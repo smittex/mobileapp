@@ -7,7 +7,6 @@
 
 # Java
 *.class
-*.jar
 
 # Android generated files
 platforms/android/bin/*
@@ -21,8 +20,6 @@ platforms/android/res/xml/config.xml
 platforms/ios/build/*
 platforms/ios/cordova/*
 platforms/ios/CordovaLib/*
-platforms/ios/3M Hearing Solutions Product Selection /config.xml
-platforms/ios/3M Hearing Solutions Product Selection /3M Hearing Solutions Product Selection -Info.plist
 platforms/ios/www/*
 plugins/ios.json
 
@@ -57,3 +54,7 @@ DerivedData
 # Misc
 *~
 *.ipa
+
+www/.idea/
+platforms/android/platform_www/
+*.jar

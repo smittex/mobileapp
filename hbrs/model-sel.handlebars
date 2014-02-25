@@ -1,25 +1,16 @@
-<header>
-    <div class="nav-back">
-        <a class="back"><img src="img/back_arrow.png" /></a>
-    </div>
-    <h1>Over the Ear</h1>
-</header>
-
 <article class="contents-wrap">
     <h2 class="question">To what kind of radio will you be connecting your headset?</h2>
     <div class="copy-wrap-select-box">
-        <select class="question-select-box">
-            <option>Select Radio Brand</option>
-            {{#each mfr}}
-                <option>{{name}}</option>
-            {{/each}}
-        </select>
-        <select class="question-select-box">
-            <option>Select Radio Model</option>
-            {{#each model}}
-                <option>{{name}}</option>
-            {{/each}}
-        </select>
+        <div id="mfrRegion">
+            <select class="question-select-box" id="manufacturer">
+                <option>Select Radio Brand</option>
+                {{#each meta.mfrs}}
+                    <option value="{{mfr}}">{{mfr}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div id="mdlRegion">
+        </div>
     </div>
     <a class="next select-button">
         Submit

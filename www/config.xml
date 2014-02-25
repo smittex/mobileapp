@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.theshinebox.threeM"
-        version="1.1"
+        version="1.2"
         xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0">
-    <name>3M Hearing Solutions Product Selection </name>
+    <name>3M Hearing Solutions Product Selection</name>
     <description>
     </description>
     <author email="jessie@theshinebox.com" href="http://www.theshinebox.com/">
@@ -12,7 +12,6 @@
     </author>
     <content src="index.html" />
     <access origin="http://127.0.0.1/*" />
-    <access origin="http://10.2.2.115/*" />
     <access origin="http://brightcove.com/*" />
     <access origin="http://3m.com/*" />
     <access origin="http://fonts.googleapis.com/*" />
@@ -25,13 +24,6 @@
     <icon src="icon.png" />
     <gap:platform name="ios" />
     <gap:platform name="android" />
-<!--    <gap:splash src="img/splash/ios/screen-iphone-portrait.png" gap:platform="ios" width="320" height="480" />
-    <gap:splash src="img/splash/ios/screen-iphone-portrait-2x.png" gap:platform="ios" width="640" height="960" />
-    <gap:splash src="img/splash/ios/screen-iphone-portrait-568h-2x.png" gap:platform="ios" width="640" height="1136" />
-    <gap:splash src="img/splash/andriod/screen-ldpi-portrait.png" gap:platform="android" gap:density="ldpi" />
-    <gap:splash src="img/splash/andriod/screen-mdpi-portrait.png" gap:platform="android" gap:density="mdpi" />
-    <gap:splash src="img/splash/andriod/screen-hdpi-portrait.png" gap:platform="android" gap:density="hdpi" />
-    <gap:splash src="img/splash/andriod/screen-xhdpi-portrait.png" gap:platform="android" gap:density="xhdpi" />-->
     <feature name="InAppBrowser">
         <param name="ios-package" value="CDVInAppBrowser" />
     </feature>

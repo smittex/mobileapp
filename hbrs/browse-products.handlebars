@@ -1,0 +1,19 @@
+<div class="pane product-list">
+    <div class="contents-wrap">
+        <ul>
+            {{#each products}}
+                <li>
+                	<a class="browse-next select-button multiple transparent list med" data-product="{{id}}">
+                    	<img class="select-thumb prod-thumb" src="img/{{image}}" />
+                   		 <div class="product-name-browse">
+                        	{{name}}
+                    	</div>
+                   		 <div class="color match">
+                        	<img src="img/right_arrow_black.png"/>
+                   		 </div>
+                	</a>
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+</div>
