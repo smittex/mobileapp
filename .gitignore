@@ -55,3 +55,6 @@ DerivedData
 # Misc
 *~
 *.ipa
+
+www/.idea/
+platforms/android/platform_www/
