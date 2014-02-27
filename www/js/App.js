@@ -82,7 +82,7 @@ var app = (function ($, Backbone, Marionette, _, Handlebars) {
     };
 
     var app     = new Marionette.Application();
-    app.debug   = true;
+    app.debug   = false;
     app.vars    = {
         direction:          null,
         category:           null,
