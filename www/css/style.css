@@ -15,18 +15,24 @@ Communications Gray: #777777
 body {
 	font-family: 'Helvetica Neue',arial,sans-serif;
 	overflow-x: hidden;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent; /* For some Androids */
+    background-color: #ffffff;
 }
 
-section {
+#main {
+    position: relative;
+    height: 100%;
+}
+
+.section {
     top: 0px;
 	width: 100%;
 	height:auto;
 	position: absolute;
 	min-height: 100%;
 	background-color: #ffffff;
-	display: none;
 }
-
 
 ul {
 	padding: 0;
@@ -40,7 +46,7 @@ ul li {
 /*End Universal*/
 
 /*Footer nav styles*/
-nav.main-nav {
+#main-nav {
 	position: fixed;
 	bottom: 0;
 	width: 100%;
@@ -48,7 +54,6 @@ nav.main-nav {
 	border-top: 1px solid #d7d7d7;
 	background-color: rgba(255,255,255,1);
 	height:4em;
-	display:none;
 }
 
 nav ul {
@@ -186,7 +191,7 @@ h1 {
 .detection h2 {
 	color: #2D9298;
 	font-family: 'Archivo Narrow',sans-serif;
-	font-size: 2em;
+	font-size: 1.8em;
 	font-weight: 100;
 	margin-bottom: 0.2em;
 	margin-left: 0.3em;
@@ -195,7 +200,7 @@ h1 {
 
 .detection h2.question {
 	color: #88CB5E;
-	line-height: 1.1em;
+	line-height: 1.25em;
 	margin-bottom: 0;
 	margin-top: 1em;
 }
@@ -203,7 +208,7 @@ h1 {
 .protection h2 {
     color: #21409a;
     font-family: 'Archivo Narrow',sans-serif;
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: 100;
     margin-bottom: 0.2em;
     margin-left: 0.3em;
@@ -212,7 +217,7 @@ h1 {
 
 .protection h2.question{
     color: #21409a;
-    line-height: 1.1em;
+    line-height: 1.25em;
     margin-bottom: 0;
     margin-top: 1em;
 }
@@ -220,7 +225,7 @@ h1 {
 .communication h2 {
     color: #00a4e2;
     font-family: 'Archivo Narrow',sans-serif;
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: 100;
     margin-bottom: 0.2em;
     margin-left: 0.3em;
@@ -229,7 +234,24 @@ h1 {
 
 .communication h2.question{
     color: #00a4e2;
-    line-height: 1.1em;
+    line-height: 1.25em;
+    margin-bottom: 0;
+    margin-top: 1em;
+}
+
+.validation h2 {
+    color: #777777;
+    font-family: 'Archivo Narrow',sans-serif;
+    font-size: 1.8em;
+    font-weight: 100;
+    margin-bottom: 0.2em;
+    margin-left: 0.3em;
+    margin-top: 0.2em;
+}
+
+.validation h2.question{
+    color: #777777;
+    line-height: 1.25em;
     margin-bottom: 0;
     margin-top: 1em;
 }
@@ -275,27 +297,54 @@ h4.bolder {
 /*End Headlines*/
 
 .detection {
-	background-image: url(../img/bg_top.jpg), url(../img/bg_bottom.jpg);
-	background-size: contain, contain;
-	background-repeat: no-repeat, no-repeat;
-	background-position: center top, center bottom;
+	background-image: url(../img/bg_top.jpg);
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+	background-position: center top;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
 
 .protection {
-    background-image: url(../img/prot/protection_top_bg.jpg), url(../img/prot/protection_bottom_bg.jpg);
-    background-size: contain, contain;
-    background-repeat: no-repeat, no-repeat;
-    background-position: center top, center bottom;
+    background-image: url(../img/prot/protection_top_bg.jpg);
+   background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
 
 .communication{
-    background-image: url(../img/comm/communication_top_bg.jpg), url(../img/comm/communication_bottom_bg.jpg);
-    background-size: contain, contain;
-    background-repeat: no-repeat, no-repeat;
-    background-position: center top, center bottom;
+    background-image: url(../img/comm/communication_top_bg.jpg);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
 }
 
-header {
+.validation{
+    background-image: url(../img/val/val-top-bg.jpg);
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.header {
     top: 0px;
     left: 0px;
     right: 0px;
@@ -330,7 +379,11 @@ header {
 .contents-wrap {
 	padding-top: 2.75em;
 	padding-bottom: 4em;
-	position: relative;
+	width: 100%;
+}
+
+.fix {
+    position: fixed;
 }
 
 .full-width {
@@ -352,6 +405,11 @@ header {
 .communication .select-button {
     background-color: #00a4e2;
 }
+
+.validation .select-button {
+    background-color: #777777;
+}
+
 
 .select-button {
     color: #FFFFFF;
@@ -527,12 +585,24 @@ img.select-thumb {
     background: #00a4e2;
 }
 
-.protection .question-choices li:nth-of-type(2) {
+.communication .question-choices li:nth-of-type(2) {
     background: #777777;
 }
 
-.protection .question-choices li:nth-of-type(3) {
+.communication .question-choices li:nth-of-type(3) {
     background: #21409a;
+}
+
+.validation .question-choices li:nth-of-type(1) {
+    background: #eeb111;
+}
+
+.validation .question-choices li:nth-of-type(2) {
+    background: #777777;
+}
+
+.validation .question-choices li:nth-of-type(3) {
+    background: #88cb5e;
 }
 
 
@@ -547,6 +617,12 @@ img.select-thumb {
 .communication .product-desc {
     background: #e4e4e4;
 }
+
+.validation .product-desc {
+    background: #ede8dc;
+}
+
+
 
 .product-desc h3 {
 	margin-left: 0;
@@ -640,7 +716,7 @@ img.select-thumb {
 
 /*Opening page nav styles*/
 
-.splash {
+#splash {
     animation: fadeout 1s;
     animation-delay: 2s;
     animation-fill-mode: forwards;
@@ -747,10 +823,18 @@ h4 {
 .home-icon {
 	left: 8px;
 	position: absolute;
-	top: 6px;
-	width: 10%;
+	top: 4px;
+	height:48px;
+
 }
 
+#overlap {
+top: 84px;
+}
+
+#last-icon {
+top: 166px;
+}
 
 #video_background {
 	position: absolute;
@@ -772,7 +856,7 @@ nav.cat-nav {
 	background-color: transparent;
 	height:auto;
 	display: block;
-	margin-bottom: 0.5em;;
+	margin-bottom: 4px;
 }
 
 
@@ -799,7 +883,7 @@ nav.cat-nav ul li a{
 	display: block;
 	font-family: 'Helvetica Neue',arial,sans-serif;
 	margin: 0.1em auto 0;
-	padding: 0.5em 0;
+	padding: 0.85em 0;
 	text-align: center;
 	text-decoration: none;
 	width: 100%;
@@ -832,34 +916,26 @@ nav.cat-nav ul li a.pro-icon{
 	-webkit-animation:slidein 1s;
 	-webkit-animation-delay:0s;
 	-webkit-animation-fill-mode: forwards;
-
 }
 
 
 
 nav.cat-nav ul li a.com-icon{
-	background-image: url(../img/coming_soon.png);
-	background-position: right top;
-	background-repeat: no-repeat;
-	background-size: auto 100%;
 	right: 100%;
 	background-color: #00a4e2;
+    background-image: none;
 	animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
 	-webkit-animation:slidein 1s;
 	-webkit-animation-delay:0s;
 	-webkit-animation-fill-mode: forwards;
-
 }
 
 nav.cat-nav ul li a.val-icon{
-	background-image: url(../img/coming_soon.png);
-	background-position: right top;
-	background-repeat: no-repeat;
-	background-size: auto 100%;
 	right: 100%;
 	background-color: #777777;
+	background-image: none;
 	animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
@@ -867,7 +943,6 @@ nav.cat-nav ul li a.val-icon{
 	-webkit-animation-delay:0s;
 	-webkit-animation-fill-mode: forwards;
 }
-
 
 @keyframes slidein
 {
@@ -945,7 +1020,7 @@ img.prod-thumb {
 }
 
 a.family.list.product-button {
-	padding: 0.875em 0.5em 0.875em 2em;
+	padding: 0.875em 1em 0.875em 2em;
 	font-family: sans-serif;
 	font-size: 1em;
 	border-bottom: 1px solid #d7d7d7;
