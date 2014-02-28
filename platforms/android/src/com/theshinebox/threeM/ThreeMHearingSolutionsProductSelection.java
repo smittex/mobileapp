@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.theshinebox.threeM;
+package com.theshinebox.mmm;
 
 import android.os.Bundle;
 import org.apache.cordova.*;

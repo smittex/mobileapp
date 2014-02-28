@@ -1,19 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.theshinebox.threeM" version="1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
+<widget id="com.theshinebox.mmm" version="1.2" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <name>Hello Cordova</name>
-    <access origin="*" />
-    <preference name="AllowInlineMediaPlayback" value="false" />
-    <preference name="BackupWebStorage" value="cloud" />
-    <preference name="DisallowOverscroll" value="false" />
-    <preference name="EnableViewportScale" value="false" />
-    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
-    <preference name="MediaPlaybackRequiresUserAction" value="false" />
-    <preference name="SuppressesIncrementalRendering" value="false" />
-    <preference name="TopActivityIndicator" value="gray" />
-    <preference name="GapBetweenPages" value="0" />
-    <preference name="PageLength" value="0" />
-    <preference name="PaginationBreakingMode" value="page" />
-    <preference name="PaginationMode" value="unpaginated" />
     <feature name="LocalStorage">
         <param name="ios-package" value="CDVLocalStorage" />
     </feature>
@@ -27,16 +14,6 @@
     <author email="bryan.smith@solutiondesign.com" href="http://solutiondesign.com/">
     </author>
     <content src="index.html" />
-    <access origin="http://127.0.0.1/*" />
-    <access origin="http://brightcove.com/*" />
-    <access origin="http://3m.com/*" />
-    <access origin="http://fonts.googleapis.com/*" />
-    <preference name="fullscreen" value="true" />
-    <preference name="UIWebViewBounce" value="false" />
-    <preference name="orienation" value="portrait" />
-    <preference name="target-device" value="handset" />
-    <preference name="phonegap-version" value="3.1.0" />
-    <preference name="SuppressesIncrementalRendering" value="true" />
     <icon src="icon.png" />
     <gap:platform name="ios" />
     <gap:platform name="android" />
@@ -44,4 +21,24 @@
         <param name="ios-package" value="CDVInAppBrowser" />
         <param name="android-package" value="org.apache.cordova.InAppBrowser" />
     </feature>
+    <access origin="http://127.0.0.1/*" />
+    <access origin="http://brightcove.com/*" />
+    <access origin="http://3m.com/*" />
+    <access origin="http://fonts.googleapis.com/*" />
+    <preference name="KeyboardDisplayRequiresUserAction" value="true" />
+    <preference name="SuppressesIncrementalRendering" value="true" />
+    <preference name="UIWebViewBounce" value="false" />
+    <preference name="TopActivityIndicator" value="gray" />
+    <preference name="EnableLocation" value="false" />
+    <preference name="EnableViewportScale" value="false" />
+    <preference name="AutoHideSplashScreen" value="true" />
+    <preference name="ShowSplashScreenSpinner" value="true" />
+    <preference name="MediaPlaybackRequiresUserAction" value="false" />
+    <preference name="AllowInlineMediaPlayback" value="false" />
+    <preference name="OpenAllWhitelistURLsInWebView" value="false" />
+    <preference name="BackupWebStorage" value="cloud" />
+    <preference name="fullscreen" value="true" />
+    <preference name="orienation" value="portrait" />
+    <preference name="target-device" value="handset" />
+    <preference name="phonegap-version" value="3.1.0" />
 </widget>
