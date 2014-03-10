@@ -4,6 +4,9 @@
         xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0">
     <name>3M Hearing Solutions Product Selection</name>
+    <preference name="Orienation" value="portrait" />
+    <preference name="splashscreen" value="splash" />
+	<preference name="splashScreenDelay" value="10000" />
     <description>
     </description>
     <author email="jessie@theshinebox.com" href="http://www.theshinebox.com/">
@@ -17,8 +20,6 @@
     <access origin="http://fonts.googleapis.com/*" />
     <preference name="fullscreen" value="true" />
     <preference name="UIWebViewBounce" value="false" />
-    <preference name="orienation" value="portrait" />
-    <preference name="target-device" value="handset" />
     <preference name="phonegap-version" value="3.1.0" />
     <preference name="SuppressesIncrementalRendering" value="true" />
     <icon src="icon.png" />
@@ -30,4 +31,4 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.InAppBrowser" />
     </feature>
-</widget>
+   </widget>

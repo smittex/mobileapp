@@ -177,8 +177,8 @@ img.montage {
 	position: absolute;
 	width: 100%;
 	background-color: white;
-	border: 1px solid #ccc;
-	box-shadow: 0px 0px 15px #222;
+	box-shadow: 0px 0px 7px #333;
+	left: 0;
 }
 
 /*Headlines*/
@@ -316,8 +316,7 @@ h4.bolder {
     top: 0;
     left: 0;
     min-height: 100%;
-    border:  1px solid #ccc;
-    box-shadow: 0px 0px 15px #222;
+    box-shadow: 0px 0px 7px #333;
 }
 
 .protection {
@@ -331,8 +330,7 @@ h4.bolder {
     top: 0;
     left: 0;
     min-height: 100%;
-    border:  1px solid #ccc;
-    box-shadow: 0px 0px 15px #222;
+    box-shadow: 0px 0px 7px #333;
 }
 
 .communication{
@@ -346,8 +344,7 @@ h4.bolder {
     top: 0;
     left: 0;
     min-height: 100%;
-    border:  1px solid #ccc;
-    box-shadow: 0px 0px 15px #222;
+    box-shadow: 0px 0px 7px #333;
 }
 
 .validation{
@@ -361,8 +358,7 @@ h4.bolder {
     top: 0;
     left: 0;
     min-height: 100%;
-    border:  1px solid #ccc;
-    box-shadow: 0px 0px 15px #222;
+    box-shadow: 0px 0px 7px #333;
 }
 
 .header {
@@ -570,7 +566,7 @@ img.select-thumb {
 .question-choices ul li a {
 	color: #FFFFFF;
 	display: block;
-	font-weight: 200;
+	font-weight: 400;
 	padding: 1em 0;
 	text-align: center;
 	width: 100%;
@@ -663,6 +659,7 @@ img.select-thumb {
 	min-height: 100%;
 	position: absolute;
 	width: 100%;
+	left: 0;
 }
 
 .browse {
@@ -744,10 +741,9 @@ img.select-thumb {
     animation: fadeout 1s;
     animation-delay: 2s;
     animation-fill-mode: forwards;
-    -webkit-animation: fadeout 1s; /* Safari and Chrome */
+    -webkit-animation: fadeout 1s;
     -webkit-animation-delay: 2s;
     -webkit-animation-fill-mode: forwards;
-
 }
 
 @keyframes fadeout {
@@ -920,52 +916,52 @@ nav.cat-nav ul li a{
 nav.cat-nav ul li a.det-icon{
 	background-color: #2d9298;
 	background-image: none;
-	right: 100%;
-	animation:slidein 1s;
+	right: 0;
+	/*animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
 	-webkit-animation:slidein 1s;
 	-webkit-animation-delay:0s;
-	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;*/
 
 }
 
 nav.cat-nav ul li a.pro-icon{
-	right: 100%;
+	right: 0;
 	background-color: #21409a;
 	background-image: none;
-	animation:slidein 1s;
+	/*animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
 	-webkit-animation:slidein 1s;
 	-webkit-animation-delay:0s;
-	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;*/
 }
 
 
 
 nav.cat-nav ul li a.com-icon{
-	right: 100%;
+	right: 0;
 	background-color: #00a4e2;
     background-image: none;
-	animation:slidein 1s;
+	/*animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
 	-webkit-animation:slidein 1s;
 	-webkit-animation-delay:0s;
-	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;*/
 }
 
 nav.cat-nav ul li a.val-icon{
-	right: 100%;
+	right: 0;
 	background-color: #777777;
 	background-image: none;
-	animation:slidein 1s;
+	/*animation:slidein 1s;
 	animation-delay:0s;
 	animation-fill-mode: forwards;
 	-webkit-animation:slidein 1s;
 	-webkit-animation-delay:0s;
-	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-fill-mode: forwards;*/
 }
 
 @keyframes slidein
@@ -1027,6 +1023,7 @@ img.prod-thumb {
 	display: block;
 	margin: 0.5em auto 0;
 	width: 90%;
+	max-width: 400px;
 }
 
 /*New Browse Styles*/
