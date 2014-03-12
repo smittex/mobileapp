@@ -988,4 +988,5 @@ $(document).ready(function(){
         splash.remove();
         app.controller.home();
     }, false);
+    
 });
