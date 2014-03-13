@@ -57,6 +57,5 @@ DerivedData
 
 www/.idea/
 platforms/android/platform_www/
-*.jar
 *.keystore
 ant.properties
